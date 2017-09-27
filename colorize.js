@@ -23,39 +23,51 @@ module.exports = function createColorize(opts) {
   return new Colorizer(opts);
 };
 
+//
+// Attach the Colorizer for registration purposes
+//
+module.exports.Colorizer = Colorizer;
+
 /*
  * function setupColors(opts)
  * Attaches a Colorizer instance to the format.
  */
 function Colorizer(opts) {
   opts = opts || {};
-  if (!opts.colors) {
-    throw new Error('Cannot create colorize format: missing { colors } in options.');
+  if (opts.colors) {
+    this.addColors(opts.colors);
   }
 
   this.options = opts;
-  this.addColors(opts.colors);
 }
 
 /**
  * Adds the colors Object to the set of allColors
- * known by winston
+ * known by the Colorizer
+ *
+ * @param {Object} colors Set of color mappings to add.
+ */
+Colorizer.addColors = function (colors) {
+  const nextColors = Object.keys(colors).reduce((acc, level) => {
+    acc[level] = hasSpace.test(colors[level])
+      ? colors[level].split(hasSpace)
+      : colors[level];
+
+    return acc;
+  }, {});
+
+  Colorizer.allColors = Object.assign({}, Colorizer.allColors || {}, nextColors);
+  return Colorizer.allColors;
+}
+
+/**
+ * Adds the colors Object to the set of allColors
+ * known by the Colorizer
  *
  * @param {Object} colors Set of color mappings to add.
  */
 Colorizer.prototype.addColors = function addColors(colors) {
-  this.allColors = this.allColors || {};
-  Object.assign(this.allColors, colors);
-
-  //
-  // Eagerly set any colors that happen to be `/s`
-  // separated strings into an Array to be used later.
-  //
-  Object.keys(this.allColors).forEach(level => {
-    if (hasSpace.test(this.allColors[level])) {
-      this.allColors[level] = this.allColors[level].split(hasSpace);
-    }
-  });
+  return Colorizer.addColors(colors);
 };
 
 /*
@@ -71,16 +83,16 @@ Colorizer.prototype.colorize = function colorize(level, message) {
   // If the color for the level is just a string
   // then attempt to colorize the message with it.
   //
-  if (!Array.isArray(this.allColors[level])) {
-    return colors[this.allColors[level]](message);
+  if (!Array.isArray(Colorizer.allColors[level])) {
+    return colors[Colorizer.allColors[level]](message);
   }
 
   //
   // If it is an Array then iterate over that Array, applying
   // the colors function for each item.
   //
-  for (var i = 0, len = this.allColors[level].length; i < len; i++) {
-    message = this.colors[allColors[level][i]](message);
+  for (var i = 0, len = Colorizer.allColors[level].length; i < len; i++) {
+    message = Colorizer.colors[allColors[level][i]](message);
   }
 
   return message;
