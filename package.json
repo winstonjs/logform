@@ -1,0 +1,34 @@
+{
+  "name": "longform",
+  "version": "0.0.0",
+  "description": "An mutable object format designed for chaining & objectMode streams",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc mocha test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winstonjs/longform.git"
+  },
+  "keywords": [
+    "winston",
+    "logging",
+    "format",
+    "winstonjs"
+  ],
+  "author": "Charlie Robbins <charlie.robbins@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/winstonjs/longform/issues"
+  },
+  "homepage": "https://github.com/winstonjs/longform#readme",
+  "dependencies": {
+    "camelcase": "^4.1.0",
+    "colors": "^1.1.2"
+  },
+  "devDependencies": {
+    "assume": "^1.5.1",
+    "mocha": "^3.5.3",
+    "nyc": "^11.2.1"
+  }
+}
