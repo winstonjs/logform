@@ -1,23 +1,10 @@
 /*
- * index.js: Set of all formats Winston knows about
+ * index.js: Set of all known formats.
  *
  * (C) 2010 Charlie Robbins
  * MIT LICENCE
  *
  */
-
-const path = require('path');
-const camelcase = require('camelcase');
-
-/**
- * @api private
- * @property {Array} available
- * Set of all available format names exposed by winston.
- */
-var available = [
-  'cli', 'colorize', 'json', 'logstash', 'pad-levels',
-  'pretty-print', 'simple', 'splat', 'uncolorize'
-];
 
 /**
  * @api public
@@ -25,25 +12,61 @@ var available = [
  * Both the construction method and set of exposed
  * formats.
  */
-var format = module.exports = require('./format');
+const format = module.exports = require('./format');
 
 //
 // Setup all transports as lazy-loaded getters.
 //
-Object.defineProperties(
-  format,
-  available.reduce(function (acc, name) {
-    var key = camelcase(name);
+Object.defineProperty(format, 'cli', {
+  get: function () {
+    return require('./cli');
+  }
+});
 
-    acc[key] = {
-      configurable: true,
-      enumerable: true,
-      get: function () {
-        var fullpath = path.join(__dirname, name.toLowerCase());
-        return require(fullpath);
-      }
-    };
+Object.defineProperty(format, 'colorize', {
+  get: function () {
+    return require('./colorize');
+  }
+});
 
-    return acc;
-  }, {})
-);
+Object.defineProperty(format, 'json', {
+  get: function () {
+    return require('./json');
+  }
+});
+
+Object.defineProperty(format, 'logstash', {
+  get: function () {
+    return require('./logstash');
+  }
+});
+
+Object.defineProperty(format, 'padLevels', {
+  get: function () {
+    return require('./pad-levels');
+  }
+});
+
+Object.defineProperty(format, 'prettyPrint', {
+  get: function () {
+    return require('./pretty-print');
+  }
+});
+
+Object.defineProperty(format, 'simple', {
+  get: function () {
+    return require('./simple');
+  }
+});
+
+Object.defineProperty(format, 'splat', {
+  get: function () {
+    return require('./splat');
+  }
+});
+
+Object.defineProperty(format, 'uncolorize', {
+  get: function () {
+    return require('./uncolorize');
+  }
+});

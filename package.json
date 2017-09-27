@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/winstonjs/longform#readme",
   "dependencies": {
-    "camelcase": "^4.1.0",
     "colors": "^1.1.2"
   },
   "devDependencies": {
