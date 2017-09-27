@@ -1,6 +1,6 @@
 {
   "name": "logform",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "An mutable object format designed for chaining & objectMode streams",
   "main": "index.js",
   "scripts": {
