@@ -92,7 +92,7 @@ Colorizer.prototype.colorize = function colorize(level, message) {
   // the colors function for each item.
   //
   for (var i = 0, len = Colorizer.allColors[level].length; i < len; i++) {
-    message = Colorizer.colors[allColors[level][i]](message);
+    message = colors[Colorizer.allColors[level][i]](message);
   }
 
   return message;
