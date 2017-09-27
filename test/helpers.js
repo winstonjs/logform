@@ -1,4 +1,5 @@
 const stream = require('stream');
+const fixtures = require('./fixtures');
 
 /**
  * Returns a new writeable stream with the specified write function.

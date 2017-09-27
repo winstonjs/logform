@@ -7,10 +7,11 @@
  */
 
 const assume = require('assume');
+const colors = require('colors');
 const colorize = require('../colorize');
 const helpers = require('./helpers');
 
-describe('winston.format.colorize', function () {
+describe('colorize', function () {
   it('default', helpers.assumeFormatted(
     colorize(),
     { level: 'info', message: 'whatever' },
