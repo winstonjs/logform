@@ -12,7 +12,14 @@
  * Both the construction method and set of exposed
  * formats.
  */
-const format = module.exports = require('./format');
+const format = exports.format = require('./format');
+
+/**
+ * @api public
+ * @method {function} levels
+ * Registers the specified levels with logform.
+ */
+const levels = exports.levels = require('./levels');
 
 //
 // Setup all transports as lazy-loaded getters.
