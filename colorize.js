@@ -89,7 +89,7 @@ Colorizer.prototype.colorize = function colorize(level, message) {
 /*
  * function transform (info, opts)
  * Attempts to colorize the { level, message } of the given
- * `longform` info object.
+ * `logform` info object.
  */
 Colorizer.prototype.transform = function transform(info, opts) {
   var level = info.level;

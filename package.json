@@ -1,5 +1,5 @@
 {
-  "name": "longform",
+  "name": "logform",
   "version": "0.0.0",
   "description": "An mutable object format designed for chaining & objectMode streams",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/winstonjs/longform.git"
+    "url": "git+https://github.com/winstonjs/logform.git"
   },
   "keywords": [
     "winston",
@@ -19,9 +19,9 @@
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/winstonjs/longform/issues"
+    "url": "https://github.com/winstonjs/logform/issues"
   },
-  "homepage": "https://github.com/winstonjs/longform#readme",
+  "homepage": "https://github.com/winstonjs/logform#readme",
   "dependencies": {
     "colors": "^1.1.2"
   },
