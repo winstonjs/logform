@@ -15,7 +15,7 @@ module.exports = function (formatFn) {
   // Remark: a little awkward that multiple formats is automagically created
   // for you, but it feels correct w.r.t. current API designs.
   const formats = Array.prototype.slice.call(arguments);
-  return createFormat(cascade(formats))();
+  return createFormat(cascade(formats));
 };
 
 /*
@@ -26,13 +26,13 @@ function createFormat(formatFn) {
     throw new Error(`Format functions must be synchronous taking a two arguments: (info, opts)\n${formatFn.toString()}`);
   }
 
-  //
-  // Create a wrapper Prototype of `Format` which
-  // has the `formatFn` set to `_format`.
-  //
-  function FormatWrap(opts) { Format.call(this, opts); }
-  util.inherits(FormatWrap, Format);
-  FormatWrap.prototype.transform = formatFn;
+  /*
+   * function Format (options)
+   * Base prototype which calls a `_format`
+   * function and pushes the result.
+   */
+  function Format(options) { this.options = options || {}; };
+  Format.prototype.transform = formatFn;
 
   //
   // Create a function which returns new instances of
@@ -41,25 +41,16 @@ function createFormat(formatFn) {
   // require('winston').formats.json();
   //
   function createFormatWrap(opts) {
-    return new FormatWrap(opts);
+    return new Format(opts);
   }
 
   //
   // Expose the FormatWrap through the create function
   // for testability.
   //
-  createFormatWrap.Format = FormatWrap;
+  createFormatWrap.Format = Format;
   return createFormatWrap;
 }
-
-/*
- * function Format (options)
- * Base prototype which calls a `_format`
- * function and pushes the result.
- */
-function Format(options) {
-  this.options = options || {};
-};
 
 /*
  * function cascade(formats)

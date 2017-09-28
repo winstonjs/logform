@@ -9,6 +9,11 @@ const format = require('./format');
  * { label: 'my label' } to transports in `winston < 3.0.0`.
  */
 module.exports = format(function (info, opts) {
-  info.message = '[' opts.label + ']' + info.message;
+  if (opts.message) {
+    info.message = '[' + opts.label + ']' + info.message;
+    return info;
+  }
+
+  info.label = opts.label;
   return info;
 });

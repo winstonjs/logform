@@ -2,7 +2,7 @@
 
 const format = require('./format');
 const colorize = require('./colorize');
-const padLevels = require('./padLevels');
+const padLevels = require('./pad-levels');
 
 /*
  * function cli (opts)

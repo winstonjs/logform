@@ -1,6 +1,7 @@
 'use strict';
 
 const format = require('./format');
+const util = require('util');
 
 /*
  * function splat (opts)
@@ -9,5 +10,9 @@ const format = require('./format');
  * previously exposed implicitly in `winston < 3.0.0`.
  */
 module.exports = format(function (info, opts) {
-  throw new Error('Not implemented.');
+  if (info.splat) {
+    info.message = util.format(message, ...info.splat);
+  }
+
+  return info;
 });

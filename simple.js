@@ -11,7 +11,7 @@ const format = require('./format');
  *    ${level}: ${message} ${JSON.stringify(rest)}
  */
 module.exports = format(function (info, opts) {
-  info.raw = info.level + ': ' + info.message + JSON.stringify(
+  info.raw = info.level + ': ' + info.message + ' ' + JSON.stringify(
     Object.assign({}, info, { level: undefined, message: undefined })
   );
 
