@@ -16,8 +16,9 @@ const hasSpace = /\s+/;
 
 /*
  * function colorize (opts)
- * Returns a new instance of the CLI format TransformStream
- * with applies level colors to `info` objects.
+ * Returns a new instance of the colorize Format that applies
+ * level colors to `info` objects. This was previously exposed
+ * as { colorize: true } to transports in `winston < 3.0.0`.
  */
 module.exports = function createColorize(opts) {
   return new Colorizer(opts);

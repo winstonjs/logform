@@ -4,8 +4,9 @@ const format = require('./format');
 
 /*
  * function json (opts)
- * Returns a new instance of the JSON format TransformStream
- * with turns a log `info` object into pure JSON.
+ * Returns a new instance of the JSON format that turns a log `info`
+ * object into pure JSON. This was previously exposed as { json: true }
+ * to transports in `winston < 3.0.0`.
  */
 module.exports = format(function (info, opts) {
   //

@@ -1,7 +1,7 @@
 {
   "name": "logform",
   "version": "1.0.0",
-  "description": "An mutable object format designed for chaining & objectMode streams",
+  "description": "An mutable object-based log format designed for chaining & objectMode streams.",
   "main": "index.js",
   "scripts": {
     "test": "nyc mocha test/*.test.js"
@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/winstonjs/logform#readme",
   "dependencies": {
-    "colors": "^1.1.2"
+    "colors": "^1.1.2",
+    "date-fns": "^1.28.5"
   },
   "devDependencies": {
     "assume": "^1.5.1",

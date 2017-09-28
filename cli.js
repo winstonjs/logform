@@ -1,13 +1,16 @@
 'use strict';
 
-var format = require('./format');
+const format = require('./format');
+const colorize = require('./colorize');
+const padLevels = require('./padLevels');
 
 /*
  * function cli (opts)
- * Returns a new instance of the CLI format TransformStream
- * with turns a log `info` object into the same format
- * previously available in `winston.cli()` in `winston < 3.0.0`.
+ * Returns a new instance of the CLI format that turns a log
+ * `info` object into the same format previously available
+ * in `winston.cli()` in `winston < 3.0.0`.
  */
-module.exports = format(function (info, opts) {
-  throw new Error('Not implemented.');
-});
+module.exports = format(
+  colorize(),
+  padLevels()
+);

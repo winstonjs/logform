@@ -1,6 +1,5 @@
 'use strict';
 
-const util = require('util');
 const format = require('./format');
 
 /*
@@ -8,9 +7,13 @@ const format = require('./format');
  * Returns a new instance of the simple format TransformStream
  * which writes a simple representation of logs.
  *
- *    ${info.level}: ${info.message} ${JSON.stringify(info)}
+ *    const { level, message, ...rest } = info;
+ *    ${level}: ${message} ${JSON.stringify(rest)}
  */
 module.exports = format(function (info, opts) {
-  info.raw = util.format('%s: %s %j', info.level, info.message, info);
+  info.raw = info.level + ': ' + info.message + JSON.stringify(
+    Object.assign({}, info, { level: undefined, message: undefined })
+  );
+
   return info;
 });

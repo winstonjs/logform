@@ -1,3 +1,5 @@
+'use strict';
+
 const Colorizer = require('./colorize').Colorizer;
 
 /*
