@@ -11,7 +11,7 @@ const util = require('util');
  */
 module.exports = format(function (info, opts) {
   if (info.splat) {
-    info.message = util.format(message, ...info.splat);
+    info.message = util.format(info.message, ...info.splat);
   }
 
   return info;
