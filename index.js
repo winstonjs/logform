@@ -1,10 +1,4 @@
-/*
- * index.js: Set of all known formats.
- *
- * (C) 2010 Charlie Robbins
- * MIT LICENCE
- *
- */
+'use strict';
 
 /**
  * @api public
