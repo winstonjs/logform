@@ -1,17 +1,29 @@
 # logform
 
-An mutable object format designed for chaining & objectMode streams.
+An mutable object-based log format designed for chaining & objectMode streams.
 
 ## Usage
 
 ``` js
 const { format } = require('logform');
 
-const simpleColorized = format(
+const alignedWithColorsAndTime = format.combine(
   format.colorize(),
-  format.simple()
+  format.timestamp(),
+  format.align(),
+  format.printf(info => `${info.timestamp} ${info.level}: ${message}`)
 );
 ```
+
+## Understanding formats
+
+Every format accepts the following 
+
+## `info` Objects
+
+The `info` parameter provided to a given format represents a single log message. The object itself is mutable. `logform` itself exposes several properties  which means community formats could add 
+
+
 
 ## Tests
 
