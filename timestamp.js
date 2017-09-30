@@ -19,7 +19,7 @@ module.exports = format(function (info, opts) {
   }
 
   if (!info.timestamp) {
-    info.timestamp = new Date.toISOString();
+    info.timestamp = new Date().toISOString();
   }
 
   return info;

@@ -1,10 +1,4 @@
-/*
- * config.test.js: Tests for winston.format
- *
- * (C) 2015 Charlie Robbins
- * MIT LICENSE
- *
- */
+'use strict';
 
 const assume = require('assume');
 const colors = require('colors');

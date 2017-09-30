@@ -1,5 +1,8 @@
+'use strict';
+
 const stream = require('stream');
 const fixtures = require('./fixtures');
+const format = require('../format');
 
 /**
  * Returns a new writeable stream with the specified write function.
@@ -27,4 +30,39 @@ exports.assumeFormatted = function (format, info, assertion) {
 
     writeable.write(format.transform(info, format.options));
   };
-}
+};
+
+/*
+ * Set of simple format functions that illustrate
+ * expected, edge, and corner cases.
+ */
+exports.formatFns = {
+  identity(info) {
+    return info;
+  },
+
+  assign(info) {
+    return Object.assign({}, info);
+  },
+
+  ignore(info) {
+    return false;
+  },
+
+  invalid(just, too, many, args) {
+    return just;
+  }
+};
+
+/*
+ * Create a set of actual formats based on the formatFns.
+ * This is very useful in upstream tests.
+ */
+exports.formats = Object.keys(exports.formatFns)
+  .filter(name => !['invalid'].includes(name))
+  .reduce((acc, name) => {
+    const formatFn = exports.formatFns[name];
+    acc[name] = format(formatFn);
+
+    return acc;
+  }, {});
