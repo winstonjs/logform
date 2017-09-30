@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 1.2.0
+**2017/09/30**
+
+- Transition from `info.raw` to `info[Symbol.for('message')]`.
+- Finish `README.md` except for full list of all built-in formats.
+- 100% coverage for everything except for `{ align, cli, padLevels }`.
+
 ### 1.1.0
 **2017/09/29**
 
