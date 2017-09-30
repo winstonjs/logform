@@ -6,7 +6,7 @@ const helpers = require('./helpers');
 const MESSAGE = Symbol.for('message');
 
 describe('json', function () {
-  it('json().transform', helpers.assumeFormatted(
+  it('json() (default) sets info[MESSAGE]', helpers.assumeFormatted(
     json(),
     { level: 'info', message: 'whatever' },
     function (info, expected) {
@@ -21,7 +21,7 @@ describe('json', function () {
     }
   ));
 
-  it('json({ space: 2 }).transform', helpers.assumeFormatted(
+  it('json({ space: 2 }) sets info[MESSAGE]', helpers.assumeFormatted(
     json({ space: 2 }),
     { level: 'info', message: '2 spaces 4 lyfe' },
     function (info, expected) {
@@ -33,7 +33,7 @@ describe('json', function () {
     }
   ));
 
-   it('json({ replacer }).transform', helpers.assumeFormatted(
+   it('json({ replacer }) sets info[MESSAGE]', helpers.assumeFormatted(
     json({
       replacer: function onlyLevelAndMessage(key, value) {
         if (key === 'filtered') { return undefined; }

@@ -8,7 +8,7 @@ const fixtures = require('./fixtures');
 const Colorizer = colorize.Colorizer;
 
 describe('colorize', function () {
-  it('default', helpers.assumeFormatted(
+  it('colorize() (default)', helpers.assumeFormatted(
     colorize(),
     { level: 'info', message: 'whatever' },
     function (info) {
@@ -19,7 +19,7 @@ describe('colorize', function () {
     }
   ));
 
-  it('{ level: true }', helpers.assumeFormatted(
+  it('colorize({ level: true })', helpers.assumeFormatted(
     colorize({ level: true }),
     { level: 'info', message: 'whatever' },
     function (info) {
@@ -30,7 +30,7 @@ describe('colorize', function () {
     }
   ));
 
-  it('{ message: true }', helpers.assumeFormatted(
+  it('colorize{ message: true })', helpers.assumeFormatted(
     colorize({ message: true }),
     { level: 'info', message: 'whatever' },
     function (info) {
@@ -41,7 +41,7 @@ describe('colorize', function () {
     }
   ));
 
-  it('{ level: true, message: true }', helpers.assumeFormatted(
+  it('colorize({ level: true, message: true })', helpers.assumeFormatted(
     colorize({ level: true, message: true }),
     { level: 'info', message: 'whatever' },
     function (info) {
@@ -52,7 +52,7 @@ describe('colorize', function () {
     }
   ));
 
-  it('{ all: true }', helpers.assumeFormatted(
+  it('colorize({ all: true })', helpers.assumeFormatted(
     colorize({ all: true }),
     { level: 'info', message: 'whatever' },
     function (info) {

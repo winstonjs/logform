@@ -40,7 +40,7 @@ function addAndRemoveColors(opts = {}) {
 }
 
 describe('uncolorize', function () {
-  it('default', helpers.assumeFormatted(
+  it('uncolorize() (default) removes all colors', helpers.assumeFormatted(
     addAndRemoveColors(),
     { level: 'info', message: 'whatever' },
     function (info) {
@@ -62,7 +62,7 @@ describe('uncolorize', function () {
     }
   ));
 
-  it('{ level: false }', helpers.assumeFormatted(
+  it('uncolorize({ level: false }) removes color from { message, [MESSAGE] }', helpers.assumeFormatted(
     addAndRemoveColors({ level: false }),
     { level: 'info', message: 'whatever' },
     function (info) {
@@ -75,7 +75,7 @@ describe('uncolorize', function () {
     }
   ));
 
-  it('{ message: false }', helpers.assumeFormatted(
+  it('uncolorize({ message: false }) removes color from { level, [MESSAGE] }', helpers.assumeFormatted(
     addAndRemoveColors({ message: false }),
     { level: 'info', message: 'whatever' },
     function (info) {
@@ -88,7 +88,7 @@ describe('uncolorize', function () {
     }
   ));
 
-  it('{ raw: false }', helpers.assumeFormatted(
+  it('uncolorize({ raw: false }) removes color from { level, message }', helpers.assumeFormatted(
     addAndRemoveColors({ raw: false }),
     { level: 'info', message: 'whatever' },
     function (info) {
@@ -101,7 +101,7 @@ describe('uncolorize', function () {
     }
   ));
 
-  it('{ level: false, message: false }', helpers.assumeFormatted(
+  it('uncolorize({ level: false, message: false }) removes color from [MESSAGE]', helpers.assumeFormatted(
     addAndRemoveColors({ level: false, message: false }),
     { level: 'info', message: 'whatever' },
     function (info) {

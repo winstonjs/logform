@@ -10,7 +10,7 @@ const format = require('./format');
  */
 module.exports = format(function (info, opts) {
   if (opts.message) {
-    info.message = '[' + opts.label + ']' + info.message;
+    info.message = '[' + opts.label + '] ' + info.message;
     return info;
   }
 
