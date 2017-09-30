@@ -9,7 +9,7 @@ const MESSAGE = Symbol.for('message');
 const TIMESTAMP = Symbol.for('timestamp');
 
 describe('logstash', function () {
-  it('default { @message, @fields }', helpers.assumeFormatted(
+  it('default { @message, @fields } sets info[MESSAGE]', helpers.assumeFormatted(
     logstash(),
     { level: 'info', message: 'whatever' },
     function (info, expected) {
@@ -24,7 +24,7 @@ describe('logstash', function () {
     }
   ));
 
-  it('with timestamp { @message, @timestamp, @fields }', helpers.assumeFormatted(
+  it('with timestamp { @message, @timestamp, @fields } sets info[MESSAGE]', helpers.assumeFormatted(
     combine(
       timestamp({ alias: TIMESTAMP }),
       logstash()
