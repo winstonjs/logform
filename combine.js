@@ -3,7 +3,7 @@
 const format = require('./format');
 
 /*
- * function combine (opts)
+ * function combine (info)
  * Returns a new instance of the combine Format which combines the specified
  * formats into a new format. This is similar to a pipe-chain in transform streams.
  * We choose to combine the prototypes this way because there is no back pressure in
@@ -28,7 +28,7 @@ function cascade(formats) {
     return;
   }
 
-  return function cascaded(info, opts) {
+  return function cascaded(info) {
     let obj = info;
     for (var i = 0; i < formats.length; i++) {
       obj = formats[i].transform(obj, formats[i].options);
@@ -53,7 +53,7 @@ function isValidFormat(format) {
       'No tranform function found on format. Did you create a format instance?',
       'const myFormat = format(formatFn);',
       'const instance = myFormat();'
-    ].join('\n'))
+    ].join('\n'));
   }
 
   return true;

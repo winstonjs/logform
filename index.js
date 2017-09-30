@@ -1,6 +1,6 @@
 'use strict';
 
-/**
+/*
  * @api public
  * @property {function} format
  * Both the construction method and set of exposed
@@ -8,14 +8,14 @@
  */
 const format = exports.format = require('./format');
 
-/**
+/*
  * @api public
  * @method {function} levels
  * Registers the specified levels with logform.
  */
-const levels = exports.levels = require('./levels');
+exports.levels = require('./levels');
 
-/**
+/*
  * @api private
  * method {function} exposeFormat
  * Exposes a sub-format on the main format object

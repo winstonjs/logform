@@ -5,7 +5,7 @@ const format = require('./format');
 const MESSAGE = Symbol.for('message');
 
 /*
- * function uncolorize (opts)
+ * function uncolorize (info)
  * Returns a new instance of the uncolorize Format that strips colors
  * from `info` objects. This was previously exposed as { stripColors: true }
  * to transports in `winston < 3.0.0`.

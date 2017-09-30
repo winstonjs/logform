@@ -1,0 +1,6 @@
+{
+  "extends": "populist",
+  "rules": {
+    "strict": 0
+  }
+}

@@ -1,7 +1,17 @@
 'use strict';
 
-const stream = require('stream');
-const util = require('util');
+/*
+ * Displays a helpful message and the source of
+ * the format when it is invalid.
+ */
+class InvalidFormatError extends Error {
+  constructor(formatFn) {
+    super(`Format functions must be synchronous taking a two arguments: (info, opts)
+Found: ${formatFn.toString().split('\n')[0]}\n`);
+
+    Error.captureStackTrace(this, InvalidFormatError);
+  }
+}
 
 /*
  * function format (formatFn)
@@ -17,7 +27,7 @@ module.exports = function (formatFn) {
    * Base prototype which calls a `_format`
    * function and pushes the result.
    */
-  function Format(options) { this.options = options || {}; };
+  function Format(options) { this.options = options || {}; }
   Format.prototype.transform = formatFn;
 
   //
@@ -37,16 +47,3 @@ module.exports = function (formatFn) {
   createFormatWrap.Format = Format;
   return createFormatWrap;
 };
-
-/*
- * Displays a helpful message and the source of
- * the format when it is invalid.
- */
-class InvalidFormatError extends Error {
-  constructor(formatFn) {
-    super(`Format functions must be synchronous taking a two arguments: (info, opts)
-Found: ${formatFn.toString().split('\n')[0]}\n`);
-
-    Error.captureStackTrace(this, InvalidFormatError);
-  }
-}

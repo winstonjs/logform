@@ -4,7 +4,7 @@ const format = require('./format');
 const MESSAGE = Symbol.for('message');
 
 /*
- * function json (opts)
+ * function json (info)
  * Returns a new instance of the JSON format that turns a log `info`
  * object into pure JSON. This was previously exposed as { json: true }
  * to transports in `winston < 3.0.0`.

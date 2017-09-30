@@ -1,7 +1,6 @@
 'use strict';
 
 const colors = require('colors/safe');
-const format = require('./format');
 
 //
 // Fix colors not appearing in non-tty environments
@@ -15,7 +14,7 @@ colors.enabled = true;
 const hasSpace = /\s+/;
 
 /*
- * function colorize (opts)
+ * function colorize (info)
  * Returns a new instance of the colorize Format that applies
  * level colors to `info` objects. This was previously exposed
  * as { colorize: true } to transports in `winston < 3.0.0`.
@@ -32,7 +31,7 @@ module.exports.Colorizer
   = Colorizer;
 
 /*
- * function setupColors(opts)
+ * function setupColors(info)
  * Attaches a Colorizer instance to the format.
  */
 function Colorizer(opts) {
@@ -44,7 +43,7 @@ function Colorizer(opts) {
   this.options = opts;
 }
 
-/**
+/*
  * Adds the colors Object to the set of allColors
  * known by the Colorizer
  *
@@ -61,9 +60,9 @@ Colorizer.addColors = function (colors) {
 
   Colorizer.allColors = Object.assign({}, Colorizer.allColors || {}, nextColors);
   return Colorizer.allColors;
-}
+};
 
-/**
+/*
  * Adds the colors Object to the set of allColors
  * known by the Colorizer
  *

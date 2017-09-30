@@ -3,7 +3,7 @@
 const format = require('./format');
 
 /*
- * function label (opts)
+ * function label (info)
  * Returns a new instance of the label Format which adds the specified
  * `opts.label` before the message. This was previously exposed as
  * { label: 'my label' } to transports in `winston < 3.0.0`.

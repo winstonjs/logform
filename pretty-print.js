@@ -5,7 +5,7 @@ const format = require('./format');
 const MESSAGE = Symbol.for('message');
 
 /*
- * function prettyPrint (opts)
+ * function prettyPrint (info)
  * Returns a new instance of the prettyPrint Format that "prettyPrint"
  * serializes `info` objects. This was previously exposed as
  * { prettyPrint: true } to transports in `winston < 3.0.0`.

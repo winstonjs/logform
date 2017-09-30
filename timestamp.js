@@ -4,7 +4,7 @@ const format = require('./format');
 const formatDate = require('date-fns/format');
 
 /*
- * function timestamp (opts)
+ * function timestamp (info)
  * Returns a new instance of the timestamp Format which adds a timestamp
  * to the info. It was previously available in winston < 3.0.0 as:
  *

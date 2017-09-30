@@ -4,20 +4,20 @@ const format = require('./format');
 const MESSAGE = Symbol.for('message');
 
 /*
- * function logstash (opts)
+ * function logstash (info)
  * Returns a new instance of the LogStash Format that turns a
  * log `info` object into pure JSON with the appropriate logstash
  * options. This was previously exposed as { logstash: true }
  * to transports in `winston < 3.0.0`.
  */
-module.exports = format(function (info, opts) {
+module.exports = format(function (info) {
   const logstash = {};
-  if (!!info.message) {
+  if (info.message) {
     logstash['@message'] = info.message;
     delete info.message;
   }
 
-  if (!!info.timestamp) {
+  if (info.timestamp) {
     logstash['@timestamp'] = info.timestamp;
     delete info.timestamp;
   }
