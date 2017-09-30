@@ -60,8 +60,8 @@ describe('combine', function () {
     it('{ false } when formats yield [false, obj, obj]', function () {
       const firstFalse = combine(
         formats.ignore(),
-        formats.identity(),
-        formats.identity()
+        formats.die(),
+        formats.die()
       );
 
       assume(firstFalse.transform({
@@ -74,7 +74,7 @@ describe('combine', function () {
       const midFalse = combine(
         formats.identity(),
         formats.ignore(),
-        formats.identity()
+        formats.die()
       );
 
       assume(midFalse.transform({
@@ -85,9 +85,9 @@ describe('combine', function () {
 
     it('{ false } when formats yield [obj, obj, false]', function () {
       const lastFalse = combine(
-        formats.ignore(),
         formats.identity(),
-        formats.identity()
+        formats.identity(),
+        formats.ignore()
       );
 
       assume(lastFalse.transform({

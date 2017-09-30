@@ -64,6 +64,8 @@ describe('colorize', function () {
   ));
 });
 
+it('exposes the Format prototype', helpers.assumeHasPrototype(colorize));
+
 describe('Colorizer', function () {
   var expected = Object.assign({},
     fixtures.cli.colors,

@@ -2,6 +2,7 @@
 
 const inspect = require('util').inspect;
 const format = require('./format');
+const MESSAGE = Symbol.for('message');
 
 /*
  * function prettyPrint (opts)
@@ -10,6 +11,6 @@ const format = require('./format');
  * { prettyPrint: true } to transports in `winston < 3.0.0`.
  */
 module.exports = format(function (info, opts) {
-  info.raw = inspect(info, false, opts.depth || null, opts.colorize);
+  info[MESSAGE] = inspect(info, false, opts.depth || null, opts.colorize);
   return info;
 });

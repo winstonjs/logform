@@ -22,5 +22,9 @@ module.exports = format(function (info, opts) {
     info.timestamp = new Date().toISOString();
   }
 
+  if (opts.alias) {
+    info[opts.alias] = info.timestamp;
+  }
+
   return info;
 });

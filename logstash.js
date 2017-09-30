@@ -1,6 +1,7 @@
 'use strict';
 
 const format = require('./format');
+const MESSAGE = Symbol.for('message');
 
 /*
  * function logstash (opts)
@@ -10,7 +11,7 @@ const format = require('./format');
  * to transports in `winston < 3.0.0`.
  */
 module.exports = format(function (info, opts) {
-  var logstash = {};
+  const logstash = {};
   if (!!info.message) {
     logstash['@message'] = info.message;
     delete info.message;
@@ -22,6 +23,6 @@ module.exports = format(function (info, opts) {
   }
 
   logstash['@fields'] = info;
-  info.raw = JSON.stringify(logstash);
+  info[MESSAGE] = JSON.stringify(logstash);
   return info;
 });

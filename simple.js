@@ -1,6 +1,7 @@
 'use strict';
 
 const format = require('./format');
+const MESSAGE = Symbol.for('message');
 
 /*
  * function simple (opts)
@@ -11,7 +12,7 @@ const format = require('./format');
  *    ${level}: ${message} ${JSON.stringify(rest)}
  */
 module.exports = format(function (info, opts) {
-  info.raw = info.level + ': ' + info.message + ' ' + JSON.stringify(
+  info[MESSAGE] = info.level + ': ' + info.message + ' ' + JSON.stringify(
     Object.assign({}, info, { level: undefined, message: undefined })
   );
 

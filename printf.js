@@ -1,5 +1,7 @@
 'use strict';
 
+const MESSAGE = Symbol.for('message');
+
 /*
  * function printf (templateFn)
  * Returns a new instance of the printf Format that creates an
@@ -11,9 +13,11 @@ module.exports = function createPrintf(templateFn) {
   function Printf() {}
   Printf.prototype.template = templateFn;
   Printf.prototype.transform = function (info) {
-    info.raw = this.template(info);
+    info[MESSAGE] = this.template(info);
     return info;
   };
 
-  return new Printf();
+  const format = new Printf();
+  format.Format = Printf;
+  return format;
 };

@@ -1,6 +1,7 @@
 'use strict';
 
 const stream = require('stream');
+const assume = require('assume');
 const fixtures = require('./fixtures');
 const format = require('../format');
 
@@ -23,12 +24,23 @@ exports.writeable = function (write) {
  */
 exports.assumeFormatted = function (format, info, assertion) {
   return function (done) {
-    var writeable = exports.writeable(function (info) {
-      assertion(info);
+    var writeable = exports.writeable(function (actual) {
+      assertion(actual, info);
       done();
     });
 
-    writeable.write(format.transform(info, format.options));
+    writeable.write(format.transform(Object.assign({}, info), format.options));
+  };
+};
+
+/*
+ * Assumes that the Factory prototype is exposed on every
+ * instance of the format, `fmt`, as `fmt.Format`.
+ */
+exports.assumeHasPrototype = function (fmt) {
+  return function assumeFormat() {
+    assume(fmt.Format).is.a('function');
+    assume(fmt.Format.prototype.transform).is.a('function');
   };
 };
 
@@ -51,6 +63,10 @@ exports.formatFns = {
 
   invalid(just, too, many, args) {
     return just;
+  },
+
+  die(info) {
+    throw new Error(`die from ${info.message}`);
   }
 };
 

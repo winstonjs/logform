@@ -27,7 +27,9 @@ module.exports = function createColorize(opts) {
 //
 // Attach the Colorizer for registration purposes
 //
-module.exports.Colorizer = Colorizer;
+module.exports.Colorizer
+  = module.exports.Format
+  = Colorizer;
 
 /*
  * function setupColors(opts)

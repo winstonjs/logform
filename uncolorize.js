@@ -2,6 +2,7 @@
 
 const colors = require('colors/safe');
 const format = require('./format');
+const MESSAGE = Symbol.for('message');
 
 /*
  * function uncolorize (opts)
@@ -10,11 +11,16 @@ const format = require('./format');
  * to transports in `winston < 3.0.0`.
  */
 module.exports = format(function (info, opts) {
-  info.level = colors.strip(info.level);
-  info.message = colors.strip(info.message);
+  if (opts.level !== false) {
+    info.level = colors.strip(info.level);
+  }
 
-  if (info.raw) {
-    info.raw = colors.strip(info.raw);
+  if (opts.message !== false) {
+    info.message = colors.strip(info.message);
+  }
+
+  if (opts.raw !== false && info[MESSAGE]) {
+    info[MESSAGE] = colors.strip(info[MESSAGE]);
   }
 
   return info;

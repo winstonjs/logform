@@ -1,6 +1,7 @@
 'use strict';
 
 const format = require('./format');
+const MESSAGE = Symbol.for('message');
 
 /*
  * function json (opts)
@@ -9,11 +10,7 @@ const format = require('./format');
  * to transports in `winston < 3.0.0`.
  */
 module.exports = format(function (info, opts) {
-  //
-  // TODO: Are we causing unexpected side effects by not deep
-  // cloning the info object here?
-  //
-  info.raw = JSON.stringify(info, opts.replacer || replacer, opts.space);
+  info[MESSAGE] = JSON.stringify(info, opts.replacer || replacer, opts.space);
   return info;
 });
 
