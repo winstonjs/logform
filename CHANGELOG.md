@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 1.2.1
+**2017/10/01**
+
+- [#3] Strip `info.splat` in `format.simple` to avoid double inclusion.
+
 ### 1.2.0
 **2017/09/30**
 
