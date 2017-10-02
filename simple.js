@@ -14,7 +14,11 @@ const MESSAGE = Symbol.for('message');
  */
 module.exports = format(function (info) {
   info[MESSAGE] = info.level + ': ' + info.message + ' ' + JSON.stringify(
-    Object.assign({}, info, { level: undefined, message: undefined })
+    Object.assign({}, info, {
+      level: undefined,
+      message: undefined,
+      splat: undefined
+    })
   );
 
   return info;
