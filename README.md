@@ -9,7 +9,7 @@ const alignedWithColorsAndTime = format.combine(
   format.colorize(),
   format.timestamp(),
   format.align(),
-  format.printf(info => `${info.timestamp} ${info.level}: ${message}`)
+  format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
 );
 ```
 
