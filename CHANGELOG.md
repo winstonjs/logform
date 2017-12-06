@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 1.2.2
+**2017/12/05**
+
+- [#4], [#11] Fix timestamp and replace `date-fns` with `fecha` (with test cases) [`@ChrisAlderson`].
+
 ### 1.2.1
 **2017/10/01**
 
