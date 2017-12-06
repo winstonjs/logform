@@ -15,7 +15,7 @@ module.exports = format(function (info, opts) {
   if (opts.format) {
     info.timestamp = typeof opts.format === 'function'
       ? opts.format()
-      : formatDate(opts.format);
+      : formatDate(new Date(), opts.format);
   }
 
   if (!info.timestamp) {
