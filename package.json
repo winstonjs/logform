@@ -26,7 +26,7 @@
   "homepage": "https://github.com/winstonjs/logform#readme",
   "dependencies": {
     "colors": "^1.1.2",
-    "date-fns": "^1.28.5"
+    "fecha": "^2.3.2"
   },
   "devDependencies": {
     "assume": "^1.5.1",
