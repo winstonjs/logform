@@ -1,10 +1,11 @@
+/* eslint max-nested-callbacks: 0 */
 'use strict';
 
 const assume = require('assume');
 const combine = require('../combine');
 const label = require('../label');
 const timestamp = require('../timestamp');
-const { assumeFormatted, formats } = require('./helpers');
+const { formats } = require('./helpers');
 
 describe('combine', function () {
   describe('combine(...formats)', function () {
@@ -33,7 +34,7 @@ describe('combine', function () {
         combine(
           function lolwut() {},
           function notaformat() {}
-        )
+        );
       }).throws();
     });
   });

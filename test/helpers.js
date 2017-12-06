@@ -2,10 +2,9 @@
 
 const stream = require('stream');
 const assume = require('assume');
-const fixtures = require('./fixtures');
 const format = require('../format');
 
-/**
+/*
  * Returns a new writeable stream with the specified write function.
  * @param {function} write Write function for the specified stream
  * @returns {stream.Writeable} A writeable stream instance
@@ -17,7 +16,7 @@ exports.writeable = function (write) {
   });
 };
 
-/**
+/*
  * Simple test helper which creates an instance
  * of the `colorize` format and asserts that the
  * correct `info` object was processed.
@@ -57,10 +56,12 @@ exports.formatFns = {
     return Object.assign({}, info);
   },
 
+  // eslint-disable-next-line no-unused-vars
   ignore(info) {
     return false;
   },
 
+  // eslint-disable-next-line no-unused-vars
   invalid(just, too, many, args) {
     return just;
   },

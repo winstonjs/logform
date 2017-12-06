@@ -4,8 +4,8 @@
   "description": "An mutable object-based log format designed for chaining & objectMode streams.",
   "main": "index.js",
   "scripts": {
-    "lint": "populist *.js",
-    "pretest": "populist *.js test/*.js examples/*.js",
+    "lint": "populist *.js test/*.js examples/*.js",
+    "pretest": "npm run lint",
     "test": "nyc mocha test/*.test.js"
   },
   "repository": {

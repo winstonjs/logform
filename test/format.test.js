@@ -2,7 +2,7 @@
 
 const assume = require('assume');
 const logform = require('../index');
-const { assumeFormatted, formatFns } = require('./helpers');
+const { formatFns } = require('./helpers');
 const { format } = logform;
 
 describe('format', function () {
@@ -38,14 +38,14 @@ describe('format', function () {
 
     it('throws if provided a function of invalid length', function () {
       assume(function () {
-        format(formatFns.invalid)
+        format(formatFns.invalid);
       }).throws(/Format functions must be synchronous taking a two arguments/);
     });
 
     it('throws an error including the bad function signature', function () {
       const fnsig = formatFns.invalid.toString().split('\n')[0];
       try {
-        format(formatFns.invalid)
+        format(formatFns.invalid);
       } catch (ex) {
         assume(ex.message).includes(fnsig);
       }

@@ -86,6 +86,7 @@ describe('Colorizer', function () {
     assume(Colorizer.allColors.multiple).deep.equals(['red', 'bold']);
   });
 
+  // eslint-disable-next-line no-useless-escape
   it('Colorizer.addColors({ string: "(\w+)/s(\w+)" })', function () {
     Colorizer.addColors({ delimited: 'blue underline' });
     assume(Colorizer.allColors.delimited).deep.equals(['blue', 'underline']);

@@ -1,3 +1,4 @@
+/* eslint no-unused-vars: 0 */
 'use strict';
 
 const assume = require('assume');
@@ -21,7 +22,7 @@ const rememberColors = format(info => {
     [MESSAGE]: info[MESSAGE],
     level: info.level,
     message: info.message
-  }
+  };
 
   return info;
 });

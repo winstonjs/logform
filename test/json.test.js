@@ -1,3 +1,4 @@
+/* eslint no-unused-vars: 0 */
 'use strict';
 
 const assume = require('assume');
@@ -33,7 +34,7 @@ describe('json', function () {
     }
   ));
 
-   it('json({ replacer }) sets info[MESSAGE]', helpers.assumeFormatted(
+  it('json({ replacer }) sets info[MESSAGE]', helpers.assumeFormatted(
     json({
       replacer: function onlyLevelAndMessage(key, value) {
         if (key === 'filtered') { return undefined; }

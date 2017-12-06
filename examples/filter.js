@@ -1,3 +1,5 @@
+/* eslint no-unused-vars: 0 */
+
 const { format } = require('../');
 const { combine, timestamp, label } = format;
 
@@ -18,11 +20,11 @@ console.dir(ignorePrivate.transform({
 }));
 
 const willNeverThrow = format.combine(
-  format(info => { return false })(), // Ignores everything
-  format(info => { throw new Error('Never reached') })()
+  format(info => { return false; })(), // Ignores everything
+  format(info => { throw new Error('Never reached'); })()
 );
 
 console.dir(willNeverThrow.transform({
   level: 'info',
   message: 'wow such testing'
-}))
+}));
