@@ -1,7 +1,7 @@
 'use strict';
 
+const fecha = require('fecha');
 const format = require('./format');
-const formatDate = require('date-fns/format');
 
 /*
  * function timestamp (info)
@@ -15,7 +15,7 @@ module.exports = format(function (info, opts) {
   if (opts.format) {
     info.timestamp = typeof opts.format === 'function'
       ? opts.format()
-      : formatDate(new Date(), opts.format);
+      : fecha.format(new Date(), opts.format);
   }
 
   if (!info.timestamp) {
