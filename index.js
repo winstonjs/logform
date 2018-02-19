@@ -38,6 +38,7 @@ exposeFormat('colorize');
 exposeFormat('json');
 exposeFormat('label');
 exposeFormat('logstash');
+exposeFormat('metadata');
 exposeFormat('padLevels', 'pad-levels');
 exposeFormat('prettyPrint', 'pretty-print');
 exposeFormat('printf');
