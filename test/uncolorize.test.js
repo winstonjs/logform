@@ -57,7 +57,7 @@ describe('uncolorize', function () {
       assume(info.message).equals(colors.strip(colored.message));
       assume(info.message).not.equals(colored.message);
 
-      assume(info[MESSAGE]).equals('info: whatever {}');
+      assume(info[MESSAGE]).equals('info: whatever');
       assume(info[MESSAGE]).equals(colors.strip(colored[MESSAGE]));
       assume(info[MESSAGE]).not.equals(colored[MESSAGE]);
     }
@@ -72,7 +72,7 @@ describe('uncolorize', function () {
 
       assume(info.level).equals(colors.green('info'));
       assume(info.message).equals('whatever');
-      assume(info[MESSAGE]).equals('info: whatever {}');
+      assume(info[MESSAGE]).equals('info: whatever');
     }
   ));
 
@@ -85,7 +85,7 @@ describe('uncolorize', function () {
 
       assume(info.level).equals('info');
       assume(info.message).equals(colors.green('whatever'));
-      assume(info[MESSAGE]).equals('info: whatever {}');
+      assume(info[MESSAGE]).equals('info: whatever');
     }
   ));
 
@@ -111,7 +111,7 @@ describe('uncolorize', function () {
 
       assume(info.level).equals(colors.green('info'));
       assume(info.message).equals(colors.green('whatever'));
-      assume(info[MESSAGE]).equals('info: whatever {}');
+      assume(info[MESSAGE]).equals('info: whatever');
     }
   ));
 });

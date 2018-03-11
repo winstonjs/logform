@@ -16,7 +16,7 @@ describe('simple', function () {
       assume(info.level).equals('info');
       assume(info.message).equals('whatever');
 
-      assume(info[MESSAGE]).equals('info: whatever {}');
+      assume(info[MESSAGE]).equals('info: whatever');
     }
   ));
 
@@ -31,7 +31,22 @@ describe('simple', function () {
       assume(info.message).equals('whatever');
       assume(info.splat).deep.equals([1, 2, 3]);
 
-      assume(info[MESSAGE]).equals('info: whatever {}');
+      assume(info[MESSAGE]).equals('info: whatever');
+    }
+  ));
+
+  it('simple() shows { rest }', helpers.assumeFormatted(
+    simple(),
+    { level: 'info', message: 'whatever', rest: 'something' },
+    function (info, expected) {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.rest).is.an('string');
+      assume(info.level).equals('info');
+      assume(info.message).equals('whatever');
+      assume(info.rest).equals('something');
+
+      assume(info[MESSAGE]).equals('info: whatever {"rest":"something"}');
     }
   ));
 });
