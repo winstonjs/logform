@@ -50,7 +50,7 @@ function cascade(formats) {
 function isValidFormat(format) {
   if (typeof format.transform !== 'function') {
     throw new Error([
-      'No tranform function found on format. Did you create a format instance?',
+      'No transform function found on format. Did you create a format instance?',
       'const myFormat = format(formatFn);',
       'const instance = myFormat();'
     ].join('\n'));
