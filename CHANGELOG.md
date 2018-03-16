@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### 1.3.0
+**2018/03/16**
+
+- [#18] Expose browser.js for rollup and the like. Fixes [#5].
+- [#13] @dabh Use new version of colors.
+- [#15] @dabh Add Typescript typings (ported from DefinitelyTyped).
+- [#17], [#16] Fix error messages other typos.
+
 ### 1.2.2
 **2017/12/05**
 
