@@ -3,6 +3,7 @@
   "version": "1.2.2",
   "description": "An mutable object-based log format designed for chaining & objectMode streams.",
   "main": "index.js",
+  "browser": "browser.js",
   "scripts": {
     "lint": "populist *.js test/*.js examples/*.js",
     "pretest": "npm run lint",
