@@ -5,9 +5,8 @@ const MESSAGE = Symbol.for('message');
 /*
  * function printf (templateFn)
  * Returns a new instance of the printf Format that creates an
- * intermediate prototype to store the
- * level colors to `info` objects. This was previously exposed
- * as { colorize: true } to transports in `winston < 3.0.0`.
+ * intermediate prototype to store the template string-based formatter
+ * function.
  */
 module.exports = function createPrintf(templateFn) {
   function Printf() {}
