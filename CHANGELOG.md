@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 1.4.0
+**2018/03/23**
+
+- [#14] @iamkirkbater Added Initial Metadata Support. 
+- Correct JSDoc for printf.js. Fixes #10.
+
 ### 1.3.0
 **2018/03/16**
 
