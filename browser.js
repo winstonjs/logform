@@ -26,6 +26,7 @@ Object.defineProperty(format, 'colorize',    { value: require('./colorize') });
 Object.defineProperty(format, 'json',        { value: require('./json') });
 Object.defineProperty(format, 'label',       { value: require('./label') });
 Object.defineProperty(format, 'logstash',    { value: require('./logstash') });
+Object.defineProperty(format, 'metadata',    { value: require('./metadata') });
 Object.defineProperty(format, 'padLevels',   { value: require('./pad-levels') });
 Object.defineProperty(format, 'prettyPrint', { value: require('./pretty-print') });
 Object.defineProperty(format, 'printf',      { value: require('./printf') });

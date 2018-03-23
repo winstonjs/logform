@@ -15,6 +15,7 @@ const expectedFormats = [
   'json',
   'label',
   'logstash',
+  'metadata',
   'padLevels',
   'prettyPrint',
   'printf',

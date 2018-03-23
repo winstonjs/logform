@@ -41,7 +41,7 @@ describe('metadata', () => {
   it('metadata({ fillExcept: [keys] }) fills all but the specified keys in the metadata object', helpers.assumeFormatted(
     metadata({ fillExcept: ['message', 'someObject'] }),
     testInfoObject,
-    function(info, expected) {
+    function (info, expected) {
       assume(info.message).equals('whatever');
       assume(info.someObject).is.a('object');
       assume(info.someObject.key).equals('value');
