@@ -10,9 +10,9 @@ const format = require('./format');
  * an in-memory transform chain.
  */
 module.exports = function combined(...formats) {
-  const combined = format(cascade(formats));
-  const instance = combined();
-  instance.Format = combined.Format;
+  const createCombined = format(cascade(formats));
+  const instance = createCombined();
+  instance.Format = createCombined.Format;
   return instance;
 };
 
