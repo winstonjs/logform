@@ -10,6 +10,7 @@ const MESSAGE = Symbol.for('message');
  * to transports in `winston < 3.0.0`.
  */
 module.exports = format(function (info, opts) {
+  console.log(Buffer.isBuffer(info.message));
   info[MESSAGE] = JSON.stringify(info, opts.replacer || replacer, opts.space);
   return info;
 });
@@ -19,7 +20,9 @@ module.exports = format(function (info, opts) {
  * Handles proper stringification of Buffer output.
  */
 function replacer(key, value) {
-  return value instanceof Buffer
+  console.log(key || 'wut', value instanceof Buffer, Buffer.isBuffer(value), value);
+
+  return Buffer.isBuffer(value)
     ? value.toString('base64')
     : value;
 }

@@ -22,6 +22,17 @@ describe('json', function () {
     }
   ));
 
+  it.only('json() (default) properly serializes a Buffer', helpers.assumeFormatted(
+    json(),
+    { level: 'info', message: Buffer.from('Please do not log buffers') },
+    function (info, expected) {
+      //console.dir(info);
+
+      console.log(Buffer.isBuffer(expected.message));
+    }
+  ));
+
+
   it('json({ space: 2 }) sets info[MESSAGE]', helpers.assumeFormatted(
     json({ space: 2 }),
     { level: 'info', message: '2 spaces 4 lyfe' },
