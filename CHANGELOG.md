@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 1.4.2
+**2018/04/19**
+
+- [#22], (@Jasu) Fix compilation on Babel 6.
+
 ### 1.4.1
 **2018/04/06**
 
