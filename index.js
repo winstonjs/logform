@@ -40,6 +40,7 @@ exposeFormat('json');
 exposeFormat('label');
 exposeFormat('logstash');
 exposeFormat('metadata');
+exposeFormat('ms');
 exposeFormat('padLevels', 'pad-levels');
 exposeFormat('prettyPrint', 'pretty-print');
 exposeFormat('printf');
