@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 1.5.0
+**2018/04/22**
+
+- [#23], (@ChrisAlderson) Add ms format to support '+N ms' format. Fixes #20.
+- [#24], (@aneilbaboo) Fix `webpack` warnings.
+- Add `.travis.yml`.
+
 ### 1.4.2
 **2018/04/19**
 
