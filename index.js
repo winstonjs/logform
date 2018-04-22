@@ -24,7 +24,7 @@ exports.levels = require('./levels');
 function exposeFormat(name, path) {
   path = path || name;
   Object.defineProperty(format, name, {
-    get: function () { return require('./' + path); },
+    get: function () { return require('./' + path + '.js'); },
     configurable: true
   });
 }
