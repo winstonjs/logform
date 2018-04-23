@@ -21,10 +21,11 @@ module.exports = format(function (info) {
     splat: undefined
   }));
 
+  info.padding = info.padding || '';
   if (stringifiedRest !== '{}') {
-    info[MESSAGE] = `${info.level}: ${info.message} ${stringifiedRest}`;
+    info[MESSAGE] = `${info.level}:${info.padding} ${info.message} ${stringifiedRest}`;
   } else {
-    info[MESSAGE] = `${info.level}: ${info.message}`;
+    info[MESSAGE] = `${info.level}:${info.padding} ${info.message}`;
   }
 
   return info;
