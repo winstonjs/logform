@@ -8,6 +8,7 @@ const format = require('./format');
  * Returns a new instance of the padLevels Format which pads
  * levels to be the same length. This was previously exposed as
  * { padLevels: true } to transports in `winston < 3.0.0`.
+ * TODO: Make `opts.levels` default to `winston.config.npm`.
  */
 module.exports = format(function (info, { levels, filler = ' ' }) {
   const lvls = Object.keys(levels).map(level => level.length);
