@@ -1,7 +1,47 @@
 /* eslint no-unused-vars: 0 */
 'use strict';
 
-const format = require('./format');
+class Padder {
+  constructor(opts = {}) {
+    if (opts.levels) {
+      this.addPadding(opts.levels, opts.filler);
+    }
+
+    this.options = opts;
+  }
+
+  static getLongestLevel(levels) {
+    const lvls = Object.keys(levels).map(level => level.length);
+    return Math.max(...lvls);
+  }
+
+  static calcPadding(level, filler) {
+    const targetLen = Padder.longestLevel + 1 - level.length;
+    const rep = Math.floor(targetLen / filler.length);
+    const padStr = `${filler}${filler.repeat(rep)}`;
+
+    return padStr.slice(0, targetLen);
+  }
+
+  static addPadding(levels, filler = ' ') {
+    Padder.longestLevel = Padder.getLongestLevel(levels);
+    Padder.allPadding = Object.keys(levels).reduce((acc, level) => {
+      acc[level] = Padder.calcPadding(level, filler);
+      return acc;
+    }, {});
+
+    return Padder.allPadding;
+  }
+
+  addPadding(levels, filler) {
+    return Padder.addPadding(levels, filler);
+  }
+
+  transform(info, opts) {
+    info.padding = this.addPadding(opts.levels, opts.filler);
+    return info;
+  }
+}
 
 /*
  * function padLevels (info)
@@ -10,14 +50,10 @@ const format = require('./format');
  * { padLevels: true } to transports in `winston < 3.0.0`.
  * TODO: Make `opts.levels` default to `winston.config.npm`.
  */
-module.exports = format(function (info, { levels, filler = ' ' }) {
-  const lvls = Object.keys(levels).map(level => level.length);
-  const longest = Math.max(...lvls);
-  const targetLength = Math.floor(longest + 1) - info.level.length;
-  let padStr = String(filler);
-  padStr += padStr.repeat(targetLength / padStr.length);
+module.exports = function (opts) {
+  return new Padder(opts);
+};
 
-  info.padding = padStr.slice(0, targetLength);
-
-  return info;
-});
+module.exports.Padder
+  = module.exports.Format
+  = Padder;
