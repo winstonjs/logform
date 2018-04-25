@@ -2,7 +2,7 @@
 
 const colors = require('colors/safe');
 const format = require('./format');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 
 /*
  * function uncolorize (info)

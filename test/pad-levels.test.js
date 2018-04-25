@@ -4,7 +4,7 @@
 const assume = require('assume');
 const helpers = require('./helpers');
 const padLevels = require('../pad-levels');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 const fixtures = require('./fixtures');
 const Padder = padLevels.Padder;
 

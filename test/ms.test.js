@@ -4,7 +4,7 @@
 const assume = require('assume');
 const helpers = require('./helpers');
 const ms = require('../ms');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 
 describe('ms', function () {
   it('ms() set the ms to info.ms', helpers.assumeFormatted(

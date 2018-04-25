@@ -10,7 +10,7 @@ const simple = require('../simple');
 const uncolorize = require('../uncolorize');
 const helpers = require('./helpers');
 const fixtures = require('./fixtures');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 const COLORED = Symbol.for('colored');
 
 //

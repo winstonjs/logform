@@ -4,7 +4,7 @@
 const assume = require('assume');
 const timestamp = require('../timestamp');
 const helpers = require('./helpers');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 
 describe('timestamp', function () {
   it('timestamp() (default) sets info[timestamp]', helpers.assumeFormatted(

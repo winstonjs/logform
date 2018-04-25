@@ -5,7 +5,7 @@ const assume = require('assume');
 const combine = require('../combine');
 const splat = require('../splat');
 const helpers = require('./helpers');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 
 /*
  * Helper function for asserting that an info object

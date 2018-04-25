@@ -1,6 +1,6 @@
 'use strict';
 
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 
 /*
  * function printf (templateFn)
