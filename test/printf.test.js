@@ -4,7 +4,7 @@
 const assume = require('assume');
 const printf = require('../printf');
 const helpers = require('./helpers');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 
 describe('printf', function () {
   it('printf(info => `${template}`) sets info[MESSAGE]', helpers.assumeFormatted(

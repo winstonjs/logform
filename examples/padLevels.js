@@ -1,7 +1,7 @@
 const { format } = require('../');
 const { combine, padLevels, simple } = format;
 
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 
 const paddedFormat = combine(
   padLevels({

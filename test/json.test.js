@@ -4,7 +4,7 @@
 const assume = require('assume');
 const json = require('../json');
 const helpers = require('./helpers');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 
 describe('json', function () {
   it('json() (default) sets info[MESSAGE]', helpers.assumeFormatted(

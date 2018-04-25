@@ -5,7 +5,7 @@ const combine = require('../combine');
 const logstash = require('../logstash');
 const timestamp = require('../timestamp');
 const helpers = require('./helpers');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 const TIMESTAMP = Symbol.for('timestamp');
 
 describe('logstash', function () {
