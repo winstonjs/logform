@@ -2,8 +2,8 @@
 
 const stream = require('stream');
 const assume = require('assume');
-const format = require('../format');
-const levels = require('../levels');
+const format = require('../lib/format');
+const levels = require('../lib/levels');
 const { configs } = require('triple-beam');
 
 exports.setupLevels = function () {

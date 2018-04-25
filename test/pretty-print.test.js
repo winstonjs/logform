@@ -2,7 +2,7 @@
 
 const util = require('util');
 const assume = require('assume');
-const prettyPrint = require('../pretty-print');
+const prettyPrint = require('../lib/pretty-print');
 const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 

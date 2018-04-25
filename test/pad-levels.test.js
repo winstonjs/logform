@@ -3,7 +3,7 @@
 
 const assume = require('assume');
 const helpers = require('./helpers');
-const padLevels = require('../pad-levels');
+const padLevels = require('../lib/pad-levels');
 const { configs, MESSAGE } = require('triple-beam');
 const Padder = padLevels.Padder;
 

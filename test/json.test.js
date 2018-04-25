@@ -2,7 +2,7 @@
 'use strict';
 
 const assume = require('assume');
-const json = require('../json');
+const json = require('../lib/json');
 const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 

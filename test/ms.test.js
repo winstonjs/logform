@@ -3,7 +3,7 @@
 
 const assume = require('assume');
 const helpers = require('./helpers');
-const ms = require('../ms');
+const ms = require('../lib/ms');
 const { MESSAGE } = require('triple-beam');
 
 describe('ms', function () {

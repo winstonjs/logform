@@ -2,8 +2,8 @@
 'use strict';
 
 const assume = require('assume');
-const combine = require('../combine');
-const splat = require('../splat');
+const combine = require('../lib/combine');
+const splat = require('../lib/splat');
 const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 

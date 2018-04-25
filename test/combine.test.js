@@ -2,9 +2,9 @@
 'use strict';
 
 const assume = require('assume');
-const combine = require('../combine');
-const label = require('../label');
-const timestamp = require('../timestamp');
+const combine = require('../lib/combine');
+const label = require('../lib/label');
+const timestamp = require('../lib/timestamp');
 const { formats } = require('./helpers');
 
 describe('combine', function () {

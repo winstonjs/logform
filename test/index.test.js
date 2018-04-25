@@ -4,7 +4,7 @@
 const assume = require('assume');
 const logform = {
   node: require('../index'),
-  browser: require('../browser')
+  browser: require('../lib/browser')
 };
 
 const expectedFormats = [

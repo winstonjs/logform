@@ -2,7 +2,7 @@
 'use strict';
 
 const assume = require('assume');
-const label = require('../label');
+const label = require('../lib/label');
 const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 

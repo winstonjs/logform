@@ -2,7 +2,7 @@
 'use strict';
 
 const assume = require('assume');
-const timestamp = require('../timestamp');
+const timestamp = require('../lib/timestamp');
 const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 

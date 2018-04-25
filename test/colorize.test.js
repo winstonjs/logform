@@ -2,7 +2,7 @@
 
 const assume = require('assume');
 const colors = require('colors');
-const colorize = require('../colorize');
+const colorize = require('../lib/colorize');
 const helpers = require('./helpers');
 const { configs } = require('triple-beam');
 const Colorizer = colorize.Colorizer;
