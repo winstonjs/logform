@@ -9,6 +9,20 @@ const Padder = padLevels.Padder;
 
 describe('padLevels', function () {
   it('padLevels({ levels }) set the padding to info.padding', helpers.assumeFormatted(
+    padLevels(),
+    { level: 'info', message: 'pad all the things' },
+    function (info, expected) {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.padding).is.an('object');
+      assume(info.level).equals('info');
+      assume(info.padding[info.level]).equals('    ');
+      assume(info.message).equals('pad all the things');
+      assume(info[MESSAGE]).equals(undefined);
+    }
+  ));
+
+  it('padLevels({ levels }) set the padding to info.padding', helpers.assumeFormatted(
     padLevels({ levels: configs.npm.levels }),
     { level: 'info', message: 'pad all the things' },
     function (info, expected) {
