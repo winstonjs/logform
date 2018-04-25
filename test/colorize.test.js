@@ -4,10 +4,12 @@ const assume = require('assume');
 const colors = require('colors');
 const colorize = require('../colorize');
 const helpers = require('./helpers');
-const fixtures = require('./fixtures');
+const { configs } = require('triple-beam');
 const Colorizer = colorize.Colorizer;
 
 describe('colorize', function () {
+  before(helpers.setupLevels);
+
   it('colorize() (default)', helpers.assumeFormatted(
     colorize(),
     { level: 'info', message: 'whatever' },
@@ -68,9 +70,11 @@ it('exposes the Format prototype', helpers.assumeHasPrototype(colorize));
 
 describe('Colorizer', function () {
   var expected = Object.assign({},
-    fixtures.cli.colors,
-    fixtures.npm.colors,
-    fixtures.syslog.colors);
+    configs.cli.colors,
+    configs.npm.colors,
+    configs.syslog.colors);
+
+  before(helpers.setupLevels);
 
   it('Colorizer.addColors({ string: string })', function () {
     Colorizer.addColors({ weird: 'cyan' });

@@ -4,13 +4,12 @@
 const assume = require('assume');
 const helpers = require('./helpers');
 const padLevels = require('../pad-levels');
-const { MESSAGE } = require('triple-beam');
-const fixtures = require('./fixtures');
+const { configs, MESSAGE } = require('triple-beam');
 const Padder = padLevels.Padder;
 
 describe('padLevels', function () {
   it('padLevels({ levels }) set the padding to info.padding', helpers.assumeFormatted(
-    padLevels({ levels: fixtures.npm.levels }),
+    padLevels({ levels: configs.npm.levels }),
     { level: 'info', message: 'pad all the things' },
     function (info, expected) {
       assume(info.level).is.a('string');
@@ -24,7 +23,7 @@ describe('padLevels', function () {
   ));
 
   it('padLevels({ levels, filler }) set the padding to info.padding with a custom filler', helpers.assumeFormatted(
-    padLevels({ levels: fixtures.npm.levels, filler: 'foo' }),
+    padLevels({ levels: configs.npm.levels, filler: 'foo' }),
     { level: 'info', message: 'pad all the things' },
     function (info, expected) {
       assume(info.level).is.a('string');
@@ -42,16 +41,16 @@ it('exposes the Format prototype', helpers.assumeHasPrototype(padLevels));
 
 describe('Colorizer', function () {
   const expected = Object.keys(Object.assign({},
-    fixtures.cli.levels,
-    fixtures.npm.levels,
-    fixtures.syslog.levels
+    configs.cli.levels,
+    configs.npm.levels,
+    configs.syslog.levels
   ));
 
   it('Padder.addColors({ string: number })', function () {
     Padder.addPadding(Object.assign({},
-      fixtures.cli.levels,
-      fixtures.npm.levels,
-      fixtures.syslog.levels
+      configs.cli.levels,
+      configs.npm.levels,
+      configs.syslog.levels
     ));
 
     const keys = Object.keys(Padder.allPadding);
@@ -64,9 +63,9 @@ describe('Colorizer', function () {
 
   it('Padder.addColors({ string: number }, string)', function () {
     Padder.addPadding(Object.assign({},
-      fixtures.cli.levels,
-      fixtures.npm.levels,
-      fixtures.syslog.levels
+      configs.cli.levels,
+      configs.npm.levels,
+      configs.syslog.levels
     ), 'foo');
 
     const keys = Object.keys(Padder.allPadding);
@@ -81,7 +80,7 @@ describe('Colorizer', function () {
     const instance = new Padder();
 
     it('padd(levels) [all levels]', function () {
-      assume(instance.addPadding(fixtures.npm.levels)).deep.equals({
+      assume(instance.addPadding(configs.npm.levels)).deep.equals({
         error: '   ',
         warn: '    ',
         info: '    ',
@@ -93,7 +92,7 @@ describe('Colorizer', function () {
     });
 
     it('padder(levels, filler) [all levels]', function () {
-      assume(instance.addPadding(fixtures.npm.levels, 'foo')).deep.equals({
+      assume(instance.addPadding(configs.npm.levels, 'foo')).deep.equals({
         error: 'foo',
         warn: 'foof',
         info: 'foof',
