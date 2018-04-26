@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 1.6.0
+**2018/04/25**
+
+- [#25] Implement padLevels format.
+- [#26] Update `dependencies` and add `node@10` to the travis build of the project.
+- [#27] Refactor logform to use triple-beam.
+
 ### 1.5.0
 **2018/04/22**
 
