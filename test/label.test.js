@@ -2,9 +2,9 @@
 'use strict';
 
 const assume = require('assume');
-const label = require('../label');
+const label = require('../lib/label');
 const helpers = require('./helpers');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 
 describe('label', function () {
   it('label({ label }) set the label to info.label', helpers.assumeFormatted(

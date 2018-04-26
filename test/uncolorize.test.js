@@ -3,14 +3,13 @@
 
 const assume = require('assume');
 const colors = require('colors');
-const colorize = require('../colorize');
-const combine = require('../combine');
-const format = require('../format');
-const simple = require('../simple');
-const uncolorize = require('../uncolorize');
+const colorize = require('../lib/colorize');
+const combine = require('../lib/combine');
+const format = require('../lib/format');
+const simple = require('../lib/simple');
+const uncolorize = require('../lib/uncolorize');
 const helpers = require('./helpers');
-const fixtures = require('./fixtures');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 const COLORED = Symbol.for('colored');
 
 //

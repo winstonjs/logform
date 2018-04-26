@@ -6,14 +6,14 @@
  * Both the construction method and set of exposed
  * formats.
  */
-const format = exports.format = require('./format');
+const format = exports.format = require('./lib/format');
 
 /*
  * @api public
  * @method {function} levels
  * Registers the specified levels with logform.
  */
-exports.levels = require('./levels');
+exports.levels = require('./lib/levels');
 
 /*
  * @api private
@@ -24,7 +24,7 @@ exports.levels = require('./levels');
 function exposeFormat(name, path) {
   path = path || name;
   Object.defineProperty(format, name, {
-    get: function () { return require('./' + path + '.js'); },
+    get: function () { return require('./lib/' + path + '.js'); },
     configurable: true
   });
 }

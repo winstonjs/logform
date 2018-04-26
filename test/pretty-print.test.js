@@ -2,9 +2,9 @@
 
 const util = require('util');
 const assume = require('assume');
-const prettyPrint = require('../pretty-print');
+const prettyPrint = require('../lib/pretty-print');
 const helpers = require('./helpers');
-const MESSAGE = Symbol.for('message');
+const { MESSAGE } = require('triple-beam');
 
 describe('prettyPrint', function () {
   it('prettyPrint() (default) sets info[MESSAGE]', helpers.assumeFormatted(

@@ -2,7 +2,15 @@
 
 const stream = require('stream');
 const assume = require('assume');
-const format = require('../format');
+const format = require('../lib/format');
+const levels = require('../lib/levels');
+const { configs } = require('triple-beam');
+
+exports.setupLevels = function () {
+  levels(configs.cli);
+  levels(configs.npm);
+  levels(configs.syslog);
+};
 
 /*
  * Returns a new writeable stream with the specified write function.
