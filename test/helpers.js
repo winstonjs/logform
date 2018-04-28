@@ -6,7 +6,7 @@ const format = require('../format');
 const levels = require('../levels');
 const { configs } = require('triple-beam');
 
-exports.setupLevels = function () {
+exports.setupLevels = () => {
   levels(configs.cli);
   levels(configs.npm);
   levels(configs.syslog);
@@ -17,26 +17,26 @@ exports.setupLevels = function () {
  * @param {function} write Write function for the specified stream
  * @returns {stream.Writeable} A writeable stream instance
  */
-exports.writeable = function (write) {
-  return new stream.Writable({
-    objectMode: true,
-    write: write
-  });
-};
+exports.writeable = write => (
+  new stream.Writable({
+    write,
+    objectMode: true
+  })
+);
 
 /*
  * Simple test helper which creates an instance
  * of the `colorize` format and asserts that the
  * correct `info` object was processed.
  */
-exports.assumeFormatted = function (format, info, assertion) {
-  return function (done) {
-    var writeable = exports.writeable(function (actual) {
+exports.assumeFormatted = (fmt, info, assertion) => {
+  return done => {
+    const writeable = exports.writeable(actual => {
       assertion(actual, info);
       done();
     });
 
-    writeable.write(format.transform(Object.assign({}, info), format.options));
+    writeable.write(fmt.transform(Object.assign({}, info), fmt.options));
   };
 };
 
@@ -44,8 +44,8 @@ exports.assumeFormatted = function (format, info, assertion) {
  * Assumes that the Factory prototype is exposed on every
  * instance of the format, `fmt`, as `fmt.Format`.
  */
-exports.assumeHasPrototype = function (fmt) {
-  return function assumeFormat() {
+exports.assumeHasPrototype = fmt => {
+  return () => {
     assume(fmt.Format).is.a('function');
     assume(fmt.Format.prototype.transform).is.a('function');
   };

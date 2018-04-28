@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: 0 */
 'use strict';
 
 const assume = require('assume');
@@ -18,7 +17,7 @@ describe('metadata', () => {
   it('metadata() (default) removes message and level and puts everything else into metadata', helpers.assumeFormatted(
     metadata(),
     testInfoObject,
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.metadata).is.a('object');
@@ -31,7 +30,7 @@ describe('metadata', () => {
   it('metadata({ fillWith: [keys] }) only adds specified keys to the metadata object', helpers.assumeFormatted(
     metadata({ fillWith: ['level', 'someObject'] }),
     testInfoObject,
-    function (info, expected) {
+    info => {
       assume(info.metadata).is.a('object');
       assume(info.metadata.level).equals('info');
       assume(info.metadata.someObject.key).equals('value');
@@ -41,7 +40,7 @@ describe('metadata', () => {
   it('metadata({ fillExcept: [keys] }) fills all but the specified keys in the metadata object', helpers.assumeFormatted(
     metadata({ fillExcept: ['message', 'someObject'] }),
     testInfoObject,
-    function (info, expected) {
+    info => {
       assume(info.message).equals('whatever');
       assume(info.someObject).is.a('object');
       assume(info.someObject.key).equals('value');
@@ -53,7 +52,7 @@ describe('metadata', () => {
   it('metadata({ fillWith: [keys], fillExcept: [keys] }) should only fillExcept the specified keys', helpers.assumeFormatted(
     metadata({ fillWith: ['message'], fillExcept: ['message'] }),
     testInfoObject,
-    function (info, expected) {
+    info => {
       assume(info.message).equals('whatever');
       assume(info.metadata.level).equals('info');
     }
@@ -63,7 +62,7 @@ describe('metadata', () => {
     helpers.assumeFormatted(
       metadata({ fillWith: ['level', 'someKey'], key: 'myCustomKey' }),
       testInfoObject,
-      function (info, expected) {
+      info => {
         assume(info.myCustomKey).is.a('object');
         assume(info.message).equals('whatever');
         assume(info.myCustomKey.level).equals('info');

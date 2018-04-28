@@ -6,11 +6,11 @@ const prettyPrint = require('../pretty-print');
 const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 
-describe('prettyPrint', function () {
+describe('prettyPrint', () => {
   it('prettyPrint() (default) sets info[MESSAGE]', helpers.assumeFormatted(
     prettyPrint(),
     { level: 'info', message: 'yay template strings are fast' },
-    function (info, expected) {
+    (info, expected) => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals('info');

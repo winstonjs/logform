@@ -1,16 +1,14 @@
-/* eslint no-unused-vars: 0 */
 'use strict';
 
 const assume = require('assume');
 const timestamp = require('../timestamp');
 const helpers = require('./helpers');
-const { MESSAGE } = require('triple-beam');
 
-describe('timestamp', function () {
+describe('timestamp', () => {
   it('timestamp() (default) sets info[timestamp]', helpers.assumeFormatted(
     timestamp(),
     { level: 'info', message: 'whatever', timestamp: new Date().toISOString() },
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals('info');
@@ -19,14 +17,14 @@ describe('timestamp', function () {
     }
   ));
 
-  it('timestamp({ format: function () { return \'test timestamp\'; } }) sets info[timestamp]', helpers.assumeFormatted(
+  it('timestamp({ format: () => { return \'test timestamp\'; } }) sets info[timestamp]', helpers.assumeFormatted(
     timestamp({
-      format: function () {
+      format: () => {
         return 'test timestamp';
       }
     }),
     { level: 'info', message: 'whatever', timestamp: 'test timestamp' },
-    function (info, expected) {
+    (info, expected) => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals('info');
@@ -44,7 +42,7 @@ describe('timestamp', function () {
       format: 'YYYY-MM-DD'
     }),
     { level: 'info', message: 'whatever', timestamp: new Date().toISOString() },
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals('info');

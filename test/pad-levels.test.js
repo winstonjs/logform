@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: 0 */
 'use strict';
 
 const assume = require('assume');
@@ -7,11 +6,11 @@ const padLevels = require('../pad-levels');
 const { configs, MESSAGE } = require('triple-beam');
 const Padder = padLevels.Padder;
 
-describe('padLevels', function () {
+describe('padLevels', () => {
   it('padLevels({ levels }) set the padding to info.padding', helpers.assumeFormatted(
     padLevels(),
     { level: 'info', message: 'pad all the things' },
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.padding).is.an('object');
@@ -25,7 +24,7 @@ describe('padLevels', function () {
   it('padLevels({ levels }) set the padding to info.padding', helpers.assumeFormatted(
     padLevels({ levels: configs.npm.levels }),
     { level: 'info', message: 'pad all the things' },
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.padding).is.an('object');
@@ -39,7 +38,7 @@ describe('padLevels', function () {
   it('padLevels({ levels, filler }) set the padding to info.padding with a custom filler', helpers.assumeFormatted(
     padLevels({ levels: configs.npm.levels, filler: 'foo' }),
     { level: 'info', message: 'pad all the things' },
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.padding).is.an('object');
@@ -53,14 +52,14 @@ describe('padLevels', function () {
 
 it('exposes the Format prototype', helpers.assumeHasPrototype(padLevels));
 
-describe('Colorizer', function () {
+describe('Colorizer', () => {
   const expected = Object.keys(Object.assign({},
     configs.cli.levels,
     configs.npm.levels,
     configs.syslog.levels
   ));
 
-  it('Padder.addColors({ string: number })', function () {
+  it('Padder.addColors({ string: number })', () => {
     Padder.addPadding(Object.assign({},
       configs.cli.levels,
       configs.npm.levels,
@@ -75,7 +74,7 @@ describe('Colorizer', function () {
     assume(padding[0]).to.equal(' ');
   });
 
-  it('Padder.addColors({ string: number }, string)', function () {
+  it('Padder.addColors({ string: number }, string)', () => {
     Padder.addPadding(Object.assign({},
       configs.cli.levels,
       configs.npm.levels,
@@ -90,10 +89,10 @@ describe('Colorizer', function () {
     assume(padding[0]).to.equal('f');
   });
 
-  describe('#padder(levels, filler)', function () {
+  describe('#padder(levels, filler)', () => {
     const instance = new Padder();
 
-    it('padd(levels) [all levels]', function () {
+    it('padd(levels) [all levels]', () => {
       assume(instance.addPadding(configs.npm.levels)).deep.equals({
         error: '   ',
         warn: '    ',
@@ -105,7 +104,7 @@ describe('Colorizer', function () {
       });
     });
 
-    it('padder(levels, filler) [all levels]', function () {
+    it('padder(levels, filler) [all levels]', () => {
       assume(instance.addPadding(configs.npm.levels, 'foo')).deep.equals({
         error: 'foo',
         warn: 'foof',
