@@ -2,31 +2,32 @@
 
 const format = require('./format');
 
-const fillExcept = (info, fillExceptKeys, metadataKey) => {
-  const savedKeys = {};
-  const metadata = {};
+function fillExcept(info, fillExceptKeys, metadataKey) {
+  const savedKeys = fillExceptKeys.reduce((acc, key) => {
+    acc[key] = info[key];
+    delete info[key];
+    return acc;
+  }, {});
+  const metadata = Object.keys(info).reduce((acc, key) => {
+    acc[key] = info[key];
+    delete info[key];
+    return acc;
+  }, {});
 
-  fillExceptKeys.forEach((key) => {
-    savedKeys[key] = info[key];
-    delete info[key];
+  Object.assign(info, savedKeys, {
+    [metadataKey]: metadata
   });
-  Object.keys(info).forEach((key) => {
-    metadata[key] = info[key];
-    delete info[key];
-  });
-  Object.assign(info, savedKeys, { [metadataKey]: metadata });
   return info;
-};
+}
 
-const fillWith = (info, fillWithKeys, metadataKey) => {
-  const metadata = {};
-  fillWithKeys.forEach((key) => {
-    metadata[key] = info[key];
+function fillWith(info, fillWithKeys, metadataKey) {
+  info[metadataKey] = fillWithKeys.reduce((acc, key) => {
+    acc[key] = info[key];
     delete info[key];
-  });
-  info[metadataKey] = metadata;
+    return acc;
+  }, {});
   return info;
-};
+}
 
 /**
  * Adds in a "metadata" object to collect extraneous data, similar to the metadata
