@@ -8,7 +8,7 @@ const { MESSAGE } = require('triple-beam');
  * intermediate prototype to store the template string-based formatter
  * function.
  */
-module.exports = function createPrintf(templateFn) {
+module.exports = templateFn => {
   function Printf() {}
   Printf.prototype.template = templateFn;
   Printf.prototype.transform = function (info) {

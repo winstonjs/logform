@@ -1,3 +1,5 @@
+'use strict';
+
 const format = require('./format');
 
 const fillExcept = (info, fillExceptKeys, metadataKey) => {
@@ -30,14 +32,13 @@ const fillWith = (info, fillWithKeys, metadataKey) => {
  * Adds in a "metadata" object to collect extraneous data, similar to the metadata
  * object in winston 2.x.
  */
-module.exports = format(function (info, opts = {}) {
+module.exports = format((info, opts = {}) => {
   let metadataKey = 'metadata';
-  let fillExceptKeys = [];
-
   if (opts.key) {
     metadataKey = opts.key;
   }
 
+  let fillExceptKeys = [];
   if (!opts.fillExcept && !opts.fillWith) {
     fillExceptKeys.push('level');
     fillExceptKeys.push('message');

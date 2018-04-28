@@ -8,7 +8,7 @@ const format = require('./format');
  * delimiter before the message to properly align it in the same place.
  * It was previously { align: true } in winston < 3.0.0
  */
-module.exports = format(function (info) {
-  info.message = '\t' + info.message;
+module.exports = format(info => {
+  info.message = `\t${info.message}`;
   return info;
 });

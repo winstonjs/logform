@@ -9,7 +9,7 @@ const util = require('util');
  * which performs string interpolation from `info` objects. This was
  * previously exposed implicitly in `winston < 3.0.0`.
  */
-module.exports = format(function (info) {
+module.exports = format(info => {
   if (info.splat) {
     info.message = util.format(info.message, ...info.splat);
   }

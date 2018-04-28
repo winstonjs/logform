@@ -5,10 +5,7 @@ const { configs } = require('triple-beam');
 
 class Padder {
   constructor(opts = { levels: configs.npm.levels }) {
-    if (opts.levels) {
-      this.addPadding(opts.levels, opts.filler);
-    }
-
+    this.addPadding(opts.levels, opts.filler);
     this.options = opts;
   }
 
@@ -51,9 +48,7 @@ class Padder {
  * levels to be the same length. This was previously exposed as
  * { padLevels: true } to transports in `winston < 3.0.0`.
  */
-module.exports = function (opts) {
-  return new Padder(opts);
-};
+module.exports = opts => new Padder(opts);
 
 module.exports.Padder
   = module.exports.Format

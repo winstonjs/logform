@@ -17,7 +17,7 @@ Found: ${formatFn.toString().split('\n')[0]}\n`);
  * function format (formatFn)
  * Returns a create function for the `formatFn`.
  */
-module.exports = function (formatFn) {
+module.exports = formatFn => {
   if (formatFn.length > 2) {
     throw new InvalidFormatError(formatFn);
   }
@@ -27,7 +27,9 @@ module.exports = function (formatFn) {
    * Base prototype which calls a `_format`
    * function and pushes the result.
    */
-  function Format(options) { this.options = options || {}; }
+  function Format(options = {}) {
+    this.options = options;
+  }
   Format.prototype.transform = formatFn;
 
   //
