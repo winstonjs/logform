@@ -60,8 +60,8 @@ exports.formatFns = {
     return info;
   },
 
-  assign(info) {
-    return Object.assign({}, info);
+  assign(info, opts) {
+    return Object.assign({}, info, opts);
   },
 
   // eslint-disable-next-line no-unused-vars

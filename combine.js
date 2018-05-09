@@ -37,8 +37,7 @@ function cascade(formats) {
       }
     }
 
-
-    return info;
+    return obj;
   };
 }
 

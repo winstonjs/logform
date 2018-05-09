@@ -58,6 +58,24 @@ describe('combine', function () {
       assume(actual.label).equals('testing');
     });
 
+    it('return the result of the transformation chain', function () {
+      const assignedInfo = combine(
+        formats.identity(),
+        formats.assign({ key: 'value' }),
+        formats.identity()
+      );
+
+      const info = {
+        level: 'info',
+        message: 'wow such testing'
+      };
+
+      const actual = assignedInfo.transform(Object.assign({}, info));
+      assume(actual.level).equals(info.level);
+      assume(actual.message).equals(info.message);
+      assume(actual.key).is.a('string');
+    });
+
     it('{ false } when formats yield [false, obj, obj]', function () {
       const firstFalse = combine(
         formats.ignore(),
