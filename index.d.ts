@@ -41,12 +41,13 @@ export namespace format {
   function json(opts?: object): Format;
   function label(opts?: object): Format;
   function logstash(opts?: object): Format;
-  function metadata(opts?: object): Format;  
+  function metadata(opts?: object): Format;
   function ms(opts?: object): Format;
   function padLevels(opts?: object): Format;
   function prettyPrint(opts?: object): Format;
   function printf(templateFunction: (info: TransformableInfo) => string): Format;
   function simple(opts?: object): Format;
+  function signale(opts?: object): Format;
   function splat(opts?: object): Format;
   function timestamp(opts?: object): Format;
   function uncolorize(opts?: object): Format;
