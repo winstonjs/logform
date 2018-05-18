@@ -16,10 +16,12 @@ const expectedFormats = [
   'label',
   'logstash',
   'metadata',
+  'ms',
   'padLevels',
   'prettyPrint',
   'printf',
   'simple',
+  'signale',
   'splat',
   'timestamp',
   'uncolorize'
