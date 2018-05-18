@@ -30,6 +30,7 @@ Object.defineProperty(format, 'metadata',    { value: require('./metadata') });
 Object.defineProperty(format, 'padLevels',   { value: require('./pad-levels') });
 Object.defineProperty(format, 'prettyPrint', { value: require('./pretty-print') });
 Object.defineProperty(format, 'printf',      { value: require('./printf') });
+Object.defineProperty(format, 'signale',      { value: require('./signale') });
 Object.defineProperty(format, 'simple',      { value: require('./simple') });
 Object.defineProperty(format, 'splat',       { value: require('./splat') });
 Object.defineProperty(format, 'timestamp',   { value: require('./timestamp') });

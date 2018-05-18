@@ -45,6 +45,7 @@ exposeFormat('padLevels', 'pad-levels');
 exposeFormat('prettyPrint', 'pretty-print');
 exposeFormat('printf');
 exposeFormat('simple');
+exposeFormat('signale');
 exposeFormat('splat');
 exposeFormat('timestamp');
 exposeFormat('uncolorize');
