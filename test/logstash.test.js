@@ -8,11 +8,11 @@ const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 const TIMESTAMP = Symbol.for('timestamp');
 
-describe('logstash', function () {
+describe('logstash', () => {
   it('default { @message, @fields } sets info[MESSAGE]', helpers.assumeFormatted(
     logstash(),
     { level: 'info', message: 'whatever' },
-    function (info, expected) {
+    (info, expected) => {
       assume(info.level).equals('info');
       assume(info.message).equals(undefined);
       assume(info[MESSAGE]).equals(JSON.stringify({
@@ -30,7 +30,7 @@ describe('logstash', function () {
       logstash()
     ),
     { level: 'info', message: 'whatever' },
-    function (info, expected) {
+    (info, expected) => {
       assume(info.level).equals('info');
       assume(info.message).equals(undefined);
       assume(info[MESSAGE]).equals(JSON.stringify({

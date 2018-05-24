@@ -1,4 +1,4 @@
-/* eslint max-nested-callbacks: 0 */
+/* eslint-disable max-nested-callbacks */
 'use strict';
 
 const assume = require('assume');
@@ -7,9 +7,9 @@ const label = require('../label');
 const timestamp = require('../timestamp');
 const { formats } = require('./helpers');
 
-describe('combine', function () {
-  describe('combine(...formats)', function () {
-    it('returns a function', function () {
+describe('combine', () => {
+  describe('combine(...formats)', () => {
+    it('returns a function', () => {
       const fmt = combine(
         formats.identity(),
         formats.identity()
@@ -19,7 +19,7 @@ describe('combine', function () {
       assume(fmt.options).deep.equals({});
     });
 
-    it('exposes the Format prototype', function () {
+    it('exposes the Format prototype', () => {
       const fmt = combine(
         formats.identity(),
         formats.identity()
@@ -29,8 +29,8 @@ describe('combine', function () {
       assume(fmt.Format.prototype.transform).is.a('function');
     });
 
-    it('throws an error when provided a non-format', function () {
-      assume(function () {
+    it('throws an error when provided a non-format', () => {
+      assume(() => {
         combine(
           function lolwut() {},
           function notaformat() {}
@@ -39,8 +39,8 @@ describe('combine', function () {
     });
   });
 
-  describe('.transform(info, opts)', function () {
-    it('invokes all intermediary formats', function () {
+  describe('.transform(info, opts)', () => {
+    it('invokes all intermediary formats', () => {
       const labelTimestamp = combine(
         label({ label: 'testing' }),
         timestamp()
@@ -58,7 +58,7 @@ describe('combine', function () {
       assume(actual.label).equals('testing');
     });
 
-    it('return the result of the transformation chain', function () {
+    it('return the result of the transformation chain', () => {
       const assignedInfo = combine(
         formats.identity(),
         formats.assign({ key: 'value' }),
@@ -76,7 +76,7 @@ describe('combine', function () {
       assume(actual.key).is.a('string');
     });
 
-    it('{ false } when formats yield [false, obj, obj]', function () {
+    it('{ false } when formats yield [false, obj, obj]', () => {
       const firstFalse = combine(
         formats.ignore(),
         formats.die(),
@@ -89,7 +89,7 @@ describe('combine', function () {
       })).false();
     });
 
-    it('{ false } when formats yield [obj, false, obj]', function () {
+    it('{ false } when formats yield [obj, false, obj]', () => {
       const midFalse = combine(
         formats.identity(),
         formats.ignore(),
@@ -102,7 +102,7 @@ describe('combine', function () {
       })).false();
     });
 
-    it('{ false } when formats yield [obj, obj, false]', function () {
+    it('{ false } when formats yield [obj, obj, false]', () => {
       const lastFalse = combine(
         formats.identity(),
         formats.identity(),

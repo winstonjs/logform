@@ -1,11 +1,8 @@
-/* eslint no-unused-vars: 0 */
 'use strict';
 
 const assume = require('assume');
-const combine = require('../combine');
 const splat = require('../splat');
 const helpers = require('./helpers');
-const { MESSAGE } = require('triple-beam');
 
 /*
  * Helper function for asserting that an info object
@@ -16,7 +13,7 @@ function assumeSplat(message, spread, expected) {
   return helpers.assumeFormatted(
     splat(),
     { level: 'info', message, splat: spread },
-    function (info) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(Array.isArray(info.splat)).true();
@@ -26,7 +23,7 @@ function assumeSplat(message, spread, expected) {
   );
 }
 
-describe('splat', function () {
+describe('splat', () => {
   it('%s | string placeholder sets info.message', assumeSplat(
     'alright %s', ['what'], 'alright what')
   );

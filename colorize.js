@@ -76,7 +76,7 @@ class Colorizer {
     // If it is an Array then iterate over that Array, applying
     // the colors function for each item.
     //
-    for (var i = 0, len = Colorizer.allColors[level].length; i < len; i++) {
+    for (let i = 0, len = Colorizer.allColors[level].length; i < len; i++) {
       message = colors[Colorizer.allColors[level][i]](message);
     }
 
@@ -89,8 +89,7 @@ class Colorizer {
    * `logform` info object.
    */
   transform(info, opts) {
-    var level = info.level;
-
+    const { level } = info;
     if (opts.level || opts.all || !opts.message) {
       info.level = this.colorize(level);
     }
@@ -109,9 +108,7 @@ class Colorizer {
  * level colors to `info` objects. This was previously exposed
  * as { colorize: true } to transports in `winston < 3.0.0`.
  */
-module.exports = function createColorize(opts) {
-  return new Colorizer(opts);
-};
+module.exports = opts => new Colorizer(opts);
 
 //
 // Attach the Colorizer for registration purposes

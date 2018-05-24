@@ -14,7 +14,7 @@ const { MESSAGE } = require('triple-beam');
  *    ${level}: ${message}                            if rest is empty
  *    ${level}: ${message} ${JSON.stringify(rest)}    otherwise
  */
-module.exports = format(function (info) {
+module.exports = format(info => {
   const stringifiedRest = JSON.stringify(Object.assign({}, info, {
     level: undefined,
     message: undefined,

@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: 0 */
 'use strict';
 
 const assume = require('assume');
@@ -6,11 +5,11 @@ const printf = require('../printf');
 const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 
-describe('printf', function () {
+describe('printf', () => {
   it('printf(info => `${template}`) sets info[MESSAGE]', helpers.assumeFormatted(
     printf(info => `${info.level}: ${info.message}`),
     { level: 'info', message: 'yay template strings are fast' },
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals('info');

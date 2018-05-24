@@ -10,7 +10,7 @@ const { MESSAGE } = require('triple-beam');
  * options. This was previously exposed as { logstash: true }
  * to transports in `winston < 3.0.0`.
  */
-module.exports = format(function (info) {
+module.exports = format(info => {
   const logstash = {};
   if (info.message) {
     logstash['@message'] = info.message;

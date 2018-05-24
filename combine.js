@@ -3,20 +3,6 @@
 const format = require('./format');
 
 /*
- * function combine (info)
- * Returns a new instance of the combine Format which combines the specified
- * formats into a new format. This is similar to a pipe-chain in transform streams.
- * We choose to combine the prototypes this way because there is no back pressure in
- * an in-memory transform chain.
- */
-module.exports = function combined(...formats) {
-  const combinedFormat = format(cascade(formats));
-  const instance = combinedFormat();
-  instance.Format = combinedFormat.Format;
-  return instance;
-};
-
-/*
  * function cascade(formats)
  * Returns a function that invokes the `._format` function in-order
  * for the specified set of `formats`. In this manner we say that Formats
@@ -28,9 +14,9 @@ function cascade(formats) {
     return;
   }
 
-  return function cascaded(info) {
+  return info => {
     let obj = info;
-    for (var i = 0; i < formats.length; i++) {
+    for (let i = 0; i < formats.length; i++) {
       obj = formats[i].transform(obj, formats[i].options);
       if (!obj) {
         return false;
@@ -46,8 +32,8 @@ function cascade(formats) {
  * If the format does not define a `transform` function throw an error
  * with more detailed usage.
  */
-function isValidFormat(format) {
-  if (typeof format.transform !== 'function') {
+function isValidFormat(fmt) {
+  if (typeof fmt.transform !== 'function') {
     throw new Error([
       'No transform function found on format. Did you create a format instance?',
       'const myFormat = format(formatFn);',
@@ -57,3 +43,17 @@ function isValidFormat(format) {
 
   return true;
 }
+
+/*
+ * function combine (info)
+ * Returns a new instance of the combine Format which combines the specified
+ * formats into a new format. This is similar to a pipe-chain in transform streams.
+ * We choose to combine the prototypes this way because there is no back pressure in
+ * an in-memory transform chain.
+ */
+module.exports = (...formats) => {
+  const combinedFormat = format(cascade(formats));
+  const instance = combinedFormat();
+  instance.Format = combinedFormat.Format;
+  return instance;
+};

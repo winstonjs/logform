@@ -8,9 +8,9 @@ const format = require('./format');
  * `opts.label` before the message. This was previously exposed as
  * { label: 'my label' } to transports in `winston < 3.0.0`.
  */
-module.exports = format(function (info, opts) {
+module.exports = format((info, opts) => {
   if (opts.message) {
-    info.message = '[' + opts.label + '] ' + info.message;
+    info.message = `[${opts.label}] ${info.message}`;
     return info;
   }
 

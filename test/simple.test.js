@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: 0 */
 'use strict';
 
 const assume = require('assume');
@@ -6,11 +5,11 @@ const simple = require('../simple');
 const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 
-describe('simple', function () {
+describe('simple', () => {
   it('simple() (default) sets info[MESSAGE]', helpers.assumeFormatted(
     simple(),
     { level: 'info', message: 'whatever' },
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals('info');
@@ -23,7 +22,7 @@ describe('simple', function () {
   it('simple() strips { splat }', helpers.assumeFormatted(
     simple(),
     { level: 'info', message: 'whatever', splat: [1, 2, 3] },
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.splat).is.an('array');
@@ -38,7 +37,7 @@ describe('simple', function () {
   it('simple() shows { rest }', helpers.assumeFormatted(
     simple(),
     { level: 'info', message: 'whatever', rest: 'something' },
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.rest).is.an('string');

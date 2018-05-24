@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: 0 */
 'use strict';
 
 const assume = require('assume');
@@ -6,11 +5,11 @@ const label = require('../label');
 const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 
-describe('label', function () {
+describe('label', () => {
   it('label({ label }) set the label to info.label', helpers.assumeFormatted(
     label({ label: 'wow such impress' }),
     { level: 'info', message: 'label all the things' },
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.label).is.a('string');
@@ -24,7 +23,7 @@ describe('label', function () {
   it('label({ label, message }) adds the label to info.message', helpers.assumeFormatted(
     label({ label: 'wow such impress', message: true }),
     { level: 'info', message: 'label all the things' },
-    function (info, expected) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals('info');

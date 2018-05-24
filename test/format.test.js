@@ -5,8 +5,8 @@ const logform = require('../index');
 const { formatFns } = require('./helpers');
 const { format } = logform;
 
-describe('format', function () {
-  it('has the expected default logform.formats', function () {
+describe('format', () => {
+  it('has the expected default logform.formats', () => {
     assume(logform.format).is.a('function');
     assume(logform.format.align).is.a('function');
     assume(logform.format.cli).is.a('function');
@@ -24,25 +24,25 @@ describe('format', function () {
     assume(logform.format.uncolorize).is.a('function');
   });
 
-  describe('format(fn)', function () {
-    it('returns a function', function () {
+  describe('format(fn)', () => {
+    it('returns a function', () => {
       const identity = format(formatFns.identity);
       assume(identity).is.a('function');
     });
 
-    it('exposes the Format prototype', function () {
+    it('exposes the Format prototype', () => {
       const identity = format(formatFns.identity);
       assume(identity.Format).is.a('function');
       assume(identity.Format.prototype.transform).is.a('function');
     });
 
-    it('throws if provided a function of invalid length', function () {
-      assume(function () {
+    it('throws if provided a function of invalid length', () => {
+      assume(() => {
         format(formatFns.invalid);
       }).throws(/Format functions must be synchronous taking a two arguments/);
     });
 
-    it('throws an error including the bad function signature', function () {
+    it('throws an error including the bad function signature', () => {
       const fnsig = formatFns.invalid.toString().split('\n')[0];
       try {
         format(formatFns.invalid);
@@ -51,14 +51,14 @@ describe('format', function () {
       }
     });
 
-    it('format(fn)()', function () {
+    it('format(fn)()', () => {
       const identity = format(formatFns.identity);
       const fmt = identity();
       assume(fmt.transform).is.a('function');
       assume(fmt.options).deep.equals({});
     });
 
-    it('format(fn)(opts)', function () {
+    it('format(fn)(opts)', () => {
       const opts = { testing: true };
       const identity = format(formatFns.identity);
       const fmt = identity(opts);

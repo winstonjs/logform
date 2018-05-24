@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: 0 */
 'use strict';
 
 const assume = require('assume');
@@ -39,11 +38,11 @@ function addAndRemoveColors(opts = {}) {
   );
 }
 
-describe('uncolorize', function () {
+describe('uncolorize', () => {
   it('uncolorize() (default) removes all colors', helpers.assumeFormatted(
     addAndRemoveColors(),
     { level: 'info', message: 'whatever' },
-    function (info) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
 
@@ -65,7 +64,7 @@ describe('uncolorize', function () {
   it('uncolorize({ level: false }) removes color from { message, [MESSAGE] }', helpers.assumeFormatted(
     addAndRemoveColors({ level: false }),
     { level: 'info', message: 'whatever' },
-    function (info) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
 
@@ -78,7 +77,7 @@ describe('uncolorize', function () {
   it('uncolorize({ message: false }) removes color from { level, [MESSAGE] }', helpers.assumeFormatted(
     addAndRemoveColors({ message: false }),
     { level: 'info', message: 'whatever' },
-    function (info) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
 
@@ -91,7 +90,7 @@ describe('uncolorize', function () {
   it('uncolorize({ raw: false }) removes color from { level, message }', helpers.assumeFormatted(
     addAndRemoveColors({ raw: false }),
     { level: 'info', message: 'whatever' },
-    function (info) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
 
@@ -104,7 +103,7 @@ describe('uncolorize', function () {
   it('uncolorize({ level: false, message: false }) removes color from [MESSAGE]', helpers.assumeFormatted(
     addAndRemoveColors({ level: false, message: false }),
     { level: 'info', message: 'whatever' },
-    function (info) {
+    info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
 

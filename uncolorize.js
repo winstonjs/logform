@@ -10,7 +10,7 @@ const { MESSAGE } = require('triple-beam');
  * from `info` objects. This was previously exposed as { stripColors: true }
  * to transports in `winston < 3.0.0`.
  */
-module.exports = format(function (info, opts) {
+module.exports = format((info, opts) => {
   if (opts.level !== false) {
     info.level = colors.strip(info.level);
   }
