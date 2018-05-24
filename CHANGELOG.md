@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 1.7.0
+**2018/05/24**
+
+- [#28] Use more es6-features across the board.
+- [#30] Fix combine return value.
+- [#29] Add metadata function to format namespace.
+
 ### 1.6.0
 **2018/04/25**
 
