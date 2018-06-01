@@ -2,17 +2,22 @@
 
 const assume = require('assume');
 const colors = require('colors');
+const { configs, LEVEL } = require('triple-beam');
 const colorize = require('../colorize');
-const helpers = require('./helpers');
-const { configs } = require('triple-beam');
 const Colorizer = colorize.Colorizer;
+const {
+  assumeHasPrototype,
+  assumeFormatted,
+  infoify,
+  setupLevels
+} = require('./helpers');
 
 describe('colorize', () => {
-  before(helpers.setupLevels);
+  before(setupLevels);
 
-  it('colorize() (default)', helpers.assumeFormatted(
+  it('colorize() (default)', assumeFormatted(
     colorize(),
-    { level: 'info', message: 'whatever' },
+    infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
@@ -21,9 +26,9 @@ describe('colorize', () => {
     }
   ));
 
-  it('colorize({ level: true })', helpers.assumeFormatted(
+  it('colorize({ level: true })', assumeFormatted(
     colorize({ level: true }),
-    { level: 'info', message: 'whatever' },
+    infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
@@ -32,9 +37,9 @@ describe('colorize', () => {
     }
   ));
 
-  it('colorize{ message: true })', helpers.assumeFormatted(
+  it('colorize{ message: true })', assumeFormatted(
     colorize({ message: true }),
-    { level: 'info', message: 'whatever' },
+    infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
@@ -43,9 +48,9 @@ describe('colorize', () => {
     }
   ));
 
-  it('colorize({ level: true, message: true })', helpers.assumeFormatted(
+  it('colorize({ level: true, message: true })', assumeFormatted(
     colorize({ level: true, message: true }),
-    { level: 'info', message: 'whatever' },
+    infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
@@ -54,19 +59,27 @@ describe('colorize', () => {
     }
   ));
 
-  it('colorize({ all: true })', helpers.assumeFormatted(
+  it('colorize({ all: true })', assumeFormatted(
     colorize({ all: true }),
-    { level: 'info', message: 'whatever' },
+    infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals(colors.green('info'));
       assume(info.message).equals(colors.green('whatever'));
+    }
+  ));
+
+  it('colorizes when LEVEL !== level', assumeFormatted(
+    colorize(),
+    { [LEVEL]: 'info', level: 'INFO', message: 'whatever' },
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.level).equals(colors.green('INFO'));
     }
   ));
 });
-
-it('exposes the Format prototype', helpers.assumeHasPrototype(colorize));
 
 describe('Colorizer', () => {
   const expected = Object.assign({},
@@ -74,7 +87,9 @@ describe('Colorizer', () => {
     configs.npm.colors,
     configs.syslog.colors);
 
-  before(helpers.setupLevels);
+  before(setupLevels);
+
+  it('exposes the Format prototype', assumeHasPrototype(colorize));
 
   it('Colorizer.addColors({ string: string })', () => {
     Colorizer.addColors({ weird: 'cyan' });
@@ -96,25 +111,25 @@ describe('Colorizer', () => {
     assume(Colorizer.allColors.delimited).deep.equals(['blue', 'underline']);
   });
 
-  describe('#colorize(level,message)', () => {
+  describe('#colorize(LEVEL, level, message)', () => {
     const instance = new Colorizer();
 
     it('colorize(level) [single color]', () => {
-      assume(instance.colorize('weird')).equals(colors.cyan('weird'));
+      assume(instance.colorize('weird', 'weird')).equals(colors.cyan('weird'));
     });
 
     it('colorize(level) [multiple colors]', () => {
-      assume(instance.colorize('multiple')).equals(
+      assume(instance.colorize('multiple', 'multiple')).equals(
         colors.bold(colors.red('multiple'))
       );
     });
 
     it('colorize(level, message) [single color]', () => {
-      assume(instance.colorize('weird', 'message')).equals(colors.cyan('message'));
+      assume(instance.colorize('weird', 'weird', 'message')).equals(colors.cyan('message'));
     });
 
     it('colorize(level, message) [multiple colors]', () => {
-      assume(instance.colorize('multiple', 'message')).equals(
+      assume(instance.colorize('multiple', 'multiple', 'message')).equals(
         colors.bold(colors.red('message'))
       );
     });

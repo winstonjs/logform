@@ -7,8 +7,8 @@ const combine = require('../combine');
 const format = require('../format');
 const simple = require('../simple');
 const uncolorize = require('../uncolorize');
-const helpers = require('./helpers');
-const { MESSAGE } = require('triple-beam');
+const { assumeFormatted, infoify } = require('./helpers');
+const { LEVEL, MESSAGE } = require('triple-beam');
 const COLORED = Symbol.for('colored');
 
 //
@@ -17,6 +17,7 @@ const COLORED = Symbol.for('colored');
 //
 const rememberColors = format(info => {
   info[COLORED] = {
+    [LEVEL]: info[LEVEL],
     [MESSAGE]: info[MESSAGE],
     level: info.level,
     message: info.message
@@ -39,9 +40,9 @@ function addAndRemoveColors(opts = {}) {
 }
 
 describe('uncolorize', () => {
-  it('uncolorize() (default) removes all colors', helpers.assumeFormatted(
+  it('uncolorize() (default) removes all colors', assumeFormatted(
     addAndRemoveColors(),
-    { level: 'info', message: 'whatever' },
+    infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
@@ -61,9 +62,9 @@ describe('uncolorize', () => {
     }
   ));
 
-  it('uncolorize({ level: false }) removes color from { message, [MESSAGE] }', helpers.assumeFormatted(
+  it('uncolorize({ level: false }) removes color from { message, [MESSAGE] }', assumeFormatted(
     addAndRemoveColors({ level: false }),
-    { level: 'info', message: 'whatever' },
+    infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
@@ -74,9 +75,9 @@ describe('uncolorize', () => {
     }
   ));
 
-  it('uncolorize({ message: false }) removes color from { level, [MESSAGE] }', helpers.assumeFormatted(
+  it('uncolorize({ message: false }) removes color from { level, [MESSAGE] }', assumeFormatted(
     addAndRemoveColors({ message: false }),
-    { level: 'info', message: 'whatever' },
+    infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
@@ -87,9 +88,9 @@ describe('uncolorize', () => {
     }
   ));
 
-  it('uncolorize({ raw: false }) removes color from { level, message }', helpers.assumeFormatted(
+  it('uncolorize({ raw: false }) removes color from { level, message }', assumeFormatted(
     addAndRemoveColors({ raw: false }),
-    { level: 'info', message: 'whatever' },
+    infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
@@ -100,9 +101,9 @@ describe('uncolorize', () => {
     }
   ));
 
-  it('uncolorize({ level: false, message: false }) removes color from [MESSAGE]', helpers.assumeFormatted(
+  it('uncolorize({ level: false, message: false }) removes color from [MESSAGE]', assumeFormatted(
     addAndRemoveColors({ level: false, message: false }),
-    { level: 'info', message: 'whatever' },
+    infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');

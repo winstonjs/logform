@@ -2,7 +2,7 @@
 
 const colors = require('colors/safe');
 const format = require('./format');
-const { MESSAGE } = require('triple-beam');
+const { LEVEL, MESSAGE } = require('triple-beam');
 
 /*
  * function uncolorize (info)
@@ -12,7 +12,7 @@ const { MESSAGE } = require('triple-beam');
  */
 module.exports = format((info, opts) => {
   if (opts.level !== false) {
-    info.level = colors.strip(info.level);
+    info.level = colors.strip(info[LEVEL]);
   }
 
   if (opts.message !== false) {
