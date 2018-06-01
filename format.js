@@ -30,6 +30,7 @@ module.exports = formatFn => {
   function Format(options = {}) {
     this.options = options;
   }
+
   Format.prototype.transform = formatFn;
 
   //
