@@ -7,7 +7,7 @@ const combine = require('../combine');
 const format = require('../format');
 const simple = require('../simple');
 const uncolorize = require('../uncolorize');
-const { assumeFormatted, infoify } = require('./helpers');
+const { assumeFormatted, infoify, setupLevels } = require('./helpers');
 const { LEVEL, MESSAGE } = require('triple-beam');
 const COLORED = Symbol.for('colored');
 
@@ -40,6 +40,8 @@ function addAndRemoveColors(opts = {}) {
 }
 
 describe('uncolorize', () => {
+  before(setupLevels);
+
   it('uncolorize() (default) removes all colors', assumeFormatted(
     addAndRemoveColors(),
     infoify({ level: 'info', message: 'whatever' }),
@@ -59,6 +61,25 @@ describe('uncolorize', () => {
       assume(info[MESSAGE]).equals('info: whatever');
       assume(info[MESSAGE]).equals(colors.strip(colored[MESSAGE]));
       assume(info[MESSAGE]).not.equals(colored[MESSAGE]);
+    }
+  ));
+
+  it('uncolorize() (default) preserves mutable level formatting', assumeFormatted(
+    combine(
+      format(info => {
+        info.level = info.level.toUpperCase();
+        return info;
+      })(),
+      colorize(),
+      uncolorize()
+    ),
+    { [LEVEL]: 'info', level: 'info', message: 'whatever' },
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+
+      assume(info.level).equals('INFO');
+      assume(info.message).equals('whatever');
     }
   ));
 
