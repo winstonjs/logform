@@ -2,6 +2,7 @@
 
 const format = require('./format');
 const { MESSAGE } = require('triple-beam');
+const jsonStringify = require('fast-safe-stringify');
 
 /*
  * function logstash (info)
@@ -23,6 +24,6 @@ module.exports = format(info => {
   }
 
   logstash['@fields'] = info;
-  info[MESSAGE] = JSON.stringify(logstash);
+  info[MESSAGE] = jsonStringify(logstash);
   return info;
 });
