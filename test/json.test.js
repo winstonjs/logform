@@ -3,7 +3,7 @@
 const assume = require('assume');
 const json = require('../json');
 const jsonStringify = require('fast-safe-stringify');
-const { assumeFormatted, assumeHasPrototype, writeable } = require('./helpers');
+const { assumeFormatted, assumeHasPrototype, writable } = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 
 describe('json', () => {
@@ -60,8 +60,7 @@ describe('json', () => {
     circular.self = { circular };
 
     const fmt = json();
-    const stream = writeable(info => {
-      const { level, message } = info;
+    const stream = writable(info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.filtered).equals(true);
