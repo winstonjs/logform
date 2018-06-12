@@ -8,6 +8,10 @@ const timestamp = require('../timestamp');
 const { formats } = require('./helpers');
 
 describe('combine', () => {
+  it('exposes the cascade function', () => {
+    assume(combine.cascade).is.a('function');
+  });
+
   describe('combine(...formats)', () => {
     it('returns a function', () => {
       const fmt = combine(

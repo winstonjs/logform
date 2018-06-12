@@ -57,3 +57,10 @@ module.exports = (...formats) => {
   instance.Format = combinedFormat.Format;
   return instance;
 };
+
+//
+// Export the cascade method for use in cli and other
+// combined formats that should not be assumed to be
+// singletons.
+//
+module.exports.cascade = cascade;

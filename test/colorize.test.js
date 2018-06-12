@@ -1,7 +1,7 @@
 'use strict';
 
 const assume = require('assume');
-const colors = require('colors');
+const colors = require('colors/safe');
 const { configs, LEVEL } = require('triple-beam');
 const colorize = require('../colorize');
 const Colorizer = colorize.Colorizer;
