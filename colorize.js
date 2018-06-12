@@ -14,11 +14,11 @@ colors.enabled = true;
  */
 const hasSpace = /\s+/;
 
+/*
+ * Colorizer format. Wraps the `level` and/or `message` properties
+ * of the `info` objects with ANSI color codes based on a few options.
+ */
 class Colorizer {
-  /*
-   * function setupColors(info)
-   * Attaches a Colorizer instance to the format.
-   */
   constructor(opts = {}) {
     if (opts.colors) {
       this.addColors(opts.colors);

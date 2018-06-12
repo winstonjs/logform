@@ -1,43 +1,71 @@
 /* eslint no-unused-vars: 0 */
 'use strict';
 
-const { configs } = require('triple-beam');
+const { configs, LEVEL, MESSAGE } = require('triple-beam');
 
 class Padder {
   constructor(opts = { levels: configs.npm.levels }) {
-    this.addPadding(opts.levels, opts.filler);
+    this.paddings = Padder.paddingForLevels(opts.levels, opts.filler);
     this.options = opts;
   }
 
+  /**
+   * Returns the maximum length of keys in the specified `levels` Object.
+   * @param  {Object} levels Set of all levels to calculate longest level against.
+   * @returns {Number} Maximum length of the longest level string.
+   */
   static getLongestLevel(levels) {
     const lvls = Object.keys(levels).map(level => level.length);
     return Math.max(...lvls);
   }
 
-  static calcPadding(level, filler) {
-    const targetLen = Padder.longestLevel + 1 - level.length;
+  /**
+   * Returns the padding for the specified `level` assuming that the
+   * maximum length of all levels it's associated with is `maxLength`.
+   * @param  {String} level Level to calculate padding for.
+   * @param  {String} filler Repeatable text to use for padding.
+   * @param  {Number} maxLength Length of the longest level
+   * @returns {String} Padding string for the `level`
+   */
+  static paddingForLevel(level, filler, maxLength) {
+    const targetLen = maxLength + 1 - level.length;
     const rep = Math.floor(targetLen / filler.length);
-    const padStr = `${filler}${filler.repeat(rep)}`;
-
-    return padStr.slice(0, targetLen);
+    const padding = `${filler}${filler.repeat(rep)}`;
+    return padding.slice(0, targetLen);
   }
 
-  static addPadding(levels, filler = ' ') {
-    Padder.longestLevel = Padder.getLongestLevel(levels);
-    Padder.allPadding = Object.keys(levels).reduce((acc, level) => {
-      acc[level] = Padder.calcPadding(level, filler);
+  /**
+   * Returns an object with the string paddings for the given `levels`
+   * using the specified `filler`.
+   * @param  {Object} levels Set of all levels to calculate padding for.
+   * @param  {String} filler Repeatable text to use for padding.
+   * @returns {Object} Mapping of level to desired padding.
+   */
+  static paddingForLevels(levels, filler = ' ') {
+    const maxLength = Padder.getLongestLevel(levels);
+    return Object.keys(levels).reduce((acc, level) => {
+      acc[level] = Padder.paddingForLevel(level, filler, maxLength);
       return acc;
     }, {});
-
-    return Padder.allPadding;
   }
 
-  addPadding(levels, filler) {
-    return Padder.addPadding(levels, filler);
-  }
-
+  /**
+   * Prepends the padding onto the `message` based on the `LEVEL` of
+   * the `info`. This is based on the behavior of `winston@2` which also
+   * prepended the level onto the message.
+   *
+   * See: https://github.com/winstonjs/winston/blob/2.x/lib/winston/logger.js#L198-L201
+   *
+   * @param  {Info} info Logform info object
+   * @param  {Object} opts Options passed along to this instance.
+   * @returns {Info} Modified logform info object.
+   */
   transform(info, opts) {
-    info.padding = this.addPadding(opts.levels, opts.filler);
+    info.message = `${this.paddings[info[LEVEL]]}${info.message}`;
+    if (info[MESSAGE]) {
+      info[MESSAGE] = `${this.paddings[info[LEVEL]]}${info[MESSAGE]}`;
+    }
+
     return info;
   }
 }
