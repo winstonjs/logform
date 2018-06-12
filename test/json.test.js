@@ -2,11 +2,12 @@
 
 const assume = require('assume');
 const json = require('../json');
-const helpers = require('./helpers');
+const jsonStringify = require('fast-safe-stringify');
+const { assumeFormatted, assumeHasPrototype, writable } = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 
 describe('json', () => {
-  it('json() (default) sets info[MESSAGE]', helpers.assumeFormatted(
+  it('json() (default) sets info[MESSAGE]', assumeFormatted(
     json(),
     { level: 'info', message: 'whatever' },
     (info, expected) => {
@@ -21,7 +22,7 @@ describe('json', () => {
     }
   ));
 
-  it('json({ space: 2 }) sets info[MESSAGE]', helpers.assumeFormatted(
+  it('json({ space: 2 }) sets info[MESSAGE]', assumeFormatted(
     json({ space: 2 }),
     { level: 'info', message: '2 spaces 4 lyfe' },
     (info, expected) => {
@@ -33,7 +34,7 @@ describe('json', () => {
     }
   ));
 
-  it('json({ replacer }) sets info[MESSAGE]', helpers.assumeFormatted(
+  it('json({ replacer }) sets info[MESSAGE]', assumeFormatted(
     json({
       replacer: function onlyLevelAndMessage(key, value) {
         if (key === 'filtered') { return undefined; }
@@ -52,5 +53,26 @@ describe('json', () => {
     }
   ));
 
-  it('exposes the Format prototype', helpers.assumeHasPrototype(json));
+
+  it('json() can handle circular JSON objects', (done) => {
+    // Define an info with a circular reference.
+    const circular = { level: 'info', message: 'has a circular ref ok!', filtered: true };
+    circular.self = { circular };
+
+    const fmt = json();
+    const stream = writable(info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.filtered).equals(true);
+      assume(info.level).equals('info');
+      assume(info.message).equals('has a circular ref ok!');
+      assume(info.self.circular).equals(circular);
+      assume(info[MESSAGE]).equals(jsonStringify(circular));
+      done();
+    });
+
+    stream.write(fmt.transform(circular, fmt.options));
+  });
+
+  it('exposes the Format prototype', assumeHasPrototype(json));
 });

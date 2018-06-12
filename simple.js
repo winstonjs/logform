@@ -3,6 +3,7 @@
 
 const format = require('./format');
 const { MESSAGE } = require('triple-beam');
+const jsonStringify = require('fast-safe-stringify');
 
 /*
  * function simple (info)
@@ -15,7 +16,7 @@ const { MESSAGE } = require('triple-beam');
  *    ${level}: ${message} ${JSON.stringify(rest)}    otherwise
  */
 module.exports = format(info => {
-  const stringifiedRest = JSON.stringify(Object.assign({}, info, {
+  const stringifiedRest = jsonStringify(Object.assign({}, info, {
     level: undefined,
     message: undefined,
     splat: undefined

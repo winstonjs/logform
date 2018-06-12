@@ -2,6 +2,7 @@
 
 const format = require('./format');
 const { MESSAGE } = require('triple-beam');
+const jsonStringify = require('fast-safe-stringify');
 
 /*
  * function replacer (key, value)
@@ -20,6 +21,6 @@ function replacer(key, value) {
  * to transports in `winston < 3.0.0`.
  */
 module.exports = format((info, opts) => {
-  info[MESSAGE] = JSON.stringify(info, opts.replacer || replacer, opts.space);
+  info[MESSAGE] = jsonStringify(info, opts.replacer || replacer, opts.space);
   return info;
 });

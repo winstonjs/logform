@@ -13,11 +13,11 @@ exports.setupLevels = () => {
 };
 
 /*
- * Returns a new writeable stream with the specified write function.
+ * Returns a new writable stream with the specified write function.
  * @param {function} write Write function for the specified stream
- * @returns {stream.Writeable} A writeable stream instance
+ * @returns {stream.Writeable} A writable stream instance
  */
-exports.writeable = write => (
+exports.writable = write => (
   new stream.Writable({
     write,
     objectMode: true
@@ -41,12 +41,12 @@ exports.infoify = info => {
  */
 exports.assumeFormatted = (fmt, info, assertion) => {
   return done => {
-    const writeable = exports.writeable(actual => {
+    const writable = exports.writable(actual => {
       assertion(actual, info);
       done();
     });
 
-    writeable.write(fmt.transform(Object.assign({}, info), fmt.options));
+    writable.write(fmt.transform(Object.assign({}, info), fmt.options));
   };
 };
 
