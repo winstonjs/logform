@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 1.9.0
+**2018/06/12**
+
+- [#38] Migrate functionality from winston Logger to splat format.
+- [#37] Match expectations from `winston@2.x` for padLevels. Create a correct `Cli` format with initial state. (Fixes [#36]).
+
 ### 1.8.0
 **2018/06/11**
 
