@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 1.8.0
+**2018/06/11**
+
+- [#35] Use `fast-safe-stringify` for perf and to support circular refs.
+- [#34] Colorize level symbol.
+
 ### 1.7.0
 **2018/05/24**
 
