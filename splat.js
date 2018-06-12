@@ -9,7 +9,7 @@ const { SPLAT } = require('triple-beam');
  * https://github.com/nodejs/node/blob/b1c8f15c5f169e021f7c46eb7b219de95fe97603/lib/util.js#L201-L230
  * @type {RegExp}
  */
-const formatRegExp = /%[sdjifoO%]/g;
+const formatRegExp = /%[scdjifoO%]/g;
 
 /**
  * Captures the number of escaped % signs in a format string (i.e. %s strings).
