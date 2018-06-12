@@ -1,6 +1,7 @@
 'use strict';
 
 const colors = require('colors/safe');
+const { LEVEL } = require('triple-beam');
 
 //
 // Fix colors not appearing in non-tty environments
@@ -56,10 +57,10 @@ class Colorizer {
   }
 
   /*
-   * function colorize (level, message)
+   * function colorize (lookup, level, message)
    * Performs multi-step colorization using colors/safe
    */
-  colorize(level, message) {
+  colorize(lookup, level, message) {
     if (typeof message === 'undefined') {
       message = level;
     }
@@ -68,16 +69,16 @@ class Colorizer {
     // If the color for the level is just a string
     // then attempt to colorize the message with it.
     //
-    if (!Array.isArray(Colorizer.allColors[level])) {
-      return colors[Colorizer.allColors[level]](message);
+    if (!Array.isArray(Colorizer.allColors[lookup])) {
+      return colors[Colorizer.allColors[lookup]](message);
     }
 
     //
     // If it is an Array then iterate over that Array, applying
     // the colors function for each item.
     //
-    for (let i = 0, len = Colorizer.allColors[level].length; i < len; i++) {
-      message = colors[Colorizer.allColors[level][i]](message);
+    for (let i = 0, len = Colorizer.allColors[lookup].length; i < len; i++) {
+      message = colors[Colorizer.allColors[lookup][i]](message);
     }
 
     return message;
@@ -89,13 +90,12 @@ class Colorizer {
    * `logform` info object.
    */
   transform(info, opts) {
-    const { level } = info;
     if (opts.level || opts.all || !opts.message) {
-      info.level = this.colorize(level);
+      info.level = this.colorize(info[LEVEL], info.level);
     }
 
     if (opts.all || opts.message) {
-      info.message = this.colorize(level, info.message);
+      info.message = this.colorize(info[LEVEL], info.level, info.message);
     }
 
     return info;

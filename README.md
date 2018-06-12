@@ -37,7 +37,7 @@ The `info` parameter provided to a given format represents a single log message.
 
 As a consumer you may add whatever properties you wish – _internal state is maintained by `Symbol` properties:_
 
-- `Symbol.for('level')` _**(READ-ONLY)**:_equal to `level` property. Is treated as immutable by all code.  
+- `Symbol.for('level')` _**(READ-ONLY)**:_ equal to `level` property. Is treated as immutable by all code.
 - `Symbol.for('message'):` complete string message set by "finalizing formats": `json`, `logstash`, `printf`, `prettyPrint`, and `simple`. 
 
 ## Understanding formats

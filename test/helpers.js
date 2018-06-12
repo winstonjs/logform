@@ -4,7 +4,7 @@ const stream = require('stream');
 const assume = require('assume');
 const format = require('../format');
 const levels = require('../levels');
-const { configs } = require('triple-beam');
+const { configs, LEVEL, MESSAGE } = require('triple-beam');
 
 exports.setupLevels = () => {
   levels(configs.cli);
@@ -23,6 +23,16 @@ exports.writeable = write => (
     objectMode: true
   })
 );
+
+/*
+ * Returns the provided `info` object with the appropriate LEVEL,
+ * and MESSAGE symbols defined.
+ */
+exports.infoify = info => {
+  info[LEVEL] = info.level;
+  info[MESSAGE] = info.message;
+  return info;
+};
 
 /*
  * Simple test helper which creates an instance
