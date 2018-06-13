@@ -33,7 +33,7 @@ class Splatter {
    */
   _splat(info, tokens) {
     const msg = info.message;
-    const splat = info[SPLAT];
+    const splat = info[SPLAT] || [];
     const percents = msg.match(escapedPercent);
     const escapes = percents && percents.length || 0;
 
