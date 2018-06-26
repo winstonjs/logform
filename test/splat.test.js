@@ -42,6 +42,13 @@ describe('splat', () => {
     'test %j', [{ number: 123 }], 'test {"number":123}'
   ));
 
+  it('balanced number of arguments to % | does not have "meta"', assumeSplat(
+    'test %j', [{ number: 123 }], info => {
+      assume(info.message).equals('test {"number":123}');
+      assume(info.meta).equals(undefined);
+    }
+  ));
+
   it('%% | escaped % sets info.message', assumeSplat(
     'test %d%%', [100], 'test 100%'
   ));
