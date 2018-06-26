@@ -74,15 +74,15 @@ describe('splat', () => {
   ));
 
   it('No [SPLAT] does not crash', () => {
-  return helpers.assumeFormatted(
-    splat(),
-    { level: 'info', message: 'Why hello %s!' },
-    info => {
-      assume(info.level).is.a('string');
-      assume(info.message).is.a('string');
-      assume(info[SPLAT]).equals(undefined);
-      assume(info.message).equals('Why hello %s!');
-    }
-  );
+    return helpers.assumeFormatted(
+      splat(),
+      { level: 'info', message: 'Why hello %s!' },
+      info => {
+        assume(info.level).is.a('string');
+        assume(info.message).is.a('string');
+        assume(info[SPLAT]).equals(undefined);
+        assume(info.message).equals('Why hello %s!');
+      }
+    );
   });
 });
