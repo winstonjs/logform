@@ -61,7 +61,7 @@ class Splatter {
     // can assign this to the `info` object and write it to our format stream.
     if (metas.length === 1) {
       info.meta = metas[0];
-    } else {
+    } else if (metas.length) {
       info.meta = metas;
     }
 

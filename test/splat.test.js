@@ -42,6 +42,13 @@ describe('splat', () => {
     'test %j', [{ number: 123 }], 'test {"number":123}'
   ));
 
+  it('balanced number of arguments to % | does not have "meta"', assumeSplat(
+    'test %j', [{ number: 123 }], info => {
+      assume(info.message).equals('test {"number":123}');
+      assume(info.meta).equals(undefined);
+    }
+  ));
+
   it('%% | escaped % sets info.message', assumeSplat(
     'test %d%%', [100], 'test 100%'
   ));
@@ -65,4 +72,17 @@ describe('splat', () => {
       assume(info.meta).deep.equals({ today: true });
     }
   ));
+
+  it('No [SPLAT] does not crash', () => {
+  return helpers.assumeFormatted(
+    splat(),
+    { level: 'info', message: 'Why hello %s!' },
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info[SPLAT]).equals(undefined);
+      assume(info.message).equals('Why hello %s!');
+    }
+  );
+  });
 });
