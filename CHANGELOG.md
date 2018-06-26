@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 1.9.1
+**2018/06/26**
+
+- [#39] Don't break when there are % placeholders but no values.
+- [#42] Only set `meta` when non-zero additional `SPLAT` arguments are
+  provided. (Fixes [winstonjs/winston#1358]).
+
 ### 1.9.0
 **2018/06/12**
 
@@ -85,3 +92,5 @@
 **2017/09/26**
 
 - Initial release.
+
+[winstonjs/winston#1358]: https://github.com/winstonjs/winston/issues/1358
