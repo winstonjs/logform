@@ -30,6 +30,10 @@ function assumeSplat(message, spread, expected) {
 }
 
 describe('splat', () => {
+  it('basic string', assumeSplat(
+    'just a string', [], 'just a string'
+  ));
+
   it('%s | string placeholder sets info.message', assumeSplat(
     'alright %s', ['what'], 'alright what'
   ));
@@ -49,18 +53,35 @@ describe('splat', () => {
     }
   ));
 
+  it('more arguments than % | multiple "meta"', assumeSplat(
+    'test %j', [{ number: 123 }, { an: 'object' }, ['an', 'array']], info => {
+      assume(info.message).equals('test {"number":123}');
+      assume(info.meta).deep.equals([{ an: 'object' }, ['an', 'array']]);
+    }
+  ));
+
   it('%% | escaped % sets info.message', assumeSplat(
     'test %d%%', [100], 'test 100%'
   ));
 
-  it('no % and no splat | returns the same info', assumeSplat(
-    'nothing to see here', [], 'nothing to see here'
+  it('no % and one object | returns the message and meta', assumeSplat(
+    'see an object', [{ an: 'object' }], info => {
+      assume(info.message).equals('see an object');
+      assume(info.meta).deep.equals({ an: 'object' });
+    }
+  ));
+
+  it('no % and two objects | returns the string and two objects', assumeSplat(
+    'lots to see here', [{ an: 'object' }, ['an', 'array']], info => {
+      assume(info.message).equals('lots to see here');
+      assume(info.meta).deep.equals([{ an: 'object' }, ['an', 'array']]);
+    }
   ));
 
   it('no % but some splat | returns the same info', assumeSplat(
     'Look! No tokens!', ['ok'], info => {
       assume(info.message).equals('Look! No tokens!');
-      assume(info.meta).equals(undefined);
+      assume(info.meta).equals('ok');
     }
   ));
 

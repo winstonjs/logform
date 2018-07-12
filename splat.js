@@ -23,14 +23,14 @@ class Splatter {
   }
 
   /**
-   * Check to see if tokens <= splat.length, assign { splat, meta } into the
-   * `info` accordingly, and write to this instance.
-   *
-   * @param  {Info} info Logform info message.
-   * @param  {String[]} tokens Set of string interpolation tokens.
-   * @returns {Info} Modified info message
-   * @private
-   */
+     * Check to see if tokens <= splat.length, assign { splat, meta } into the
+     * `info` accordingly, and write to this instance.
+     *
+     * @param  {Info} info Logform info message.
+     * @param  {String[]} tokens Set of string interpolation tokens.
+     * @returns {Info} Modified info message
+     * @private
+     */
   _splat(info, tokens) {
     const msg = info.message;
     const splat = info[SPLAT] || [];
@@ -70,14 +70,14 @@ class Splatter {
   }
 
   /**
-   * Transforms the `info` message by using `util.format` to complete
-   * any `info.message` provided it has string interpolation tokens.
-   * If no tokens exist then `info` is immutable.
-   *
-   * @param  {Info} info Logform info message.
-   * @param  {Object} opts Options for this instance.
-   * @returns {Info} Modified info message
-   */
+     * Transforms the `info` message by using `util.format` to complete
+     * any `info.message` provided it has string interpolation tokens.
+     * If no tokens exist then `info` is immutable.
+     *
+     * @param  {Info} info Logform info message.
+     * @param  {Object} opts Options for this instance.
+     * @returns {Info} Modified info message
+     */
   transform(info) {
     const msg = info.message;
     const splat = info[SPLAT];
@@ -86,6 +86,23 @@ class Splatter {
     // then let evaluation continue.
     const tokens = msg && msg.match && msg.match(formatRegExp);
     if (!tokens && (!splat || !splat.length)) {
+      return info;
+    }
+
+    // This condition will take care of inputs with info[SPLAT]
+    // but no tokens present
+    if (!tokens && (splat || splat.length)) {
+      const metas = splat.length > 1
+        ? splat.splice(0)
+        : splat;
+
+      // Now that { splat } has been separated from any potential { meta }. we
+      // can assign this to the `info` object and write it to our format stream.
+      if (metas.length === 1) {
+        info.meta = metas[0];
+      } else if (metas.length) {
+        info.meta = metas;
+      }
       return info;
     }
 
