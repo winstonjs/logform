@@ -33,39 +33,20 @@ class Splatter {
      */
   _splat(info, tokens) {
     const msg = info.message;
-    const splat = info[SPLAT] || [];
+    const splat = info[SPLAT] || info.splat || [];
     const percents = msg.match(escapedPercent);
     const escapes = percents && percents.length || 0;
 
-    // The expected splat is the number of tokens minus the number of escapes
-    // e.g.
-    // - { expectedSplat: 3 } '%d %s %j'
-    // - { expectedSplat: 5 } '[%s] %d%% %d%% %s %j'
-    //
-    // Any "meta" will be arugments in addition to the expected splat size
-    // regardless of type. e.g.
-    //
-    // logger.log('info', '%d%% %s %j', 100, 'wow', { such: 'js' }, { thisIsMeta: true });
-    // would result in splat of four (4), but only three (3) are expected. Therefore:
-    //
-    // extraSplat = 3 - 4 = -1
-    // metas = [100, 'wow', { such: 'js' }, { thisIsMeta: true }].splice(-1, -1 * -1);
-    // splat = [100, 'wow', { such: 'js' }]
+    // We only process the number of splats that we expect.
+    // All other splats will be processed (if desired),
+    // by another transform.
     const expectedSplat = tokens.length - escapes;
-    const extraSplat = expectedSplat - splat.length;
-    const metas = extraSplat < 0
-      ? splat.splice(extraSplat, -1 * extraSplat)
+    const splatMerge = expectedSplat > 0
+      ? splat.splice(0, expectedSplat)
       : [];
 
-    // Now that { splat } has been separated from any potential { meta }. we
-    // can assign this to the `info` object and write it to our format stream.
-    if (metas.length === 1) {
-      info.meta = metas[0];
-    } else if (metas.length) {
-      info.meta = metas;
-    }
+    info.message = util.format(msg, ...splatMerge);
 
-    info.message = util.format(msg, ...splat);
     return info;
   }
 
@@ -80,29 +61,12 @@ class Splatter {
      */
   transform(info) {
     const msg = info.message;
-    const splat = info[SPLAT];
+    const splat = info[SPLAT] || info.splat;
 
     // Evaluate if the message has any interpolation tokens. If not,
     // then let evaluation continue.
     const tokens = msg && msg.match && msg.match(formatRegExp);
     if (!tokens && (!splat || !splat.length)) {
-      return info;
-    }
-
-    // This condition will take care of inputs with info[SPLAT]
-    // but no tokens present
-    if (!tokens && (splat || splat.length)) {
-      const metas = splat.length > 1
-        ? splat.splice(0)
-        : splat;
-
-      // Now that { splat } has been separated from any potential { meta }. we
-      // can assign this to the `info` object and write it to our format stream.
-      if (metas.length === 1) {
-        info.meta = metas[0];
-      } else if (metas.length) {
-        info.meta = metas;
-      }
       return info;
     }
 

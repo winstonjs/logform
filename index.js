@@ -50,3 +50,4 @@ exposeFormat('simple');
 exposeFormat('splat');
 exposeFormat('timestamp');
 exposeFormat('uncolorize');
+exposeFormat('captureAllMeta');

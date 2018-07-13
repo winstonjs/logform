@@ -29,5 +29,9 @@ module.exports = format(info => {
     info[MESSAGE] = `${info.level}:${padding} ${info.message}`;
   }
 
+  if (info.meta) {
+    info[MESSAGE] += `\n\t ${info.meta}`;
+  }
+
   return info;
 });
