@@ -106,4 +106,22 @@ describe('splat', () => {
       }
     );
   });
+
+  it('tests info.splat as passed in with an object', () => {
+    return helpers.assumeFormatted(
+      splat(),
+      {
+        level: 'info',
+        message: '%d: The answer to life, the universe and everything',
+        splat: [42]
+      },
+      info => {
+        assume(info.level).is.a('string');
+        assume(info.message).is.a('string');
+
+        assume(info.message).equals('info: 42: The answer to life, the universe and everything');
+      }
+    );
+  });
+
 });
