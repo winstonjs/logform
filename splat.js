@@ -33,7 +33,7 @@ class Splatter {
      */
   _splat(info, tokens) {
     const msg = info.message;
-    const splat = info[SPLAT] || [];
+    const splat = info[SPLAT] || info.splat || [];
     const percents = msg.match(escapedPercent);
     const escapes = percents && percents.length || 0;
 
@@ -80,7 +80,7 @@ class Splatter {
      */
   transform(info) {
     const msg = info.message;
-    const splat = info[SPLAT];
+    const splat = info[SPLAT] || info.splat;
 
     // Evaluate if the message has any interpolation tokens. If not,
     // then let evaluation continue.
