@@ -18,12 +18,22 @@ class CaptureAllMeta {
   transform(info) {
     const splat = info[SPLAT] || [];
 
+    info.meta = [];
+    // capture all info[SPLAT] entries
     if (Array.isArray(splat)) {
 
       info.meta = splat;
     } else {
-      info.meta = [];
+      // info.meta = [];
       info.meta[0] = splat;
+    }
+    console.log('info.splat: %s', info.splat);
+    // if user passes an object with info.splat
+    if (info.splat) {
+      console.log('info.meta before: %s', info.meta);
+      info.meta = info.meta.concat(info.splat);
+      console.log('info.meta after: %s', info.meta);
+
     }
 
     // console.log('with meta...', JSON.stringify(info));
