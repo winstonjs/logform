@@ -27,7 +27,7 @@ class CaptureAllMeta {
       // info.meta = [];
       info.meta[0] = splat;
     }
-    console.log('info.splat: %s', info.splat);
+
     // if user passes an object with info.splat
     if (info.splat) {
       console.log('info.meta before: %s', info.meta);
@@ -36,7 +36,6 @@ class CaptureAllMeta {
 
     }
 
-    // console.log('with meta...', JSON.stringify(info));
     return info;
   }
 
