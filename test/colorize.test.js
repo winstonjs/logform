@@ -3,7 +3,7 @@
 const assume = require('assume');
 const colors = require('colors/safe');
 const { configs, LEVEL } = require('triple-beam');
-const colorize = require('../colorize');
+const colorize = require('../src/colorize');
 const Colorizer = colorize.Colorizer;
 const {
   assumeHasPrototype,
