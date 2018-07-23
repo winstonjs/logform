@@ -1,7 +1,7 @@
 'use strict';
 
 const assume = require('assume');
-const timestamp = require('../timestamp');
+const timestamp = require('../src/timestamp');
 const helpers = require('./helpers');
 
 describe('timestamp', () => {
