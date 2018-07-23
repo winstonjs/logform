@@ -2,12 +2,14 @@
   "name": "logform",
   "version": "1.9.1",
   "description": "An mutable object-based log format designed for chaining & objectMode streams.",
-  "main": "index.js",
+  "main": "./build/index.js",
   "browser": "browser.js",
   "scripts": {
     "lint": "populist *.js test/*.js examples/*.js",
     "pretest": "npm run lint",
-    "test": "nyc mocha test/*.test.js"
+    "test": "nyc mocha test/*.test.js",
+    "build": "./node_modules/.bin/rimraf build && babel src --out-dir build --ignore node_modules,test,build,examples",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -36,6 +38,9 @@
     "assume": "^2.0.1",
     "eslint-config-populist": "^4.1.0",
     "mocha": "^5.1.1",
-    "nyc": "^11.7.1"
+    "nyc": "^11.7.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "rimraf": "^2.6.2"
   }
 }
