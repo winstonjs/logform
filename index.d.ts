@@ -33,12 +33,17 @@ export function format(transform: TransformFunction): FormatWrap;
 
 export function levels(config: object): object;
 
+export interface JsonOpts {
+    replacer?: (key: string, value: any) => any,
+    space?: string | number
+}
+
 export namespace format {
   function align(opts?: object): Format;
   function cli(opts?: object): Format;
   function colorize(opts?: object): Colorizer;
   function combine(...formats: Format[]): Format;
-  function json(opts?: object): Format;
+  function json(opts?: JsonOpts): Format;
   function label(opts?: object): Format;
   function logstash(opts?: object): Format;
   function metadata(opts?: object): Format;  
