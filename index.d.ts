@@ -34,8 +34,8 @@ export function format(transform: TransformFunction): FormatWrap;
 export function levels(config: object): object;
 
 export interface JsonOpts {
-    replacer?: (key: string, value: any) => any,
-    space?: string | number
+  replacer?: (key: string, value: any) => any,
+  space?: string | number
 }
 
 export namespace format {
