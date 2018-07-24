@@ -82,12 +82,14 @@ class Splatter {
     const msg = info.message;
     const splat = info[SPLAT] || info.splat;
 
-    // Evaluate if the message has any interpolation tokens. If not,
-    // then let evaluation continue.
-    const tokens = msg && msg.match && msg.match(formatRegExp);
-    if (!tokens && (!splat || !splat.length)) {
+    // No need to process anything if splat is undefined
+    if (!splat || !splat.length) {
       return info;
     }
+
+    // Extract tokens, if none available default to empty array to
+    // ensure consistancy in expected results
+    const tokens = msg && msg.match && msg.match(formatRegExp);
 
     // This condition will take care of inputs with info[SPLAT]
     // but no tokens present

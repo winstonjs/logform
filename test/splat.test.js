@@ -78,6 +78,13 @@ describe('splat', () => {
     }
   ));
 
+  it('no % and no splat | returns the same info', assumeSplat(
+    'nothing to see here', [], info => {
+      assume(info.message).equals('nothing to see here');
+      assume(info.meta).equals(undefined);
+    }
+  ));
+
   it('no % but some splat | returns the same info', assumeSplat(
     'Look! No tokens!', ['ok'], info => {
       assume(info.message).equals('Look! No tokens!');
