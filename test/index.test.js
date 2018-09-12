@@ -2,8 +2,8 @@
 
 const assume = require('assume');
 const logform = {
-  node: require('../index'),
-  browser: require('../browser')
+  node: require('../src/index'),
+  browser: require('../src/browser')
 };
 
 const expectedFormats = [

@@ -2,7 +2,7 @@
 
 const assume = require('assume');
 const colors = require('colors/safe');
-const cli = require('../cli');
+const cli = require('../src/cli');
 const {
   assumeFormatted,
   assumeHasPrototype,
