@@ -9,7 +9,7 @@
     "pretest": "npm run lint && npm run build",
     "test": "nyc mocha test/*.test.js",
     "build": "rimraf dist && babel *.js -d ./dist",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
