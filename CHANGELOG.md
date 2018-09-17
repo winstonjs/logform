@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 1.10.0
+**2018/09/17**
+
+- [#52] Add types field in package.json.
+- [#46], [#49] Changes for splat when there are no tokens present and no splat present.
+- [#47], [#53] Expose transpiled code for Browser-only scenarios.  
+
 ### 1.9.1
 **2018/06/26**
 
