@@ -2,8 +2,13 @@
 
 const assume = require('assume');
 const logform = {
-  node: require('../src/index'),
-  browser: require('../src/browser')
+  node: require('../index'),
+  browser: require('../browser')
+};
+
+const transpiled = {
+  node: require('../dist/index'),
+  browser: require('../dist/browser')
 };
 
 const expectedFormats = [
@@ -49,3 +54,6 @@ function assumeLogform(obj) {
 
 describe('logform (node)', assumeLogform(logform.node));
 describe('logform (browser)', assumeLogform(logform.browser));
+
+describe('logform (node, transpiled)', assumeLogform(transpiled.node));
+describe('logform (browser, transpiled)', assumeLogform(transpiled.browser));

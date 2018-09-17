@@ -1,9 +1,9 @@
 'use strict';
 
 const assume = require('assume');
-const combine = require('../src/combine');
-const logstash = require('../src/logstash');
-const timestamp = require('../src/timestamp');
+const combine = require('../combine');
+const logstash = require('../logstash');
+const timestamp = require('../timestamp');
 const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 const TIMESTAMP = Symbol.for('timestamp');

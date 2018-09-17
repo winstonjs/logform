@@ -2,11 +2,11 @@
 
 const assume = require('assume');
 const colors = require('colors/safe');
-const colorize = require('../src/colorize');
-const combine = require('../src/combine');
-const format = require('../src/format');
-const simple = require('../src/simple');
-const uncolorize = require('../src/uncolorize');
+const colorize = require('../colorize');
+const combine = require('../combine');
+const format = require('../format');
+const simple = require('../simple');
+const uncolorize = require('../uncolorize');
 const { assumeFormatted, infoify, setupLevels } = require('./helpers');
 const { LEVEL, MESSAGE } = require('triple-beam');
 const COLORED = Symbol.for('colored');

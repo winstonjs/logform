@@ -2,7 +2,7 @@
 
 const assume = require('assume');
 const helpers = require('./helpers');
-const ms = require('../src/ms');
+const ms = require('../ms');
 const { MESSAGE } = require('triple-beam');
 
 describe('ms', () => {

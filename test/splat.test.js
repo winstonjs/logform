@@ -2,7 +2,7 @@
 
 const { SPLAT } = require('triple-beam');
 const assume = require('assume');
-const splat = require('../src/splat');
+const splat = require('../splat');
 const helpers = require('./helpers');
 
 /*
