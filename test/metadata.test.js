@@ -1,7 +1,7 @@
 'use strict';
 
 const assume = require('assume');
-const metadata = require('../src/metadata');
+const metadata = require('../metadata');
 const helpers = require('./helpers');
 
 describe('metadata', () => {

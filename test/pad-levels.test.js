@@ -6,7 +6,7 @@ const {
   assumeHasPrototype,
   infoify
 } = require('./helpers');
-const padLevels = require('../src/pad-levels');
+const padLevels = require('../pad-levels');
 const { configs, MESSAGE } = require('triple-beam');
 const Padder = padLevels.Padder;
 

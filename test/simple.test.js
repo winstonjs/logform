@@ -1,7 +1,7 @@
 'use strict';
 
 const assume = require('assume');
-const simple = require('../src/simple');
+const simple = require('../simple');
 const helpers = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 

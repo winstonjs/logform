@@ -60,6 +60,6 @@ typings/
 # idea project settings
 .idea
 
-# pre-compiled directory
-build
+# Transpiled code
+dist
 

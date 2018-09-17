@@ -1,7 +1,7 @@
 'use strict';
 
 const assume = require('assume');
-const logform = require('../src/index');
+const logform = require('../index');
 const { formatFns } = require('./helpers');
 const { format } = logform;
 
