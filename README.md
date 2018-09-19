@@ -1,6 +1,6 @@
 # logform
 
-An mutable object-based log format designed for chaining & objectMode streams.
+A mutable object-based log format designed for chaining & objectMode streams.
 
 ``` js
 const { format } = require('logform');
