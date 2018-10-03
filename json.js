@@ -20,7 +20,7 @@ function replacer(key, value) {
  * object into pure JSON. This was previously exposed as { json: true }
  * to transports in `winston < 3.0.0`.
  */
-module.exports = format((info, opts) => {
+module.exports = format((info, opts = {}) => {
   info[MESSAGE] = jsonStringify(info, opts.replacer || replacer, opts.space);
   return info;
 });

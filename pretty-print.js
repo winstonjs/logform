@@ -10,7 +10,7 @@ const { LEVEL, MESSAGE } = require('triple-beam');
  * serializes `info` objects. This was previously exposed as
  * { prettyPrint: true } to transports in `winston < 3.0.0`.
  */
-module.exports = format((info, opts) => {
+module.exports = format((info, opts = {}) => {
   // info[LEVEL] is enumerable here, so util.inspect would print it; so it must be manually stripped
   const strippedInfo = Object.assign({}, info);
   delete strippedInfo[LEVEL];
