@@ -60,9 +60,9 @@ class Splatter {
     // Now that { splat } has been separated from any potential { meta }. we
     // can assign this to the `info` object and write it to our format stream.
     if (metas.length === 1) {
-      info.meta = metas[0];
+      Object.assign(info, metas[0]);
     } else if (metas.length) {
-      info.meta = metas;
+      Object.assign(info, metas);
     }
 
     info.message = util.format(msg, ...splat);
