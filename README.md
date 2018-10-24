@@ -17,6 +17,22 @@ const alignedWithColorsAndTime = format.combine(
 - [Understanding formats](#understanding-formats)
   - [Combining formats](#combining-formats)
   - [Filtering `info` objects](#filtering-info-objects)
+- [Formats](#formats)
+  - [Align](#align)
+  - [CLI](#cli)
+  - [Colorize](#colorize)
+  - [Combine](#combine)
+  - [JSON](#json)
+  - [Label](#label)
+  - [Logstash](#logstash)
+  - [Metadata](#metadata)
+  - [PadLevels](#padlevels)
+  - [PrettyPrint](#prettyprint)
+  - [Printf](#printf)
+  - [Simple](#simple)
+  - [Splat](#splat)
+  - [Timestamp](#timestamp)
+  - [Uncolorize](#uncolorize)
 
 ## `info` Objects
 
@@ -157,6 +173,355 @@ console.dir(willNeverThrow.transform({
   message: 'wow such testing'
 }))
 ```
+
+## Formats
+
+### Align
+
+The `align` format adds a `\t` delimiter before the message to align it in the same place.
+
+```js
+const { format } = require('logform');
+
+const alignFormat = format.align();
+
+const info = alignFormat.transform({
+  level: 'info',
+  message: 'my message'
+});
+
+console.log(info);
+// { level: 'info', message: '\tmy message' }
+```
+
+This was previously exposed as `{ align: true }` in `winston < 3.0.0`.
+
+### CLI
+
+The `cli` format is a combination of the `colorize` and the `padLevels` formats. It turns a log  `info` object into the same format previously available in `winston.cli()` in `winston < 3.0.0`.
+
+```js
+const { format } = require('logform');
+const LEVEL = Symbol.for('level');
+
+const cliFormat = format.cli({ colors: { info: 'blue' }});
+
+const info = cliFormat.transform({
+  [LEVEL]: 'info',
+  level: 'info',
+  message: 'my message'
+}, { all: true });
+
+console.log(info);
+// { level: '\u001b[34minfo\u001b[39m',
+//   message: '\u001b[34m    my message\u001b[39m',
+//   [Symbol(level)]: 'info',
+//   [Symbol(message)]:
+//    '\u001b[34minfo\u001b[39m:\u001b[34m    my message\u001b[39m' }
+```
+
+### Colorize
+
+The `colorize` format adds different colors depending on the log level to the message and/or level.
+It accepts the following options:
+
+* **level**: If set to `true` the color will be applied to the `level`.
+* **all**: If set to `true` the color will be applied to the `message` and `level`.
+* **message**: If set to `true` the color will be applied to the `message`.
+* **colors**: An object containing the colors for the log levels. For example: `{ info: 'blue', error: 'red' }`
+
+```js
+const { format } = require('logform');
+const LEVEL = Symbol.for('level');
+
+const colorizeFormat = format.colorize({ colors: { info: 'blue' }});
+
+const info = colorizeFormat.transform({
+  [LEVEL]: 'info',
+  level: 'info',
+  message: 'my message'
+}, { all: true });
+
+console.log(info);
+// { level: '\u001b[34minfo\u001b[39m',
+//   message: '\u001b[34mmy message\u001b[39m',
+//   [Symbol(level)]: 'info' }
+```
+
+This was previously exposed as `{ colorize: true }` to transports in `winston < 3.0.0`.
+
+### Combine
+
+The `combine` Format allows to combine multiple formats:
+
+```js
+const { format } = require('logform');
+const { combine, timestamp, json } = format;
+
+const jsonWithTimestamp = combine(
+  timestamp(),
+  json()
+);
+
+const info = jsonWithTimestamp.transform({
+  level: 'info',
+  message: 'my message'
+});
+
+console.log(info);
+// { level: 'info',
+//   message: 'my message',
+//   timestamp: '2018-10-02T15:03:14.230Z',
+//   [Symbol(message)]:
+//    '{"level":"info","message":"my message","timestamp":"2018-10-02T15:03:14.230Z"}' }
+```
+
+### JSON
+
+The `json` format uses `fast-safe-stringify` to finalize the message.
+It accepts the following options:
+
+* **replacer**: A function that influences how the `info` is stringified.
+* **space**: The number of white space used to format the json.
+
+```js
+const { format } = require('logform');
+
+const jsonFormat = format.json();
+
+const info = jsonFormat.transform({
+  level: 'info',
+  message: 'my message',
+});
+console.log(info);
+// { level: 'info',
+//   message: 'my message',
+//   [Symbol(message)]: '{"level":"info","message":"my message"}' }
+```
+
+This was previously exposed as `{ json: true }` to transports in `winston < 3.0.0`.
+
+### Label
+
+The `label` format adds the specified `label` before the message or adds it to the `info` object.
+It accepts the following options:
+
+* **label**: A label to be added before the message.
+* **message**: If set to `true` the `label` will be added to `info.message`. If set to `false` the `label` will be added as `info.label`.
+
+```js
+const { format } = require('logform');
+
+const labelFormat = format.label();
+
+const info = labelFormat.transform({
+  level: 'info',
+  message: 'my message'
+}, { label: 'my label', message: true });
+
+console.log(info);
+// { level: 'info', message: '[my label] my message' }
+```
+
+This was previously exposed as `{ label: 'my label' }` to transports in `winston < 3.0.0`.
+
+### Logstash
+
+The `logstash` Format turns a log `info` object into pure JSON with the appropriate logstash options.
+
+```js
+const { format } = require('logform');
+const { logstash, combine, timestamp } = format;
+
+const logstashFormat = combine(
+  timestamp(),
+  logstash()
+);
+
+const info = logstashFormat.transform({
+  level: 'info',
+  message: 'my message'
+});
+
+console.log(info);
+// { level: 'info',
+//   [Symbol(message)]:
+//    '{"@message":"my message","@timestamp":"2018-10-02T11:04:52.915Z","@fields":{"level":"info"}}' }
+```
+
+This was previously exposed as `{ logstash: true }` to transports in `winston < 3.0.0`.
+
+### Metadata
+
+The `metadata` format adds a metadata object to collect extraneous data, similar to the metadata object in winston 2.x.
+It accepts the following options:
+
+* **key**: The name of the key used for the metadata object. Defaults to `metadata`.
+* **fillExcept**: An array of keys that should not be added to the metadata object.
+* **fillWith**: An array of keys that will be added to the metadata object.
+
+```js
+const { format } = require('logform');
+
+const metadataFormat = format.metadata();
+
+const info = metadataFormat.transform({
+  level: 'info',
+  message: 'my message',
+  meta: 42
+});
+
+console.log(info);
+// { level: 'info', message: 'my message', metadata: { meta: 42 } }
+```
+
+### PadLevels
+
+The `padLevels` format pads levels to be the same length.
+
+```js
+const { format } = require('logform');
+const LEVEL = Symbol.for('level');
+
+const padLevelsFormat = format.padLevels();
+
+const info = padLevelsFormat.transform({
+  [LEVEL]: 'info',
+  message: 'my message'
+});
+
+console.log(info);
+// { message: '    my message', [Symbol(level)]: 'info' }
+```
+
+This was previously exposed as `{ padLevels: true }` to transports in `winston < 3.0.0`.
+
+### PrettyPrint
+
+The `prettyPrint` format finalizes the message using `util.inspect`.
+It accepts the following options:
+
+* **depth**: A `number` that specifies the maximum depth of the `info` object being stringified by `util.inspect`. Defaults to `2`.  
+* **colorize**: Colorizes the message if set to `true`. Defaults to `false`.
+
+The `prettyPrint` format should not be used in production because it may impact performance negatively and block the event loop.
+
+This was previously exposed as `{ prettyPrint: true }` to transports in `winston < 3.0.0`.
+
+```js
+const { format } = require('logform');
+
+const prettyPrintFormat = format.prettyPrint();
+
+const info = prettyPrintFormat.transform({
+  level: 'info',
+  message: 'my message'
+});
+
+console.log(info);
+// { level: 'info',
+//   message: 'my message',
+//   [Symbol(message)]: '{ level: \'info\', message: \'my message\' }' }
+```
+
+### Printf
+
+The `printf` format allows to create a custom logging format:
+
+```js
+const { format } = require('logform');
+
+const myFormat = format.printf((info) => {
+  return `${info.level} ${info.message}`;
+})
+
+const info = myFormat.transform({
+  level: 'info',
+  message: 'my message'
+});
+
+console.log(info);
+// { level: 'info',
+//   message: 'my message',
+//   [Symbol(message)]: 'info my message' }
+```
+
+### Simple
+
+The `simple` format finalizes the `info` object using the format: `level: message stringifiedRest`.
+```js
+const { format } = require('logform');
+const MESSAGE = Symbol.for('message');
+
+const simpleFormat = format.simple();
+
+const info = simpleFormat.transform({
+  level: 'info',
+  message: 'my message',
+  number: 123
+});
+console.log(info[MESSAGE]);
+// info: my message {number:123}
+```
+
+### Splat
+
+The `splat` format transforms the message by using `util.format` to complete any `info.message` provided it has string interpolation tokens.
+
+```js
+const { format } = require('logform');
+
+const jsonFormat = format.splat();
+
+const info = jsonFormat.transform({
+  level: 'info',
+  message: 'my message %s',
+  splat: ['test']
+});
+
+console.log(info);
+// { level: 'info', message: 'my message test', splat: [ 'test' ] }
+```
+
+This was previously exposed implicitly in `winston < 3.0.0`.
+
+### Timestamp
+
+The `timestamp` format adds a timestamp to the info. 
+It accepts the following options:
+
+* **format**: Either the format as a string accepted by the [fecha](https://github.com/taylorhakes/fecha) module or a function that returns a formatted date. If no format is provided `new Date().toISOString()` will be used.
+* **alias**: The name of an alias for the timestamp property, that will be added to the `info` object. 
+
+```js
+const { format } = require('logform');
+
+const timestampFormat = format.timestamp();
+
+const info = timestampFormat.transform({
+  level: 'info',
+  message: 'my message'
+});
+
+console.log(info);
+// { level: 'info',
+//   message: 'my message',
+//   timestamp: '2018-10-02T11:47:02.682Z' }
+```
+
+It was previously available in `winston < 3.0.0` as `{ timestamp: true }` and `{ timestamp: function:String }`.
+
+
+### Uncolorize
+
+The `uncolorize` format strips colors from `info` objects.
+It accepts the following options:
+
+* **level**: Disables the uncolorize format for `info.level` if set to `false`. 
+* **message**: Disables the uncolorize format for `info.message` if set to `false`. 
+* **raw**: Disables the uncolorize format for `info[MESSAGE]` if set to `false`. 
+
+This was previously exposed as `{ stripColors: true }` to transports in `winston < 3.0.0`.
 
 ## Tests
 
