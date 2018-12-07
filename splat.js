@@ -73,14 +73,14 @@ class Splatter {
   }
 
   /**
-     * Transforms the `info` message by using `util.format` to complete
-     * any `info.message` provided it has string interpolation tokens.
-     * If no tokens exist then `info` is immutable.
-     *
-     * @param  {Info} info Logform info message.
-     * @param  {Object} opts Options for this instance.
-     * @returns {Info} Modified info message
-     */
+    * Transforms the `info` message by using `util.format` to complete
+    * any `info.message` provided it has string interpolation tokens.
+    * If no tokens exist then `info` is immutable.
+    *
+    * @param  {Info} info Logform info message.
+    * @param  {Object} opts Options for this instance.
+    * @returns {Info} Modified info message
+    */
   transform(info) {
     const msg = info.message;
     const splat = info[SPLAT] || info.splat;
