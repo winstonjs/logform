@@ -59,10 +59,13 @@ class Splatter {
 
     // Now that { splat } has been separated from any potential { meta }. we
     // can assign this to the `info` object and write it to our format stream.
-    if (metas.length === 1) {
-      Object.assign(info, metas[0]);
-    } else if (metas.length) {
-      Object.assign(info, metas);
+    // If the additional metas are **NOT** objects or **LACK** enumerable properties
+    // you are going to have a bad time.
+    const metalen = metas.length;
+    if (metalen) {
+      for (let i = 0; i < metalen; i++) {
+        Object.assign(info, metas[i]);
+      }
     }
 
     info.message = util.format(msg, ...splat);
@@ -100,11 +103,15 @@ class Splatter {
 
       // Now that { splat } has been separated from any potential { meta }. we
       // can assign this to the `info` object and write it to our format stream.
-      if (metas.length === 1) {
-        info.meta = metas[0];
-      } else if (metas.length) {
-        info.meta = metas;
+      // If the additional metas are **NOT** objects or **LACK** enumerable properties
+      // you are going to have a bad time.
+      const metalen = metas.length;
+      if (metalen) {
+        for (let i = 0; i < metalen; i++) {
+          Object.assign(info, metas[i]);
+        }
       }
+
       return info;
     }
 
