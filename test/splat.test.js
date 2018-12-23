@@ -56,7 +56,9 @@ describe('splat', () => {
   it('more arguments than % | multiple "meta"', assumeSplat(
     'test %j', [{ number: 123 }, { an: 'object' }, ['an', 'array']], info => {
       assume(info.message).equals('test {"number":123}');
-      assume(info.meta).deep.equals([{ an: 'object' }, ['an', 'array']]);
+      assume(info.an).equals('object');
+      assume(info[0]).equals('an');
+      assume(info[1]).equals('array');
     }
   ));
 
@@ -64,17 +66,19 @@ describe('splat', () => {
     'test %d%%', [100], 'test 100%'
   ));
 
-  it('no % and one object | returns the message and meta', assumeSplat(
+  it('no % and one object | returns the message and properties', assumeSplat(
     'see an object', [{ an: 'object' }], info => {
       assume(info.message).equals('see an object');
-      assume(info.meta).deep.equals({ an: 'object' });
+      assume(info.an).equals('object');
     }
   ));
 
-  it('no % and two objects | returns the string and two objects', assumeSplat(
+  it('no % and two objects | returns the string and all properties', assumeSplat(
     'lots to see here', [{ an: 'object' }, ['an', 'array']], info => {
       assume(info.message).equals('lots to see here');
-      assume(info.meta).deep.equals([{ an: 'object' }, ['an', 'array']]);
+      assume(info.an).equals('object');
+      assume(info[0]).equals('an');
+      assume(info[1]).equals('array');
     }
   ));
 
@@ -85,10 +89,11 @@ describe('splat', () => {
     }
   ));
 
-  it('no % but some splat | returns the same info', assumeSplat(
+  it('no % but some splat | returns the same message with new properties', assumeSplat(
     'Look! No tokens!', ['ok'], info => {
       assume(info.message).equals('Look! No tokens!');
-      assume(info.meta).equals('ok');
+      assume(info[0]).equals('o');
+      assume(info[1]).equals('k');
     }
   ));
 
@@ -97,7 +102,7 @@ describe('splat', () => {
     ['Hi', 42, 'feeling', { today: true }],
     info => {
       assume(info.message).equals('Hi #42, how are you feeling');
-      assume(info.meta).deep.equals({ today: true });
+      assume(info.today).true();
     }
   ));
 

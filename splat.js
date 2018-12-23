@@ -59,10 +59,13 @@ class Splatter {
 
     // Now that { splat } has been separated from any potential { meta }. we
     // can assign this to the `info` object and write it to our format stream.
-    if (metas.length === 1) {
-      info.meta = metas[0];
-    } else if (metas.length) {
-      info.meta = metas;
+    // If the additional metas are **NOT** objects or **LACK** enumerable properties
+    // you are going to have a bad time.
+    const metalen = metas.length;
+    if (metalen) {
+      for (let i = 0; i < metalen; i++) {
+        Object.assign(info, metas[i]);
+      }
     }
 
     info.message = util.format(msg, ...splat);
@@ -70,14 +73,14 @@ class Splatter {
   }
 
   /**
-     * Transforms the `info` message by using `util.format` to complete
-     * any `info.message` provided it has string interpolation tokens.
-     * If no tokens exist then `info` is immutable.
-     *
-     * @param  {Info} info Logform info message.
-     * @param  {Object} opts Options for this instance.
-     * @returns {Info} Modified info message
-     */
+    * Transforms the `info` message by using `util.format` to complete
+    * any `info.message` provided it has string interpolation tokens.
+    * If no tokens exist then `info` is immutable.
+    *
+    * @param  {Info} info Logform info message.
+    * @param  {Object} opts Options for this instance.
+    * @returns {Info} Modified info message
+    */
   transform(info) {
     const msg = info.message;
     const splat = info[SPLAT] || info.splat;
@@ -100,11 +103,15 @@ class Splatter {
 
       // Now that { splat } has been separated from any potential { meta }. we
       // can assign this to the `info` object and write it to our format stream.
-      if (metas.length === 1) {
-        info.meta = metas[0];
-      } else if (metas.length) {
-        info.meta = metas;
+      // If the additional metas are **NOT** objects or **LACK** enumerable properties
+      // you are going to have a bad time.
+      const metalen = metas.length;
+      if (metalen) {
+        for (let i = 0; i < metalen; i++) {
+          Object.assign(info, metas[i]);
+        }
       }
+
       return info;
     }
 
