@@ -471,9 +471,9 @@ The `splat` format transforms the message by using `util.format` to complete any
 ```js
 const { format } = require('logform');
 
-const jsonFormat = format.splat();
+const splatFormat = format.splat();
 
-const info = jsonFormat.transform({
+const info = splatFormat.transform({
   level: 'info',
   message: 'my message %s',
   splat: ['test']
@@ -481,6 +481,28 @@ const info = jsonFormat.transform({
 
 console.log(info);
 // { level: 'info', message: 'my message test', splat: [ 'test' ] }
+```
+
+Any additional splat parameters beyond those needed for the `%` tokens
+(aka "metas") are assumed to be objects. Their enumerable properties are
+merged into the `info`.
+
+```js
+const { format } = require('logform');
+
+const splatFormat = format.splat();
+
+const info = splatFormat.transform({
+  level: 'info',
+  message: 'my message %s',
+  splat: ['test', { thisIsMeta: true }]
+});
+
+console.log(info);
+// { level: 'info',
+//   message: 'my message test',
+//   thisIsMeta: true,
+//   splat: [ 'test' ] }
 ```
 
 This was previously exposed implicitly in `winston < 3.0.0`.
