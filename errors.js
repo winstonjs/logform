@@ -2,7 +2,7 @@
 'use strict';
 
 const format = require('./format');
-const { MESSAGE } = require('triple-beam');
+const { LEVEL, MESSAGE } = require('triple-beam');
 
 /*
  * function errors (info)
@@ -11,27 +11,31 @@ const { MESSAGE } = require('triple-beam');
  *
  * Optionally, the Error's `stack` property can also be appended to the `info` object.
  */
-module.exports = format((info, { stack }) => {
-  if (info instanceof Error) {
-    return Object.assign({}, info, {
-      message: info.message,
-      [MESSAGE]: info.message,
-      stack: stack ? info.stack : undefined
+module.exports = format((einfo, { stack }) => {
+  if (einfo instanceof Error) {
+    const info = Object.assign({}, einfo, {
+      level: einfo.level,
+      [LEVEL]: einfo[LEVEL] || einfo.level,
+      message: einfo.message,
+      [MESSAGE]: einfo[MESSAGE] || einfo.message
     });
+
+    if (stack) info.stack = einfo.stack;
+    return info;
   }
 
-  console.dir(info.message);
-  console.dir(info.stack);
-  console.dir(info instanceof Error);
-  if (!(info.message instanceof Error)) return info;
+  console.dir(einfo.message);
+  console.dir(einfo.stack);
+  console.dir(einfo instanceof Error);
+  if (!(einfo.message instanceof Error)) return einfo;
 
   console.dir('wtf');
-  const err = info.message;
+  const err = einfo.message;
 
-  info.message = err.message;
-  info[MESSAGE] = err.message;
+  einfo.message = err.message;
+  einfo[MESSAGE] = err.message;
 
-  if (opts.stack) info.stack = err.stack;
+  if (opts.stack) einfo.stack = err.stack;
 
-  return info;
+  return einfo;
 });
