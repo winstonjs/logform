@@ -7,7 +7,7 @@ const { MESSAGE } = require('triple-beam');
 
 const err = new Error('whatever');
 
-describe('json', () => {
+describe('errors', () => {
   it('errors() (default) sets info[MESSAGE]', assumeFormatted(
     errors(),
     { level: 'info', message: err },
@@ -20,7 +20,7 @@ describe('json', () => {
     }
   ));
 
-  it('json({ space: 2 }) sets info[MESSAGE]', assumeFormatted(
+  it('errors({ space: 2 }) sets info.stack', assumeFormatted(
     errors({ stack: true }),
     { level: 'info', message: err },
     (info) => {
