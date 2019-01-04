@@ -35,6 +35,7 @@ function exposeFormat(name, path) {
 // Setup all transports as lazy-loaded getters.
 //
 exposeFormat('align');
+exposeFormat('errors');
 exposeFormat('cli');
 exposeFormat('combine');
 exposeFormat('colorize');

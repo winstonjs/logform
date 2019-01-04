@@ -38,6 +38,7 @@ export namespace format {
   function cli(opts?: CliOptions): Format;
   function colorize(opts?: ColorizeOptions): Colorizer;
   function combine(...formats: Format[]): Format;
+  function errors(opts?: object): Format;
   function json(opts?: JsonOptions): Format;
   function label(opts?: LabelOptions): Format;
   function logstash(): Format;
