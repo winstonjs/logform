@@ -283,16 +283,14 @@ The `errors` format allows you to pass in an instance of a JavaScript `Error` di
 It allows you to specify whether not to include the stack-trace.
 
 ```js
-const { format } = require('logform')
-const { errors } = format
+const { format } = require('logform');
+const { errors } = format;
 
 const errorsFormat = errors({ stack: true })
 
-const err = new Error('Oh no!')
+const info = errorsFormat.transform(new Error('Oh no!'));
 
-const info = errorsFormat.transform(err)
-
-console.log(info)
+console.log(info);
 // Error: Oh no!
 //     at repl:1:13
 //     at ContextifyScript.Script.runInThisContext (vm.js:50:33)
