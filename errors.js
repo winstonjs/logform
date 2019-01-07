@@ -24,18 +24,12 @@ module.exports = format((einfo, { stack }) => {
     return info;
   }
 
-  console.dir(einfo.message);
-  console.dir(einfo.stack);
-  console.dir(einfo instanceof Error);
   if (!(einfo.message instanceof Error)) return einfo;
 
-  console.dir('wtf');
   const err = einfo.message;
-
   einfo.message = err.message;
   einfo[MESSAGE] = err.message;
 
-  if (opts.stack) einfo.stack = err.stack;
-
+  if (stack) einfo.stack = err.stack;
   return einfo;
 });
