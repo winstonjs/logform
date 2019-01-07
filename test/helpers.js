@@ -39,14 +39,18 @@ exports.infoify = info => {
  * of the `colorize` format and asserts that the
  * correct `info` object was processed.
  */
-exports.assumeFormatted = (fmt, info, assertion) => {
+exports.assumeFormatted = (fmt, info, assertion, opts = {}) => {
   return done => {
     const writable = exports.writable(actual => {
       assertion(actual, info);
       done();
     });
 
-    writable.write(fmt.transform(Object.assign({}, info), fmt.options));
+    const value = opts.immutable === false
+      ? info
+      : Object.assign({}, info);
+
+    writable.write(fmt.transform(value, fmt.options));
   };
 };
 

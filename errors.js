@@ -26,12 +26,9 @@ module.exports = format((einfo, { stack }) => {
 
   if (!(einfo.message instanceof Error)) return einfo;
 
-  // Assign all custom enumerable properties on
-  // the error provided.
+  // Assign all enumerable properties and the
+  // message property from the error provided.
   Object.assign(einfo, einfo.message);
-
-  // Assign all non-enumerable properties
-  // on the error provided.
   const err = einfo.message;
   einfo.message = err.message;
   einfo[MESSAGE] = err.message;
