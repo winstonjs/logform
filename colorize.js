@@ -1,7 +1,7 @@
 'use strict';
 
 const colors = require('colors/safe');
-const { LEVEL } = require('triple-beam');
+const { LEVEL, MESSAGE } = require('triple-beam');
 
 //
 // Fix colors not appearing in non-tty environments
@@ -90,6 +90,10 @@ class Colorizer {
    * `logform` info object.
    */
   transform(info, opts) {
+    if (opts.all && typeof info[MESSAGE] === 'string') {
+      info[MESSAGE] = this.colorize(info[LEVEL], info.level, info[MESSAGE]);
+    }
+
     if (opts.level || opts.all || !opts.message) {
       info.level = this.colorize(info[LEVEL], info.level);
     }
