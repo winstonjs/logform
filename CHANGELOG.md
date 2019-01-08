@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 2.1.0
+**2019/01/07**
+
+- [#59], [#68], [#69]  Add error normalizing format.
+- [#65] When MESSAGE symbol has a value and `{ all: true }` is set, colorize the entire serialized message.
+
 ### 2.0.0
 **2018/12/23**
 
