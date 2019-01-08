@@ -2,7 +2,7 @@
 
 const assume = require('assume');
 const colors = require('colors/safe');
-const { configs, LEVEL } = require('triple-beam');
+const { configs, LEVEL, MESSAGE } = require('triple-beam');
 const colorize = require('../colorize');
 const Colorizer = colorize.Colorizer;
 const {
@@ -67,6 +67,24 @@ describe('colorize', () => {
       assume(info.message).is.a('string');
       assume(info.level).equals(colors.green('info'));
       assume(info.message).equals(colors.green('whatever'));
+    }
+  ));
+
+  it('colorize({ all: true }) [custom message]', assumeFormatted(
+    colorize({ all: true }),
+    {
+      level: 'info',
+      [LEVEL]: 'info',
+      message: 'whatever',
+      [MESSAGE]: '[info] whatever custom'
+    },
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info[LEVEL]).equals('info');
+      assume(info.level).equals(colors.green('info'));
+      assume(info.message).equals(colors.green('whatever'));
+      assume(info[MESSAGE]).equals(colors.green('[info] whatever custom'));
     }
   ));
 
