@@ -91,8 +91,7 @@ class Colorizer {
    */
   transform(info, opts) {
     if (opts.all && typeof info[MESSAGE] === 'string') {
-      info[MESSAGE] = this.colorize(info[LEVEL], info.level, info[MESSAGE])
-      return info;
+      info[MESSAGE] = this.colorize(info[LEVEL], info.level, info[MESSAGE]);
     }
 
     if (opts.level || opts.all || !opts.message) {
