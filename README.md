@@ -37,25 +37,61 @@ const alignedWithColorsAndTime = format.combine(
 
 ## `info` Objects
 
-The `info` parameter provided to a given format represents a single log message. The object itself is mutable. Every `info` must have at least the `level` and `message` properties:
+The `info` parameter provided to a given format represents a single log
+message. The object itself is mutable. Every `info` must have at least the
+`level` and `message` properties:
 
 ``` js
-{
+const info = {
   level: 'info',                 // Level of the logging message  
   message: 'Hey! Log something?' // Descriptive message being logged.
 }
 ```
 
-`logform` itself exposes several additional properties:
+Properties **besides level and message** are considered as "`meta`". i.e.:
 
-- `splat`: string interpolation splat for `%d %s`-style messages.
-- `timestamp`: timestamp the message was received.
-- `label`: custom label associated with each message.
+``` js
+const { level, message, ...meta } = info;
+```
 
-As a consumer you may add whatever properties you wish – _internal state is maintained by `Symbol` properties:_
+Several of the formats in `logform` itself add additional properties:
 
-- `Symbol.for('level')` _**(READ-ONLY)**:_ equal to `level` property. Is treated as immutable by all code.
-- `Symbol.for('message'):` complete string message set by "finalizing formats": `json`, `logstash`, `printf`, `prettyPrint`, and `simple`. 
+| Property    | Format added by | Description |
+| ----------- | --------------- | ----------- | 
+| `splat`     | `splat()`       | String interpolation splat for `%d %s`-style messages. |
+| `timestamp` | `timestamp()`   |  timestamp the message was received. |
+| `label`     | `label()`       | Custom label associated with each message. | 
+| `ms`        | `ms()`          | Number of milliseconds since the previous log message. |
+
+As a consumer you may add whatever properties you wish – _internal state is
+maintained by `Symbol` properties:_
+
+- `Symbol.for('level')` _**(READ-ONLY)**:_ equal to `level` property.
+  **Is treated as immutable by all code.**
+- `Symbol.for('message'):` complete string message set by "finalizing formats":
+  - `json`
+  - `logstash`
+  - `printf`
+  - `prettyPrint`
+  - `simple`
+- `Symbol.for('splat')`: additional string interpolation arguments. _Used
+  exclusively by `splat()` format._
+
+These Symbols are stored in another package: `triple-beam` so that all
+consumers of `logform` can have the same Symbol reference. i.e.:
+
+``` js
+const { LEVEL, MESSAGE, SPLAT } = require('triple-beam');
+
+console.log(LEVEL === Symbol.for('level'));
+// true
+
+console.log(MESSAGE === Symbol.for('message'));
+// true
+
+console.log(SPLAT === Symbol.for('splat'));
+// true
+```
 
 ## Understanding formats
 
