@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 2.1.1
+**2019/01/29**
+
+- [#71] Bump logform to be consistent with winston.
+   - Fixes https://github.com/winstonjs/winston/issues/1584
+
 ### 2.1.0
 **2019/01/07**
 
