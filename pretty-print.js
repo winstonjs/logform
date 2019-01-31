@@ -16,12 +16,13 @@ module.exports = format((info, opts = {}) => {
   // are internal, we remove them before util.inspect so they
   // are not printed.
   //
-  const {
-    [LEVEL]: level, // eslint-disable-line no-unused-vars
-    [MESSAGE]: message, // eslint-disable-line no-unused-vars
-    [SPLAT]: splat, // eslint-disable-line no-unused-vars
-    ...stripped
-  } = info;
+  const stripped = Object.assign({}, info);
+
+  // Remark (indexzero): update this technique in April 2019
+  // when node@6 is EOL
+  delete stripped[LEVEL];
+  delete stripped[MESSAGE];
+  delete stripped[SPLAT];
 
   info[MESSAGE] = inspect(stripped, false, opts.depth || null, opts.colorize);
   return info;

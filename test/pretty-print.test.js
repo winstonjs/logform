@@ -16,12 +16,10 @@ describe('prettyPrint', () => {
       assume(info.level).equals('info');
       assume(info.message).equals('yay template strings are fast');
 
-      const {
-        [LEVEL]: level, // eslint-disable-line no-unused-vars
-        [MESSAGE]: message, // eslint-disable-line no-unused-vars
-        [SPLAT]: splat, // eslint-disable-line no-unused-vars
-        ...stripped
-      } = expected;
+      const stripped = Object.assign({}, expected);
+      delete stripped[LEVEL];
+      delete stripped[MESSAGE];
+      delete stripped[SPLAT];
 
       assume(info[MESSAGE]).equals(util.inspect(stripped));
     }
@@ -40,12 +38,10 @@ describe('prettyPrint', () => {
       assume(info.level).equals('info');
       assume(info.message).equals('yay template strings are fast');
 
-      const {
-        [LEVEL]: level, // eslint-disable-line no-unused-vars
-        [MESSAGE]: message, // eslint-disable-line no-unused-vars
-        [SPLAT]: splat, // eslint-disable-line no-unused-vars
-        ...stripped
-      } = expected;
+      const stripped = Object.assign({}, expected);
+      delete stripped[LEVEL];
+      delete stripped[MESSAGE];
+      delete stripped[SPLAT];
 
       assume(info[MESSAGE]).equals(util.inspect(stripped));
     }
