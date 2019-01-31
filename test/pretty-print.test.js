@@ -21,7 +21,7 @@ describe('prettyPrint', () => {
         [MESSAGE]: message, // eslint-disable-line no-unused-vars
         [SPLAT]: splat, // eslint-disable-line no-unused-vars
         ...stripped
-      } = info;
+      } = expected;
 
       assume(info[MESSAGE]).equals(util.inspect(stripped));
     }
@@ -45,7 +45,7 @@ describe('prettyPrint', () => {
         [MESSAGE]: message, // eslint-disable-line no-unused-vars
         [SPLAT]: splat, // eslint-disable-line no-unused-vars
         ...stripped
-      } = info;
+      } = expected;
 
       assume(info[MESSAGE]).equals(util.inspect(stripped));
     }
