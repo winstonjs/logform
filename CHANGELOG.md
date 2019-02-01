@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 2.1.2
+**2019/01/31**
+
+- [#74] Remove all internal symbols before invoking `util.inspect`. 
+   - Related to [#31].
+
 ### 2.1.1
 **2019/01/29**
 
