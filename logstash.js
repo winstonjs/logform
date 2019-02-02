@@ -14,9 +14,19 @@ const jsonStringify = require('fast-safe-stringify');
 module.exports = format(info => {
   const logstash = {};
 
+  if (info.message) {
+    logstash['message'] = info.message;
+    delete info.message;
+  }
+
   if (info.timestamp) {
     logstash['@timestamp'] = info.timestamp;
     delete info.timestamp;
+  }
+
+  if (info.level) {
+    logstash['level'] = info.level;
+    delete info.level;
   }
 
   logstash['@version'] = 1;
