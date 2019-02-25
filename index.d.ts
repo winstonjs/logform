@@ -132,13 +132,14 @@ export interface PrettyPrintOptions {
   colorize?: boolean;
 }
 
+type stringFunction = () => string;
 export interface TimestampOptions {
   /**
    * Either the format as a string accepted by the [fecha](https://github.com/taylorhakes/fecha)
    * module or a function that returns a formatted date. If no format is provided `new
    * Date().toISOString()` will be used.
    */
-  format?: string;
+  format?: string | stringFunction;
   /**
    * The name of an alias for the timestamp property, that will be added to the `info` object.
    */
