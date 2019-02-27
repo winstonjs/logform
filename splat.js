@@ -46,27 +46,49 @@ class Splatter {
       : [];
 
     info.message = util.format(msg, ...splatMerge);
-
     return info;
   }
 
   /**
-     * Transforms the `info` message by using `util.format` to complete
-     * any `info.message` provided it has string interpolation tokens.
-     * If no tokens exist then `info` is immutable.
-     *
-     * @param  {Info} info Logform info message.
-     * @param  {Object} opts Options for this instance.
-     * @returns {Info} Modified info message
-     */
+    * Transforms the `info` message by using `util.format` to complete
+    * any `info.message` provided it has string interpolation tokens.
+    * If no tokens exist then `info` is immutable.
+    *
+    * @param  {Info} info Logform info message.
+    * @param  {Object} opts Options for this instance.
+    * @returns {Info} Modified info message
+    */
   transform(info) {
     const msg = info.message;
     const splat = info[SPLAT] || info.splat;
 
-    // Evaluate if the message has any interpolation tokens. If not,
-    // then let evaluation continue.
+    // No need to process anything if splat is undefined
+    if (!splat || !splat.length) {
+      return info;
+    }
+
+    // Extract tokens, if none available default to empty array to
+    // ensure consistancy in expected results
     const tokens = msg && msg.match && msg.match(formatRegExp);
-    if (!tokens && (!splat || !splat.length)) {
+
+    // This condition will take care of inputs with info[SPLAT]
+    // but no tokens present
+    if (!tokens && (splat || splat.length)) {
+      const metas = splat.length > 1
+        ? splat.splice(0)
+        : splat;
+
+      // Now that { splat } has been separated from any potential { meta }. we
+      // can assign this to the `info` object and write it to our format stream.
+      // If the additional metas are **NOT** objects or **LACK** enumerable properties
+      // you are going to have a bad time.
+      const metalen = metas.length;
+      if (metalen) {
+        for (let i = 0; i < metalen; i++) {
+          Object.assign(info, metas[i]);
+        }
+      }
+
       return info;
     }
 

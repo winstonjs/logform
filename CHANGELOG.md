@@ -1,5 +1,133 @@
 # CHANGELOG
 
+### 2.1.2
+**2019/01/31**
+
+- [#74] Remove all internal symbols before invoking `util.inspect`. 
+   - Related to [#31].
+
+### 2.1.1
+**2019/01/29**
+
+- [#71] Bump logform to be consistent with winston.
+   - Fixes https://github.com/winstonjs/winston/issues/1584
+
+### 2.1.0
+**2019/01/07**
+
+- [#59], [#68], [#69]  Add error normalizing format.
+- [#65] When MESSAGE symbol has a value and `{ all: true }` is set, colorize the entire serialized message.
+
+### 2.0.0
+**2018/12/23**
+
+- **BREAKING** [#57] Try better fix for [winston#1485]. See:
+  [New `splat` behavior`](#new-splat-behavior) below.
+- [#54] Fix typo in `README.md`
+- [#55] Strip info[LEVEL] in prettyPrint. Fixes [#31].
+- [#56] Document built-in formats.
+- [#64] Add TypeScript definitions for all format options.
+  Relates to [#9] and [#48].
+
+#### New `splat` behavior
+
+Previously `splat` would have added a `meta` property for any additional
+`info[SPLAT]` beyond the expected number of tokens.
+
+**As of `logform@2.0.0`,** `format.splat` assumes additional splat paramters
+(aka "metas") are objects and merges enumerable properties into the `info`.
+e.g.
+
+``` js
+const { format } = require('logform');
+const { splat } = format;
+const { MESSAGE, LEVEL, SPLAT } = require('triple-beam');
+
+console.log(
+  // Expects two tokens, but three splat parameters provided.
+  splat().transform({
+    level: 'info',
+    message: 'Let us %s for %j',
+    [LEVEL]: 'info',
+    [MESSAGE]: 'Let us %s for %j',
+    [SPLAT]: ['objects', { label: 'sure' }, { thisIsMeta: 'wut' }]
+  })
+);
+
+// logform@1.x behavior:
+// Added "meta" property.
+//
+// { level: 'info',
+//   message: 'Let us objects for {"label":"sure"}',
+//   meta: { thisIsMeta: 'wut' },
+//   [Symbol(level)]: 'info',
+//   [Symbol(message)]: 'Let us %s for %j',
+//   [Symbol(splat)]: [ 'objects', { label: 'sure' } ] }
+
+// logform@2.x behavior:
+// Enumerable properties assigned into `info`.
+//
+// { level: 'info',
+//   message: 'Let us objects for {"label":"sure"}',
+//   thisIsMeta: 'wut',
+//   [Symbol(level)]: 'info',
+//   [Symbol(message)]: 'Let us %s for %j',
+//   [Symbol(splat)]: [ 'objects', { label: 'sure' } ] }
+```
+
+The reason for this change is to be consistent with how `winston` itself
+handles `meta` objects in its variable-arity conventions.
+
+**BE ADVISED** previous "metas" that _were not objects_ will very likely lead
+to odd behavior. e.g.
+
+``` js
+const { format } = require('logform');
+const { splat } = format;
+const { MESSAGE, LEVEL, SPLAT } = require('triple-beam');
+
+console.log(
+  // Expects two tokens, but three splat parameters provided.
+  splat().transform({
+    level: 'info',
+    message: 'Let us %s for %j',
+    [LEVEL]: 'info',
+    [MESSAGE]: 'Let us %s for %j',
+    // !!NOTICE!! Additional parameters are a string and an Array
+    [SPLAT]: ['objects', { label: 'sure' }, 'lol', ['ok', 'why']]
+  })
+);
+
+// logform@1.x behavior:
+// Added "meta" property.
+//
+// { level: 'info',
+//   message: 'Let us objects for {"label":"sure"}',
+//   meta: ['lol', ['ok', 'why']],
+//   [Symbol(level)]: 'info',
+//   [Symbol(message)]: 'Let us %s for %j',
+//   [Symbol(splat)]: [ 'objects', { label: 'sure' } ] }
+
+// logform@2.x behavior: Enumerable properties assigned into `info`.
+// **Strings and Arrays only have NUMERIC enumerable properties!**
+//
+// { '0': 'ok',
+//   '1': 'why',
+//   '2': 'l',
+//   level: 'info',
+//   message: 'Let us objects for {"label":"sure"}',
+//   [Symbol(level)]: 'info',
+//   [Symbol(message)]: 'Let us %s for %j',
+//   [Symbol(splat)]: [ 'objects', { label: 'sure' } ] }
+```
+
+### 1.10.0
+**2018/09/17**
+
+- [#52] Add types field in package.json.
+- [#46], [#49] Changes for splat when there are no tokens present and no splat present.
+- [#47], [#53] Expose transpiled code for Browser-only scenarios.  
+
 ### 1.9.1
 **2018/06/26**
 

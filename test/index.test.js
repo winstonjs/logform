@@ -6,6 +6,11 @@ const logform = {
   browser: require('../browser')
 };
 
+const transpiled = {
+  node: require('../dist/index'),
+  browser: require('../dist/browser')
+};
+
 const expectedFormats = [
   'align',
   'cli',
@@ -49,3 +54,6 @@ function assumeLogform(obj) {
 
 describe('logform (node)', assumeLogform(logform.node));
 describe('logform (browser)', assumeLogform(logform.browser));
+
+describe('logform (node, transpiled)', assumeLogform(transpiled.node));
+describe('logform (browser, transpiled)', assumeLogform(transpiled.browser));
