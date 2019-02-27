@@ -30,9 +30,9 @@ class CaptureAllMeta {
 
     // if user passes an object with info.splat
     if (info.splat) {
-      console.log('info.meta before: %s', info.meta);
+      // console.log('info.meta before: %s', info.meta);
       info.meta = info.meta.concat(info.splat);
-      console.log('info.meta after: %s', info.meta);
+      // console.log('info.meta after: %s', info.meta);
 
     }
 

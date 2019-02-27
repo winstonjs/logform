@@ -37,39 +37,57 @@ class Splatter {
     const percents = msg.match(escapedPercent);
     const escapes = percents && percents.length || 0;
 
-    // We only process the number of splats that we expect.
-    // All other splats will be processed (if desired),
-    // by another transform.
+    // The expected splat is the number of tokens minus the number of escapes
+    // e.g.
+    // - { expectedSplat: 3 } '%d %s %j'
+    // - { expectedSplat: 5 } '[%s] %d%% %d%% %s %j'
+    //
+    // Any "meta" will be arugments in addition to the expected splat size
+    // regardless of type. e.g.
+    //
+    // logger.log('info', '%d%% %s %j', 100, 'wow', { such: 'js' }, { thisIsMeta: true });
+    // would result in splat of four (4), but only three (3) are expected. Therefore:
+    //
+    // extraSplat = 3 - 4 = -1
+    // metas = [100, 'wow', { such: 'js' }, { thisIsMeta: true }].splice(-1, -1 * -1);
+    // splat = [100, 'wow', { such: 'js' }]
     const expectedSplat = tokens.length - escapes;
-    const splatMerge = expectedSplat > 0
-      ? splat.splice(0, expectedSplat)
+    const extraSplat = expectedSplat - splat.length;
+    const metas = extraSplat < 0
+      ? splat.splice(extraSplat, -1 * extraSplat)
       : [];
 
-    info.message = util.format(msg, ...splatMerge);
+    // Now that { splat } has been separated from any potential { meta }. we
+    // can assign this to the `info` object and write it to our format stream.
+    if (metas.length === 1) {
+      info.meta = metas[0];
+    } else if (metas.length) {
+      info.meta = metas;
+    }
+
+    info.message = util.format(msg, ...splat);
     return info;
   }
 
   /**
-    * Transforms the `info` message by using `util.format` to complete
-    * any `info.message` provided it has string interpolation tokens.
-    * If no tokens exist then `info` is immutable.
-    *
-    * @param  {Info} info Logform info message.
-    * @param  {Object} opts Options for this instance.
-    * @returns {Info} Modified info message
-    */
+     * Transforms the `info` message by using `util.format` to complete
+     * any `info.message` provided it has string interpolation tokens.
+     * If no tokens exist then `info` is immutable.
+     *
+     * @param  {Info} info Logform info message.
+     * @param  {Object} opts Options for this instance.
+     * @returns {Info} Modified info message
+     */
   transform(info) {
     const msg = info.message;
     const splat = info[SPLAT] || info.splat;
 
-    // No need to process anything if splat is undefined
-    if (!splat || !splat.length) {
+    // Evaluate if the message has any interpolation tokens. If not,
+    // then let evaluation continue.
+    const tokens = msg && msg.match && msg.match(formatRegExp);
+    if (!tokens && (!splat || !splat.length)) {
       return info;
     }
-
-    // Extract tokens, if none available default to empty array to
-    // ensure consistancy in expected results
-    const tokens = msg && msg.match && msg.match(formatRegExp);
 
     // This condition will take care of inputs with info[SPLAT]
     // but no tokens present
@@ -80,15 +98,11 @@ class Splatter {
 
       // Now that { splat } has been separated from any potential { meta }. we
       // can assign this to the `info` object and write it to our format stream.
-      // If the additional metas are **NOT** objects or **LACK** enumerable properties
-      // you are going to have a bad time.
-      const metalen = metas.length;
-      if (metalen) {
-        for (let i = 0; i < metalen; i++) {
-          Object.assign(info, metas[i]);
-        }
+      if (metas.length === 1) {
+        info.meta = metas[0];
+      } else if (metas.length) {
+        info.meta = metas;
       }
-
       return info;
     }
 
