@@ -9,10 +9,11 @@ const jsonStringify = require('fast-safe-stringify');
  * Handles proper stringification of Buffer and bigint output.
  */
 function replacer(key, value) {
-  if (value instanceof Buffer) 
+  if (value instanceof Buffer)
     return value.toString('base64');
-  if (value instanceof bigint)
-     return value.toString();
+  // eslint-disable-next-line valid-typeof
+  if (typeof value === 'bigint')
+    return value.toString();
   return value;
 }
 
