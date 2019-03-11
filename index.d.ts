@@ -138,7 +138,7 @@ export interface TimestampOptions {
    * module or a function that returns a formatted date. If no format is provided `new
    * Date().toISOString()` will be used.
    */
-  format?: string;
+  format?: string | (() => string);
   /**
    * The name of an alias for the timestamp property, that will be added to the `info` object.
    */
