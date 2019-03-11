@@ -46,19 +46,17 @@ describe('splat', () => {
     'test %j', [{ number: 123 }], 'test {"number":123}'
   ));
 
-  it('balanced number of arguments to % | does not have "meta"', assumeSplat(
+  it('balanced number of arguments to % | does not have "metadata"', assumeSplat(
     'test %j', [{ number: 123 }], info => {
       assume(info.message).equals('test {"number":123}');
-      assume(info.meta).equals(undefined);
+      assume(info[SPLAT]).deep.equals([]);
     }
   ));
 
-  it('more arguments than % | multiple "meta"', assumeSplat(
+  it('more arguments than % | multiple "metadata"', assumeSplat(
     'test %j', [{ number: 123 }, { an: 'object' }, ['an', 'array']], info => {
       assume(info.message).equals('test {"number":123}');
-      assume(info.an).equals('object');
-      assume(info[0]).equals('an');
-      assume(info[1]).equals('array');
+      assume(info[SPLAT]).deep.equals([{ an: 'object' }, ['an', 'array']]);
     }
   ));
 
@@ -69,31 +67,29 @@ describe('splat', () => {
   it('no % and one object | returns the message and properties', assumeSplat(
     'see an object', [{ an: 'object' }], info => {
       assume(info.message).equals('see an object');
-      assume(info.an).equals('object');
+      assume(info[SPLAT]).deep.equals([{ an: 'object' }]);
     }
   ));
 
   it('no % and two objects | returns the string and all properties', assumeSplat(
     'lots to see here', [{ an: 'object' }, ['an', 'array']], info => {
       assume(info.message).equals('lots to see here');
-      assume(info.an).equals('object');
-      assume(info[0]).equals('an');
-      assume(info[1]).equals('array');
+      assume(info[SPLAT]).deep.equals([{ an: 'object' }, ['an', 'array']]);
     }
   ));
 
   it('no % and no splat | returns the same info', assumeSplat(
     'nothing to see here', [], info => {
       assume(info.message).equals('nothing to see here');
-      assume(info.meta).equals(undefined);
+      assume(info[SPLAT]).deep.equals([]);
     }
   ));
 
   it('no % but some splat | returns the same message with new properties', assumeSplat(
     'Look! No tokens!', ['ok'], info => {
       assume(info.message).equals('Look! No tokens!');
-      assume(info[0]).equals('o');
-      assume(info[1]).equals('k');
+      assume(info[SPLAT]).deep.equals(['ok']);
+
     }
   ));
 
@@ -102,7 +98,7 @@ describe('splat', () => {
     ['Hi', 42, 'feeling', { today: true }],
     info => {
       assume(info.message).equals('Hi #42, how are you feeling');
-      assume(info.today).true();
+      assume(info[SPLAT]).deep.equals([{ today: true }]);
     }
   ));
 

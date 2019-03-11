@@ -27,6 +27,7 @@ const alignedWithColorsAndTime = format.combine(
   - [Label](#label)
   - [Logstash](#logstash)
   - [Metadata](#metadata)
+  - [Metadata Array](#metadataArray)
   - [PadLevels](#padlevels)
   - [PrettyPrint](#prettyprint)
   - [Printf](#printf)
@@ -451,6 +452,8 @@ It accepts the following options:
 * **fillExcept**: An array of keys that should not be added to the metadata object.
 * **fillWith**: An array of keys that will be added to the metadata object.
 
+Do not use this simultaneously with metadataArray as they both process the same information differently.  The key/values pairs must be subsequently exposed with json() or a custom printf() format.
+
 ```js
 const { format } = require('logform');
 
@@ -464,6 +467,71 @@ const info = metadataFormat.transform({
 
 console.log(info);
 // { level: 'info', message: 'my message', metadata: { meta: 42 } }
+
+const info2 = metadataFormat.transform({
+  level: 'info',
+  message: 'my message',
+  [SPLAT]: [{meta: 42}]
+});
+
+// above could be written with Winston as:
+// logger.info('my message', {meta: 42})
+
+console.log(info2);
+// { level: 'info', message: 'my message', metadata: { meta: 42 } }
+```
+
+### Metadata Array
+
+The `metadataArray` format stringifies metadata (info[SPLAT]) into info.message.   It will stringify Errors, objects/arrays, and other data types found in info[SPLAT].
+It accepts the following options:
+
+* **messageSplatDelimeter**: A string to separate the meassage from the splat. Defaults to ` `.
+* **innerSplatDelimeter**: A delimeter to be used to separate multiple splat. Defaults to `, `.
+
+This works well in conjunction with splat.  Splat will now take any "extra" matadata and leave it in info[SPLAT].  Do not use this simultaneously with metadata as they both process the same information differently.
+```js
+logger.info("my message %s", "should be one", {an:"object"})
+/* after splat transform;
+  info: {
+    level: "info",
+    message: "my message should be one",
+    [SPLAT]: [{an:"object"}]
+  }
+*/
+```
+
+```js
+const { format } = require('logform');
+
+const metadataArray = format.metadataArray();
+
+const info = metadataArray.transform({
+  level: 'info',
+  message: 'my message',
+  [SPLAT]: [{an:"object"}]
+});
+
+console.log(info);
+// { level: 'info', message: 'my message {"an":"object"} }
+
+const info2 = metadataArray.transform({
+  level: 'info',
+  message: 'my message',
+  [SPLAT]: [{an:"object"}, [1, 2, 3], throw new('my bad!')]
+}, { messageSplatDelimeter = ' ', innerSplatDelimeter = ', ' });
+
+console.log(info);
+// { level: 'info', message: 'my message:\n\t{"an":"object"}\n\t[1, 2, 3]}
+// printed info.message...
+/*
+info: my message:
+  {"an":"object"}
+  [1, 2, 3]
+  Error: my bad!
+  at {...rest of stack}
+*/
+
 ```
 
 ### PadLevels
@@ -580,8 +648,7 @@ console.log(info);
 ```
 
 Any additional splat parameters beyond those needed for the `%` tokens
-(aka "metas") are assumed to be objects. Their enumerable properties are
-merged into the `info`.
+are left in info[SPLAT] in an array for later processing. (See metadata or metadataArray)
 
 ```js
 const { format } = require('logform');
@@ -597,8 +664,7 @@ const info = splatFormat.transform({
 console.log(info);
 // { level: 'info',
 //   message: 'my message test',
-//   thisIsMeta: true,
-//   splat: [ 'test' ] }
+//   [SPLAT]: [{thisIsMeta: true}],
 ```
 
 This was previously exposed implicitly in `winston < 3.0.0`.

@@ -3,6 +3,7 @@
 const assume = require('assume');
 const metadata = require('../metadata');
 const helpers = require('./helpers');
+const { SPLAT } = require('triple-beam');
 
 describe('metadata', () => {
   const testInfoObject = {
@@ -14,9 +15,33 @@ describe('metadata', () => {
     }
   };
 
+  const testInfoObjectSplat = {
+    level: 'info',
+    message: 'whatever',
+    [SPLAT]: [{ someKey: 'someValue' },
+      {
+        someObject: {
+          key: 'value'
+        }
+      }]
+  };
+
   it('metadata() (default) removes message and level and puts everything else into metadata', helpers.assumeFormatted(
     metadata(),
     testInfoObject,
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.metadata).is.a('object');
+      assume(info.metadata.someKey).equals('someValue');
+      assume(info.metadata.someObject).is.a('object');
+      assume(info.metadata.someObject.key).equals('value');
+    }
+  ));
+
+  it('[SPLAT]: metadata() (default) removes message and level and puts everything else into metadata', helpers.assumeFormatted(
+    metadata(),
+    testInfoObjectSplat,
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
@@ -68,4 +93,5 @@ describe('metadata', () => {
         assume(info.myCustomKey.level).equals('info');
       }
     ));
+
 });
