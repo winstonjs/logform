@@ -374,6 +374,7 @@ It accepts the following options:
 
 * **replacer**: A function that influences how the `info` is stringified.
 * **space**: The number of white space used to format the json.
+* **stable**: If set to `true` the objects' attributes will always be stringified in alphabetical order.
 
 ```js
 const { format } = require('logform');
@@ -383,6 +384,7 @@ const jsonFormat = format.json();
 const info = jsonFormat.transform({
   level: 'info',
   message: 'my message',
+  stable: true,
 });
 console.log(info);
 // { level: 'info',
