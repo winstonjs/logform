@@ -69,6 +69,12 @@ class Splatter {
     }
 
     info.message = util.format(msg, ...splat);
+    if (this.options.source && this.options.arguments) {
+      const sourceMeta = {};
+      sourceMeta[this.options.source] = msg;
+      sourceMeta[this.options.arguments] = splat;
+      Object.assign(info, sourceMeta);
+    }
     return info;
   }
 
