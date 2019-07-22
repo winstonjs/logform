@@ -19,7 +19,7 @@ const escapedPercent = /%%/g;
 
 class Splatter {
   constructor(opts) {
-    this.options = opts;
+    this.options = opts || {};
   }
 
   /**
