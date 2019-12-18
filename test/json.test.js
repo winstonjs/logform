@@ -2,7 +2,7 @@
 
 const assume = require('assume');
 const json = require('../json');
-const jsonStringify = require('fast-safe-stringify');
+const jsonStringify = require('safe-stable-stringify');
 const { assumeFormatted, assumeHasPrototype, writable } = require('./helpers');
 const { MESSAGE } = require('triple-beam');
 

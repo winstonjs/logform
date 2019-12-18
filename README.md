@@ -43,7 +43,7 @@ message. The object itself is mutable. Every `info` must have at least the
 
 ``` js
 const info = {
-  level: 'info',                 // Level of the logging message  
+  level: 'info',                 // Level of the logging message
   message: 'Hey! Log something?' // Descriptive message being logged.
 }
 ```
@@ -57,10 +57,10 @@ const { level, message, ...meta } = info;
 Several of the formats in `logform` itself add additional properties:
 
 | Property    | Format added by | Description |
-| ----------- | --------------- | ----------- | 
+| ----------- | --------------- | ----------- |
 | `splat`     | `splat()`       | String interpolation splat for `%d %s`-style messages. |
 | `timestamp` | `timestamp()`   |  timestamp the message was received. |
-| `label`     | `label()`       | Custom label associated with each message. | 
+| `label`     | `label()`       | Custom label associated with each message. |
 | `ms`        | `ms()`          | Number of milliseconds since the previous log message. |
 
 As a consumer you may add whatever properties you wish – _internal state is
@@ -105,7 +105,7 @@ They are expected to return one of two things:
 - **An `info` Object** representing the modified `info` argument. Object references need not be preserved if immutability is preferred. All current built-in formats consider `info` mutable, but [immutablejs] is being considered for future releases.
 - **A falsey value** indicating that the `info` argument should be ignored by the caller. (See: [Filtering `info` Objects](#filtering-info-objects)) below.
 
-`logform.format`  is designed to be as simple as possible. To define a new format simple pass it a `transform(info, opts)` function to get a new `Format`. 
+`logform.format`  is designed to be as simple as possible. To define a new format simple pass it a `transform(info, opts)` function to get a new `Format`.
 
 The named `Format` returned can be used to create as many copies of the given `Format` as desired:
 
@@ -114,7 +114,7 @@ const { format } = require('logform');
 
 const volume = format((info, opts) => {
   if (opts.yell) {
-    info.message = info.message.toUpperCase(); 
+    info.message = info.message.toUpperCase();
   } else if (opts.whisper) {
     info.message = info.message.toLowerCase();
   }
@@ -135,9 +135,9 @@ console.dir(scream.transform({
 
 // `volume` can be used multiple times to create different formats.
 const whisper = volume({ whisper: true });
-console.dir(whisper.transform({ 
-  level: 'info', 
-  message: `WHY ARE THEY MAKING US YELL SO MUCH!` 
+console.dir(whisper.transform({
+  level: 'info',
+  message: `WHY ARE THEY MAKING US YELL SO MUCH!`
 }), whisper.options);
 // {
 //   level: 'info'
@@ -369,12 +369,11 @@ console.log(info);
 
 ### JSON
 
-The `json` format uses `fast-safe-stringify` to finalize the message.
+The `json` format uses `safe-stable-stringify` to finalize the message.
 It accepts the following options:
 
 * **replacer**: A function that influences how the `info` is stringified.
 * **space**: The number of white space used to format the json.
-* **stable**: If set to `true` the objects' attributes will always be stringified in alphabetical order.
 
 ```js
 const { format } = require('logform');
@@ -384,7 +383,6 @@ const jsonFormat = format.json();
 const info = jsonFormat.transform({
   level: 'info',
   message: 'my message',
-  stable: true,
 });
 console.log(info);
 // { level: 'info',
@@ -494,7 +492,7 @@ This was previously exposed as `{ padLevels: true }` to transports in `winston <
 The `prettyPrint` format finalizes the message using `util.inspect`.
 It accepts the following options:
 
-* **depth**: A `number` that specifies the maximum depth of the `info` object being stringified by `util.inspect`. Defaults to `2`.  
+* **depth**: A `number` that specifies the maximum depth of the `info` object being stringified by `util.inspect`. Defaults to `2`.
 * **colorize**: Colorizes the message if set to `true`. Defaults to `false`.
 
 The `prettyPrint` format should not be used in production because it may impact performance negatively and block the event loop.
@@ -607,11 +605,11 @@ This was previously exposed implicitly in `winston < 3.0.0`.
 
 ### Timestamp
 
-The `timestamp` format adds a timestamp to the info. 
+The `timestamp` format adds a timestamp to the info.
 It accepts the following options:
 
 * **format**: Either the format as a string accepted by the [fecha](https://github.com/taylorhakes/fecha) module or a function that returns a formatted date. If no format is provided `new Date().toISOString()` will be used.
-* **alias**: The name of an alias for the timestamp property, that will be added to the `info` object. 
+* **alias**: The name of an alias for the timestamp property, that will be added to the `info` object.
 
 ```js
 const { format } = require('logform');
@@ -637,9 +635,9 @@ It was previously available in `winston < 3.0.0` as `{ timestamp: true }` and `{
 The `uncolorize` format strips colors from `info` objects.
 It accepts the following options:
 
-* **level**: Disables the uncolorize format for `info.level` if set to `false`. 
-* **message**: Disables the uncolorize format for `info.message` if set to `false`. 
-* **raw**: Disables the uncolorize format for `info[MESSAGE]` if set to `false`. 
+* **level**: Disables the uncolorize format for `info.level` if set to `false`.
+* **message**: Disables the uncolorize format for `info.message` if set to `false`.
+* **raw**: Disables the uncolorize format for `info[MESSAGE]` if set to `false`.
 
 This was previously exposed as `{ stripColors: true }` to transports in `winston < 3.0.0`.
 
