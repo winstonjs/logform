@@ -3,11 +3,6 @@
 const colors = require('colors/safe');
 const { LEVEL, MESSAGE } = require('triple-beam');
 
-//
-// Fix colors not appearing in non-tty environments
-//
-colors.enabled = true;
-
 /**
  * @property {RegExp} hasSpace
  * Simple regex to check for presence of spaces.
@@ -22,6 +17,13 @@ class Colorizer {
   constructor(opts = {}) {
     if (opts.colors) {
       this.addColors(opts.colors);
+    }
+
+    //
+    // Fix colors not appearing in non-tty environments
+    //
+    if (opts.force) {
+      colors.enabled = true;
     }
 
     this.options = opts;
