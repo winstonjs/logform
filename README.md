@@ -325,7 +325,7 @@ const { errors } = format;
 
 const errorsFormat = errors({ stack: true })
 
-const info = errorsFormat.transform(new Error('Oh no!'));
+const info = errorsFormat.transform(new Error('Oh no!'), errorsFormat.options);
 
 console.log(info);
 // Error: Oh no!
