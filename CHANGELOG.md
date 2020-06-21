@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### 2.2.0
+**2020/06/21**
+
+- [#90], [#91] Add option for using stable stringify when formatting as JSON.
+- [#84] Add replacer for BigInt on JSON formatter.
+- [#79] Timestamp format type definitions can accept functions.
+- Update dependencies and fix most of the oustanding npm audit notices.
+
 ### 2.1.2
 **2019/01/31**
 
