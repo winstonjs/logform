@@ -19,6 +19,10 @@ errInfoProps.level = 'error';
 errInfoProps.whatever = true;
 errInfoProps.wut = 'some string';
 
+const errEnumerableMsg = new Error();
+errEnumerableMsg.message = 'message set later';
+errEnumerableMsg.extraProp = 'an extra prop';
+
 describe('errors()({ object })', () => {
   it('errors() returns the original info', assumeFormatted(
     errors(),
@@ -67,6 +71,19 @@ describe('errors()({ object })', () => {
       assume(info[MESSAGE]).equals(errProps.message);
       assume(info.whatever).true();
       assume(info.wut).equals('some string');
+    }
+  ));
+
+  it('errors() still works when err.message is enumerable', assumeFormatted(
+    errors(),
+    { level: 'info', message: errEnumerableMsg },
+    (info) => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.level).equals('info');
+      assume(info.message).equals(errEnumerableMsg.message);
+      assume(info[MESSAGE]).equals(errEnumerableMsg.message);
+      assume(info.extraProp).equals('an extra prop');
     }
   ));
 });

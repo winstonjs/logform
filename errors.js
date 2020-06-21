@@ -28,8 +28,8 @@ module.exports = format((einfo, { stack }) => {
 
   // Assign all enumerable properties and the
   // message property from the error provided.
-  Object.assign(einfo, einfo.message);
   const err = einfo.message;
+  Object.assign(einfo, err);
   einfo.message = err.message;
   einfo[MESSAGE] = err.message;
 
