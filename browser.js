@@ -21,12 +21,14 @@ exports.levels = require('././levels');
 //
 Object.defineProperty(format, 'align',       { value: require('./align') });
 Object.defineProperty(format, 'cli',         { value: require('./cli') });
-Object.defineProperty(format, 'combine',     { value: require('./combine') });
 Object.defineProperty(format, 'colorize',    { value: require('./colorize') });
+Object.defineProperty(format, 'combine',     { value: require('./combine') });
+Object.defineProperty(format, 'errors',      { value: require('./errors') });
 Object.defineProperty(format, 'json',        { value: require('./json') });
 Object.defineProperty(format, 'label',       { value: require('./label') });
 Object.defineProperty(format, 'logstash',    { value: require('./logstash') });
 Object.defineProperty(format, 'metadata',    { value: require('./metadata') });
+Object.defineProperty(format, 'ms',          { value: require('./ms') });
 Object.defineProperty(format, 'padLevels',   { value: require('./pad-levels') });
 Object.defineProperty(format, 'prettyPrint', { value: require('./pretty-print') });
 Object.defineProperty(format, 'printf',      { value: require('./printf') });
