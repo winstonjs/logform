@@ -51,3 +51,4 @@ exposeFormat('simple');
 exposeFormat('splat');
 exposeFormat('timestamp');
 exposeFormat('uncolorize');
+exposeFormat('metadataArray');

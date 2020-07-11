@@ -52,23 +52,11 @@ class Splatter {
     // metas = [100, 'wow', { such: 'js' }, { thisIsMeta: true }].splice(-1, -1 * -1);
     // splat = [100, 'wow', { such: 'js' }]
     const expectedSplat = tokens.length - escapes;
-    const extraSplat = expectedSplat - splat.length;
-    const metas = extraSplat < 0
-      ? splat.splice(extraSplat, -1 * extraSplat)
+    const splatMerge = expectedSplat > 0
+      ? splat.splice(0, expectedSplat)
       : [];
 
-    // Now that { splat } has been separated from any potential { meta }. we
-    // can assign this to the `info` object and write it to our format stream.
-    // If the additional metas are **NOT** objects or **LACK** enumerable properties
-    // you are going to have a bad time.
-    const metalen = metas.length;
-    if (metalen) {
-      for (let i = 0; i < metalen; i++) {
-        Object.assign(info, metas[i]);
-      }
-    }
-
-    info.message = util.format(msg, ...splat);
+    info.message = util.format(msg, ...splatMerge);
     return info;
   }
 
@@ -82,44 +70,31 @@ class Splatter {
     * @returns {Info} Modified info message
     */
   transform(info) {
+    // look for info.mesasge fist.  if it isn't set then set it from info[MESSAGE]
     const msg = info.message;
-    const splat = info[SPLAT] || info.splat;
-
-    // No need to process anything if splat is undefined
-    if (!splat || !splat.length) {
-      return info;
+    // info[SPLAT] will be preset if user uses logger.log('level', 'message', ...)
+    // info.splat will be used in hot path (eg logger.log({level: 'level', message: 'msg %s', splat: 'string'}))
+    let splat = info[SPLAT] || info.splat;
+    // following checks if hotpath is taken and splat is not passed in an array
+    if (!Array.isArray(splat)) {
+      splat = [splat];
+      // and write back to info object so we don't need to check twice (once here, once in _splat)
+      info[SPLAT] = splat;
     }
 
     // Extract tokens, if none available default to empty array to
     // ensure consistancy in expected results
     const tokens = msg && msg.match && msg.match(formatRegExp);
 
-    // This condition will take care of inputs with info[SPLAT]
-    // but no tokens present
-    if (!tokens && (splat || splat.length)) {
-      const metas = splat.length > 1
-        ? splat.splice(0)
-        : splat;
-
-      // Now that { splat } has been separated from any potential { meta }. we
-      // can assign this to the `info` object and write it to our format stream.
-      // If the additional metas are **NOT** objects or **LACK** enumerable properties
-      // you are going to have a bad time.
-      const metalen = metas.length;
-      if (metalen) {
-        for (let i = 0; i < metalen; i++) {
-          Object.assign(info, metas[i]);
-        }
-      }
+    // No need to process anything if splat is undefined
+    if (!splat || !splat.length || !tokens) {
 
       return info;
     }
 
-    if (tokens) {
-      return this._splat(info, tokens);
-    }
+    return this._splat(info, tokens);
 
-    return info;
+
   }
 }
 
