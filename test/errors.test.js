@@ -19,6 +19,9 @@ errInfoProps.level = 'error';
 errInfoProps.whatever = true;
 errInfoProps.wut = 'some string';
 
+const errLateMessage = new Error();
+errLateMessage.message = 'whatever';
+
 describe('errors()({ object })', () => {
   it('errors() returns the original info', assumeFormatted(
     errors(),
@@ -67,6 +70,18 @@ describe('errors()({ object })', () => {
       assume(info[MESSAGE]).equals(errProps.message);
       assume(info.whatever).true();
       assume(info.wut).equals('some string');
+    }
+  ));
+
+  it('errors() works with a late-initialized message', assumeFormatted(
+    errors(),
+    { level: 'info', message: errLateMessage },
+    (info) => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.level).equals('info');
+      assume(info.message).equals(errLateMessage.message);
+      assume(info[MESSAGE]).equals(errLateMessage.message);
     }
   ));
 });
