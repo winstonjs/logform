@@ -3,7 +3,7 @@
 
 const format = require('./format');
 const { MESSAGE } = require('triple-beam');
-const jsonStringify = require('fast-safe-stringify');
+const jsonStringify = require('safe-stable-stringify');
 
 /*
  * function simple (info)
