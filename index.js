@@ -21,11 +21,10 @@ exports.levels = require('./levels');
  * Exposes a sub-format on the main format object
  * as a lazy-loaded getter.
  */
-function exposeFormat(name, path) {
-  path = path || name;
+function exposeFormat(name, requiredFormat) {
   Object.defineProperty(format, name, {
     get() {
-      return require(`./${path}.js`);
+      return requiredFormat;
     },
     configurable: true
   });
@@ -34,20 +33,20 @@ function exposeFormat(name, path) {
 //
 // Setup all transports as lazy-loaded getters.
 //
-exposeFormat('align');
-exposeFormat('errors');
-exposeFormat('cli');
-exposeFormat('combine');
-exposeFormat('colorize');
-exposeFormat('json');
-exposeFormat('label');
-exposeFormat('logstash');
-exposeFormat('metadata');
-exposeFormat('ms');
-exposeFormat('padLevels', 'pad-levels');
-exposeFormat('prettyPrint', 'pretty-print');
-exposeFormat('printf');
-exposeFormat('simple');
-exposeFormat('splat');
-exposeFormat('timestamp');
-exposeFormat('uncolorize');
+exposeFormat('align', require('./align'));
+exposeFormat('errors', require('./errors'));
+exposeFormat('cli', require('./cli'));
+exposeFormat('combine', require('./combine'));
+exposeFormat('colorize', require('./colorize'));
+exposeFormat('json', require('./json'));
+exposeFormat('label', require('./label'));
+exposeFormat('logstash', require('./logstash'));
+exposeFormat('metadata', require('./metadata'));
+exposeFormat('ms', require('./ms'));
+exposeFormat('padLevels', require('./pad-levels'));
+exposeFormat('prettyPrint', require('./pretty-print'));
+exposeFormat('printf', require('./printf'));
+exposeFormat('simple', require('./simple'));
+exposeFormat('splat', require('./splat'));
+exposeFormat('timestamp', require('./timestamp'));
+exposeFormat('uncolorize', require('./uncolorize'));
