@@ -4,9 +4,14 @@
 // Definitions: https://github.com/winstonjs/logform
 // TypeScript Version: 2.2
 
+import { LEVEL, MESSAGE, SPLAT } from 'triple-beam'
+
 export interface TransformableInfo {
   level: string;
   message: string;
+  [LEVEL]?: any;
+  [MESSAGE]?: any;
+  [SPLAT]?: any;
   [key: string]: any;
 }
 
