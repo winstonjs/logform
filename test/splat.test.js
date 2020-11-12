@@ -4,6 +4,7 @@ const { SPLAT } = require('triple-beam');
 const assume = require('assume');
 const splat = require('../splat');
 const helpers = require('./helpers');
+const util = require('util');
 
 /*
  * Helper function for asserting that an info object
@@ -118,7 +119,8 @@ describe('splat', () => { // eslint-disable-line max-statements
     'printing object %O',
     [{ a: { b: { c: { d: { e: { f: 1 }}}}}}],
     info => {
-      assume(info.message).equals(`printing object {\n  a: {\n    b: {\n      c: { d: { e: { f: 1 } } }\n    }\n  }\n}`);
+      const deepPrinted = util.inspect({ a: { b: { c: { d: { e: { f: 1 }}}}}}, { depth: null });
+      assume(info.message).equals(`printing object ${deepPrinted}`);
     },
     { inspectOptions: { depth: null }}
   ));
