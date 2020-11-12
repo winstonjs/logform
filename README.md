@@ -563,6 +563,9 @@ console.log(info[MESSAGE]);
 ### Splat
 
 The `splat` format transforms the message by using `util.format` to complete any `info.message` provided it has string interpolation tokens.
+It accepts the following options:
+
+* **inspectOptions**: Option object that is passed to `util.inspect` when finalizing the message.
 
 ```js
 const { format } = require('logform');
