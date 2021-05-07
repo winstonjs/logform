@@ -53,8 +53,8 @@ describe('errors()({ object })', () => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals('info');
-      assume(info.message).equals(err.message);
-      assume(info[MESSAGE]).equals(err.message);
+      assume(info.message).equals(err.message + '\n' + err.stack);
+      assume(info[MESSAGE]).equals(err.message + '\n' + err.stack);
       assume(info.stack).equals(err.stack);
     }
   ));
@@ -100,15 +100,15 @@ describe('errors()(Error)', () => {
     { immutable: false }
   ));
 
-  it('errors({ space: 2 }) sets info.stack', assumeFormatted(
+  it('errors({ stack: true }) includes error stack into message.', assumeFormatted(
     errors({ stack: true }),
     errInfo,
     (info) => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals(errInfo.level);
-      assume(info.message).equals(errInfo.message);
-      assume(info[MESSAGE]).equals(errInfo.message);
+      assume(info.message).equals(errInfo.message + '\n' + errInfo.stack);
+      assume(info[MESSAGE]).equals(errInfo.message + '\n' + errInfo.stack);
       assume(info.stack).equals(errInfo.stack);
     },
     { immutable: false }
