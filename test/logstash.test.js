@@ -14,12 +14,12 @@ describe('logstash', () => {
     { level: 'info', message: 'whatever' },
     (info, expected) => {
       assume(info.level).equals('info');
-      assume(info.message).equals(undefined);
+      assume(info.message).equals(expected.message);
       assume(info[MESSAGE]).equals(JSON.stringify({
         '@fields': {
           level: expected.level
         },
-        '@message': expected.message,
+        '@message': expected.message
       }));
     }
   ));
@@ -32,13 +32,13 @@ describe('logstash', () => {
     { level: 'info', message: 'whatever' },
     (info, expected) => {
       assume(info.level).equals('info');
-      assume(info.message).equals(undefined);
+      assume(info.message).equals(expected.message);
       assume(info[MESSAGE]).equals(JSON.stringify({
         '@fields': {
           level: expected.level
         },
         '@message': expected.message,
-        '@timestamp': info[TIMESTAMP],
+        '@timestamp': info[TIMESTAMP]
       }));
     }
   ));
