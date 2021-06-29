@@ -12,18 +12,17 @@ const jsonStringify = require('safe-stable-stringify');
  * to transports in `winston < 3.0.0`.
  */
 module.exports = format(info => {
-  const logstash = {};
-  if (info.message) {
-    logstash['@message'] = info.message;
-    delete info.message;
+  const { message, timestamp, ...fields } = info;
+  const logstash = {'@fields': fields};
+
+  if (message) {
+    logstash['@message'] = message;
   }
 
-  if (info.timestamp) {
-    logstash['@timestamp'] = info.timestamp;
-    delete info.timestamp;
+  if (timestamp) {
+    logstash['@timestamp'] = timestamp;
   }
 
-  logstash['@fields'] = info;
   info[MESSAGE] = jsonStringify(logstash);
   return info;
 });
