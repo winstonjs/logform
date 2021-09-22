@@ -21,11 +21,10 @@ exports.levels = require('./levels');
  * Exposes a sub-format on the main format object
  * as a lazy-loaded getter.
  */
-function exposeFormat(name, path) {
-  path = path || name;
+function exposeFormat(name, requireFormat) {
   Object.defineProperty(format, name, {
     get() {
-      return require(`./${path}.js`);
+      return requireFormat();
     },
     configurable: true
   });
@@ -34,20 +33,20 @@ function exposeFormat(name, path) {
 //
 // Setup all transports as lazy-loaded getters.
 //
-exposeFormat('align');
-exposeFormat('errors');
-exposeFormat('cli');
-exposeFormat('combine');
-exposeFormat('colorize');
-exposeFormat('json');
-exposeFormat('label');
-exposeFormat('logstash');
-exposeFormat('metadata');
-exposeFormat('ms');
-exposeFormat('padLevels', 'pad-levels');
-exposeFormat('prettyPrint', 'pretty-print');
-exposeFormat('printf');
-exposeFormat('simple');
-exposeFormat('splat');
-exposeFormat('timestamp');
-exposeFormat('uncolorize');
+exposeFormat('align', function () { return require('./align') });
+exposeFormat('errors', function () { return require('./errors') });
+exposeFormat('cli', function () { return require('./cli') });
+exposeFormat('combine', function () { return require('./combine') });
+exposeFormat('colorize', function () { return require('./colorize') });
+exposeFormat('json', function () { return require('./json') });
+exposeFormat('label', function () { return require('./label') });
+exposeFormat('logstash', function () { return require('./logstash') });
+exposeFormat('metadata', function () { return require('./metadata') });
+exposeFormat('ms', function () { return require('./ms') });
+exposeFormat('padLevels', function () { return require('./pad-levels') });
+exposeFormat('prettyPrint', function () { return require('./pretty-print') });
+exposeFormat('printf', function () { return require('./printf') });
+exposeFormat('simple', function () { return require('./simple') });
+exposeFormat('splat', function () { return require('./splat') });
+exposeFormat('timestamp', function () { return require('./timestamp') });
+exposeFormat('uncolorize', function () { return require('./uncolorize') });
