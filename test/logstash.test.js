@@ -19,7 +19,7 @@ describe('logstash', () => {
         '@fields': {
           level: expected.level
         },
-        '@message': expected.message,
+        '@message': expected.message
       }));
     }
   ));
@@ -38,7 +38,7 @@ describe('logstash', () => {
           level: expected.level
         },
         '@message': expected.message,
-        '@timestamp': info[TIMESTAMP],
+        '@timestamp': info[TIMESTAMP]
       }));
     }
   ));
