@@ -1,5 +1,15 @@
 # CHANGELOG
 
+### 2.3.0
+**2021/09/21**
+
+- Update dependencies
+- Removing some superfluous semicolons & commas lint
+- Avoid dynamic requires [#117]
+- Replace JSON stringify library "fast-safe-stringify" by "safe-stable-stringify" [#98]
+- More correctly format errors even if the “message” property is enumerable [#101] 
+- Fix errors and ms export for browsers [#106] 
+
 ### 2.2.0
 **2020/06/21**
 
