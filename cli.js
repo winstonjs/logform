@@ -12,7 +12,7 @@ const { configs, MESSAGE } = require('triple-beam');
 class CliFormat {
   constructor(opts = {}) {
     if (!opts.levels) {
-      opts.levels = configs.npm.levels;
+      opts.levels = configs.cli.levels;
     }
 
     this.colorizer = new Colorizer(opts);
