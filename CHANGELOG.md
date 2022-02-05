@@ -1,5 +1,22 @@
 # CHANGELOG
 
+### 2.3.2
+**2022/01/09**
+
+This update, which also used up version number 2.3.1, pinned the version of the `colors` dependency
+due to vandalism by a developer of that package, as noted [here](https://www.bleepingcomputer.com/news/security/dev-corrupts-npm-libs-colors-and-faker-breaking-thousands-of-apps/).
+[As discussed in the `winston` package](https://github.com/winstonjs/winston/issues/2011), all users should update to this (or a later version, should one exist) ASAP.  
+
+### 2.3.0
+**2021/09/21**
+
+- Update dependencies
+- Removing some superfluous semicolons & commas lint
+- Avoid dynamic requires [#117]
+- Replace JSON stringify library "fast-safe-stringify" by "safe-stable-stringify" [#98]
+- More correctly format errors even if the “message” property is enumerable [#101] 
+- Fix errors and ms export for browsers [#106] 
+
 ### 2.2.0
 **2020/06/21**
 
