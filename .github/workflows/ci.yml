@@ -31,4 +31,4 @@ jobs:
       - name: Test
         run: npm test
       - name: TypeScript Test
-        run: npx --package typescript tsc --project test
+        run: npx --package typescript tsc
