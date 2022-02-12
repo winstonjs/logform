@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 2.4.0
+**2022/02/12**
+
+- Updated all dependencies
+- [#135] Use CLI levels (not NPM levels) in `CliFormat` (this was likely a typo originally)
+- [#134] Expose `safe-stable-stringify` 2.x options as parameters in `JsonOptions`
+
 ### 2.3.2
 **2022/01/09**
 
