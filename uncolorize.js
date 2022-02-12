@@ -1,6 +1,6 @@
 'use strict';
 
-const colors = require('colors/safe');
+const colors = require('@colors/colors/safe');
 const format = require('./format');
 const { MESSAGE } = require('triple-beam');
 
