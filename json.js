@@ -2,16 +2,16 @@
 
 const format = require('./format');
 const { MESSAGE } = require('triple-beam');
-const jsonStringify = require('safe-stable-stringify');
+const stringify = require('safe-stable-stringify');
 
 /*
  * function replacer (key, value)
  * Handles proper stringification of Buffer and bigint output.
  */
 function replacer(key, value) {
-  if (value instanceof Buffer)
-    return value.toString('base64');
-  // eslint-disable-next-line valid-typeof
+  // safe-stable-stringify does support BigInt, however, it doesn't wrap the value in quotes.
+  // Leading to a loss in fidelity if the resulting string is parsed.
+  // It would also be a breaking change for logform.
   if (typeof value === 'bigint')
     return value.toString();
   return value;
@@ -23,7 +23,8 @@ function replacer(key, value) {
  * object into pure JSON. This was previously exposed as { json: true }
  * to transports in `winston < 3.0.0`.
  */
-module.exports = format((info, opts = {}) => {
+module.exports = format((info, opts) => {
+  const jsonStringify = stringify.configure(opts);
   info[MESSAGE] = jsonStringify(info, opts.replacer || replacer, opts.space);
   return info;
 });
