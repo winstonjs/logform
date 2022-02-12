@@ -1,6 +1,6 @@
 'use strict';
 
-const colors = require('colors/safe');
+const colors = require('@colors/colors/safe');
 const { LEVEL, MESSAGE } = require('triple-beam');
 
 //
@@ -58,7 +58,7 @@ class Colorizer {
 
   /*
    * function colorize (lookup, level, message)
-   * Performs multi-step colorization using colors/safe
+   * Performs multi-step colorization using @colors/colors/safe
    */
   colorize(lookup, level, message) {
     if (typeof message === 'undefined') {

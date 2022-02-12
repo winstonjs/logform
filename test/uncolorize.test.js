@@ -1,7 +1,7 @@
 'use strict';
 
 const assume = require('assume');
-const colors = require('colors/safe');
+const colors = require('@colors/colors/safe');
 const colorize = require('../colorize');
 const combine = require('../combine');
 const format = require('../format');
