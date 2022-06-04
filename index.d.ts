@@ -6,7 +6,7 @@
 
 export interface TransformableInfo {
   level: string;
-  message: string;
+  message: any;
   [key: string]: any;
 }
 
@@ -53,7 +53,7 @@ export namespace format {
   function uncolorize(opts?: UncolorizeOptions): Format;
 }
 
-export interface CliOptions extends ColorizeOptions, PadLevelsOptions {}
+export interface CliOptions extends ColorizeOptions, PadLevelsOptions { }
 
 export interface ColorizeOptions {
   /**
