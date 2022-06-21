@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 2.4.1
+**2022/06/21**
+
+- [#178] Change TransformableInfo message prop to any: Loosening types to fix #172 (thanks, @gregbair!)
+- [#149] Adopted issue templates for reporting issues, affects GitHub project management only (thanks, @maverick1872!)
+- Updated dependencies, from dependabot
+
 ### 2.4.0
 **2022/02/12**
 
