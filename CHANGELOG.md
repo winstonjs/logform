@@ -6,6 +6,10 @@
 This patch-level release includes a fix for a crash on attempt to uncolorize Symbol.
 Thanks to @Alexsey for that first contribution in https://github.com/winstonjs/logform/pull/188.
 
+## Maintainability updates:
+Line break styles were changed to be LF (instead of CRLF) more consistently so that linter warnings
+aren't drowned out by notes about that.
+
 ## Dependency updates by @dependabot
 * @babel/cli from 7.17.10 to 7.18.6 in https://github.com/winstonjs/logform/pull/187
 * @babel/core from 7.18.5 to 7.18.6 in https://github.com/winstonjs/logform/pull/185
@@ -31,7 +35,7 @@ Thanks to @Alexsey for that first contribution in https://github.com/winstonjs/l
 
 This update, which also used up version number 2.3.1, pinned the version of the `colors` dependency
 due to vandalism by a developer of that package, as noted [here](https://www.bleepingcomputer.com/news/security/dev-corrupts-npm-libs-colors-and-faker-breaking-thousands-of-apps/).
-[As discussed in the `winston` package](https://github.com/winstonjs/winston/issues/2011), all users should update to this (or a later version, should one exist) ASAP.  
+[As discussed in the `winston` package](https://github.com/winstonjs/winston/issues/2011), all users should update to this (or a later version, should one exist) ASAP.
 
 ### 2.3.0
 **2021/09/21**
@@ -40,8 +44,8 @@ due to vandalism by a developer of that package, as noted [here](https://www.ble
 - Removing some superfluous semicolons & commas lint
 - Avoid dynamic requires [#117]
 - Replace JSON stringify library "fast-safe-stringify" by "safe-stable-stringify" [#98]
-- More correctly format errors even if the “message” property is enumerable [#101] 
-- Fix errors and ms export for browsers [#106] 
+- More correctly format errors even if the “message” property is enumerable [#101]
+- Fix errors and ms export for browsers [#106]
 
 ### 2.2.0
 **2020/06/21**
@@ -54,7 +58,7 @@ due to vandalism by a developer of that package, as noted [here](https://www.ble
 ### 2.1.2
 **2019/01/31**
 
-- [#74] Remove all internal symbols before invoking `util.inspect`. 
+- [#74] Remove all internal symbols before invoking `util.inspect`.
    - Related to [#31].
 
 ### 2.1.1
@@ -177,7 +181,7 @@ console.log(
 
 - [#52] Add types field in package.json.
 - [#46], [#49] Changes for splat when there are no tokens present and no splat present.
-- [#47], [#53] Expose transpiled code for Browser-only scenarios.  
+- [#47], [#53] Expose transpiled code for Browser-only scenarios.
 
 ### 1.9.1
 **2018/06/26**
@@ -232,7 +236,7 @@ console.log(
 ### 1.4.0
 **2018/03/23**
 
-- [#14] @iamkirkbater Added Initial Metadata Support. 
+- [#14] @iamkirkbater Added Initial Metadata Support.
 - Correct JSDoc for printf.js. Fixes #10.
 
 ### 1.3.0
