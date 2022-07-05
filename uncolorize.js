@@ -16,11 +16,11 @@ module.exports = format((info, opts) => {
   }
 
   if (opts.message !== false) {
-    info.message = colors.strip(info.message);
+    info.message = colors.strip(String(info.message));
   }
 
   if (opts.raw !== false && info[MESSAGE]) {
-    info[MESSAGE] = colors.strip(info[MESSAGE]);
+    info[MESSAGE] = colors.strip(String(info[MESSAGE]));
   }
 
   return info;
