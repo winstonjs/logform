@@ -83,6 +83,25 @@ describe('uncolorize', () => {
     }
   ));
 
+  it('uncolorize() not crashing with Symbol()', assumeFormatted(
+    combine(
+      format(info => {
+        info.level = info.level.toUpperCase();
+        return info;
+      })(),
+      colorize(),
+      uncolorize()
+    ),
+    infoify({ level: 'info', message: Symbol() }),
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+
+      assume(info.level).equals('INFO');
+      assume(info.message).equals('Symbol()');
+    }
+  ));
+
   it('uncolorize({ level: false }) removes color from { message, [MESSAGE] }', assumeFormatted(
     addAndRemoveColors({ level: false }),
     infoify({ level: 'info', message: 'whatever' }),
