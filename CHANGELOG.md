@@ -1,5 +1,17 @@
 # CHANGELOG
 
+### [2.4.2](https://github.com/winstonjs/logform/compare/v2.4.1...v2.4.2)
+**2022/07/05**
+## Bugfixes
+This patch-level release includes a fix for a crash on attempt to uncolorize Symbol.
+Thanks to @Alexsey for that first contribution in https://github.com/winstonjs/logform/pull/188.
+
+## Dependency updates by @dependabot
+* @babel/cli from 7.17.10 to 7.18.6 in https://github.com/winstonjs/logform/pull/187
+* @babel/core from 7.18.5 to 7.18.6 in https://github.com/winstonjs/logform/pull/185
+* @babel/preset-env from 7.18.2 to 7.18.6 in https://github.com/winstonjs/logform/pull/184
+* eslint from 8.18.0 to 8.19.0 in https://github.com/winstonjs/logform/pull/186
+
 ### 2.4.1
 **2022/06/21**
 
