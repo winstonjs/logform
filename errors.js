@@ -9,9 +9,9 @@ const { LEVEL, MESSAGE } = require('triple-beam');
  * If the `message` property of the `info` object is an instance of `Error`,
  * replace the `Error` object its own `message` property.
  *
- * Optionally, the Error's `stack` property can also be appended to the `info` object.
+ * Optionally, the Error's `stack` and/or `cause` properties can also be appended to the `info` object.
  */
-module.exports = format((einfo, { stack }) => {
+module.exports = format((einfo, { stack, cause }) => {
   if (einfo instanceof Error) {
     const info = Object.assign({}, einfo, {
       level: einfo.level,
@@ -21,6 +21,7 @@ module.exports = format((einfo, { stack }) => {
     });
 
     if (stack) info.stack = einfo.stack;
+    if (cause) info.cause = einfo.cause;
     return info;
   }
 
@@ -33,7 +34,8 @@ module.exports = format((einfo, { stack }) => {
   einfo.message = err.message;
   einfo[MESSAGE] = err.message;
 
-  // Assign the stack if requested.
+  // Assign the stack and/or cause if requested.
   if (stack) einfo.stack = err.stack;
+  if (cause) einfo.cause = err.cause;
   return einfo;
 });
