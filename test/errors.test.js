@@ -22,6 +22,8 @@ errInfoProps.wut = 'some string';
 const errLateMessage = new Error();
 errLateMessage.message = 'whatever';
 
+const errWithCause = new Error('wut', { cause: new Error('an error cause') });
+
 describe('errors()({ object })', () => {
   it('errors() returns the original info', assumeFormatted(
     errors(),
@@ -82,6 +84,33 @@ describe('errors()({ object })', () => {
       assume(info.level).equals('info');
       assume(info.message).equals(errLateMessage.message);
       assume(info[MESSAGE]).equals(errLateMessage.message);
+    }
+  ));
+
+  it('errors({ cause: true }) sets info.cause', assumeFormatted(
+    errors({ cause: true }),
+    { level: 'info', message: errWithCause },
+    (info) => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.level).equals('info');
+      assume(info.message).equals(errWithCause.message);
+      assume(info[MESSAGE]).equals(errWithCause.message);
+      assume(info.cause).equals(errWithCause.cause);
+    }
+  ));
+
+  it('errors({ stack: true, cause: true }) sets info.stack and info.cause', assumeFormatted(
+    errors({ stack: true, cause: true }),
+    { level: 'info', message: errWithCause },
+    (info) => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.level).equals('info');
+      assume(info.message).equals(errWithCause.message);
+      assume(info[MESSAGE]).equals(errWithCause.message);
+      assume(info.stack).equals(errWithCause.stack);
+      assume(info.cause).equals(errWithCause.cause);
     }
   ));
 });
