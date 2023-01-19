@@ -7,7 +7,7 @@
 export interface TransformableInfo {
   level: string;
   message: any;
-  [key: string]: any;
+  [key: string | symbol]: any;
 }
 
 export type TransformFunction = (info: TransformableInfo, opts?: any) => TransformableInfo | boolean;
