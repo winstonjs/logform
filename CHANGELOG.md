@@ -1,5 +1,26 @@
 # CHANGELOG
 
+### [2.5.0](https://github.com/winstonjs/logform/compare/v2.4.2...v2.5.0)
+**2023/02/06**
+## Improvements
+All the improvements in this release are from first-time contributors - thanks for your contributions!
+* Feature - optionally include Error.cause property by @davidnbooth in https://github.com/winstonjs/logform/pull/226
+* Add triple beam properties to types by @robinpokorny in https://github.com/winstonjs/logform/pull/194
+* TransformableInfo should support symbols as keys by @dancrumb in https://github.com/winstonjs/logform/pull/240
+
+## Dependency updates by @dependabot
+* Bump @babel/cli from 7.18.6 to 7.19.3 by @dependabot in https://github.com/winstonjs/logform/pull/214
+* Bump @babel/core from 7.18.6 to 7.20.12 by @dependabot in https://github.com/winstonjs/logform/pull/212
+and https://github.com/winstonjs/logform/pull/237
+* Bump @babel/preset-env from 7.18.6 to 7.20.2 by @dependabot in https://github.com/winstonjs/logform/pull/217
+and https://github.com/winstonjs/logform/pull/225
+* Bump eslint from 8.19.0 to 8.33.0 by @dependabot in https://github.com/winstonjs/logform/pull/215
+and https://github.com/winstonjs/logform/pull/241
+* Bump mocha from 10.0.0 to 10.2.0 by @dependabot in https://github.com/winstonjs/logform/pull/218
+and https://github.com/winstonjs/logform/pull/232
+* Bump safe-stable-stringify from 2.3.1 to 2.4.2 by @dependabot in https://github.com/winstonjs/logform/pull/206
+and https://github.com/winstonjs/logform/pull/235
+
 ### [2.4.2](https://github.com/winstonjs/logform/compare/v2.4.1...v2.4.2)
 **2022/07/05**
 ## Bugfixes
