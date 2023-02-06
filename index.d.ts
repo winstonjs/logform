@@ -11,7 +11,7 @@ export interface TransformableInfo {
   [LEVEL]?: string;
   [MESSAGE]?: any;
   [SPLAT]?: any;
-  [key: string]: any;
+  [key: string | symbol]: any;
 }
 
 export type TransformFunction = (info: TransformableInfo, opts?: any) => TransformableInfo | boolean;
