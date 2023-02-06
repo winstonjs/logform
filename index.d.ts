@@ -1,12 +1,16 @@
-// Type definitions for logform 1.2
+// Type definitions for logform 2.x
 // Project: https://github.com/winstonjs/logform
 // Definitions by: DABH <https://github.com/DABH>
 // Definitions: https://github.com/winstonjs/logform
 // TypeScript Version: 2.2
+import {LEVEL, MESSAGE, SPLAT} from 'triple-beam'
 
 export interface TransformableInfo {
   level: string;
   message: any;
+  [LEVEL]?: string;
+  [MESSAGE]?: any;
+  [SPLAT]?: any;
   [key: string]: any;
 }
 
