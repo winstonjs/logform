@@ -8,6 +8,9 @@ in https://github.com/winstonjs/logform/pull/243 to fix https://github.com/winst
 
 ### [2.5.0](https://github.com/winstonjs/logform/compare/v2.4.2...v2.5.0)
 **2023/02/06**
+## Most Important:
+* Now incompatible with TypeScript < 4.4 due to [PR #240](https://github.com/winstonjs/logform/pull/240), as pointed out in [#244](https://github.com/winstonjs/logform/issues/244). 
+
 ## Improvements
 All the improvements in this release are from first-time contributors - thanks for your contributions!
 * Feature - optionally include Error.cause property by @davidnbooth in https://github.com/winstonjs/logform/pull/226
