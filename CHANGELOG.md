@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### [2.5.1](https://github.com/winstonjs/logform/compare/v2.5.0...v2.5.1)
+**2023/02/07**
+## Bugfix
+The triple-beam types package has been promoted to a full dependency, by first-time contributor @carboneater (Thanks!)
+in https://github.com/winstonjs/logform/pull/243 to fix https://github.com/winstonjs/logform/issues/242.
+
 ### [2.5.0](https://github.com/winstonjs/logform/compare/v2.4.2...v2.5.0)
 **2023/02/06**
 ## Improvements
