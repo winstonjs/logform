@@ -5,14 +5,15 @@
 // TypeScript Version: 2.2
 import {LEVEL, MESSAGE, SPLAT} from 'triple-beam'
 
-export interface TransformableInfo {
+export type TransformableInfo = {
+  [key in string | number]: any;
+} & {
   level: string;
   message: any;
   [LEVEL]?: string;
   [MESSAGE]?: any;
   [SPLAT]?: any;
-  [key: string | symbol]: any;
-}
+};
 
 export type TransformFunction = (info: TransformableInfo, opts?: any) => TransformableInfo | boolean;
 export type Colors = { [key: string]: string | string[] }; // tslint:disable-line interface-over-type-literal
