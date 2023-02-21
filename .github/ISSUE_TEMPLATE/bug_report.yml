@@ -30,15 +30,22 @@ body:
         Can be found by running one of the following (depending on your package manager of choice):
         - `npm list logform`
         - `yarn list --pattern logform`
-  - type: input # Affected Version Input
+  - type: input # Affected Node Version Input
     id: node-version
     validations:
       required: true
     attributes:
       label: What version of Node are you using?
-      placeholder: v16.8.0
+      placeholder: v18.14.1
       description: >
         Can be found by running the following: `node -v`
+  - type: input # Affected TS Version Input
+    id: ts-version
+    attributes:
+      label: If this is a TypeScript issue, what version of TypeScript are you using?
+      placeholder: v4.9.5
+      description: >
+        Can be found by running the following: `npx tsc -v`
   - type: input # Last Known Working Version
     attributes:
       label: If this worked in a previous version of Logform, which was it?
