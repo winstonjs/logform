@@ -25,7 +25,7 @@ body:
       required: true
     attributes:
       label: What version of Logform presents the issue?
-      placeholder: v2.4.0
+      placeholder: v2.5.1
       description: >
         Can be found by running one of the following (depending on your package manager of choice):
         - `npm list logform`
