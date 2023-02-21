@@ -6,7 +6,7 @@
 import {LEVEL, MESSAGE, SPLAT} from 'triple-beam'
 
 export type TransformableInfo = {
-  [key in string | number]: any;
+  [key in string | symbol]: any;
 } & {
   level: string;
   message: any;
