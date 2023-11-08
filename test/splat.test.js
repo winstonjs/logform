@@ -4,15 +4,16 @@ const { SPLAT } = require('triple-beam');
 const assume = require('assume');
 const splat = require('../splat');
 const helpers = require('./helpers');
+const util = require('util');
 
 /*
  * Helper function for asserting that an info object
  * with the given { message, splat: spread } is properly interoplated
  * by the splat format into the `expected` value.
  */
-function assumeSplat(message, spread, expected) {
+function assumeSplat(message, spread, expected, options) {
   return helpers.assumeFormatted(
-    splat(),
+    splat(options),
     { level: 'info', message, [SPLAT]: spread },
     info => {
       assume(info.level).is.a('string');
@@ -29,7 +30,7 @@ function assumeSplat(message, spread, expected) {
   );
 }
 
-describe('splat', () => {
+describe('splat', () => { // eslint-disable-line max-statements
   it('basic string', assumeSplat(
     'just a string', [], 'just a string'
   ));
@@ -104,6 +105,24 @@ describe('splat', () => {
       assume(info.message).equals('Hi #42, how are you feeling');
       assume(info.today).true();
     }
+  ));
+
+  it('%O | object placeholder formats object', assumeSplat(
+    'printing object %O',
+    [{ hello: 'world' }],
+    info => {
+      assume(info.message).equals('printing object { hello: \'world\' }');
+    }
+  ));
+
+  it('%O | object placeholder formats deep object', assumeSplat(
+    'printing object %O',
+    [{ a: { b: { c: { d: { e: { f: 1 }}}}}}],
+    info => {
+      const deepPrinted = util.inspect({ a: { b: { c: { d: { e: { f: 1 }}}}}}, { depth: null });
+      assume(info.message).equals(`printing object ${deepPrinted}`);
+    },
+    { inspectOptions: { depth: null }}
   ));
 
   it('No [SPLAT] does not crash', () => {
