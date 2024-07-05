@@ -11,14 +11,14 @@ const format = require('./format');
  * - { timestamp: true }             // `new Date.toISOString()`
  * - { timestamp: function:String }  // Value returned by `timestamp()`
  */
-module.exports = format((info, opts = {propName: 'timestamp'}) => {
+module.exports = format((info, opts = { propName: 'timestamp' }) => {
   if (opts.format) {
     info[opts.propName] = typeof opts.format === 'function'
       ? opts.format()
       : fecha.format(new Date(), opts.format);
   }
 
-  if (!info[propName]) {
+  if (!info[opts.propName]) {
     info[opts.propName] = new Date().toISOString();
   }
 
