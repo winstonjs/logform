@@ -60,5 +60,8 @@ typings/
 # test files
 test/
 
+# example files
+examples/
+
 # GitHub settings like CI configuration
 .github
