@@ -8,6 +8,7 @@ import {LEVEL, MESSAGE, SPLAT} from 'triple-beam'
 export interface TransformableInfo {
   level: string;
   message: any;
+  timestamp: any;
   [LEVEL]?: string;
   [MESSAGE]?: any;
   [SPLAT]?: any;
