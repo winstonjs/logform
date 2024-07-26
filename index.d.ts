@@ -75,7 +75,7 @@ export interface ColorizeOptions {
   /**
    * An object containing the colors for the log levels. For example: `{ info: 'blue', error: 'red' }`.
    */
-  colors?: Record<string, string>;
+  colors?: Record<string, string | string[]>;
 }
 
 export interface JsonOptions {
