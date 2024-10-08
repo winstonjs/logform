@@ -7,16 +7,16 @@ import {LEVEL, MESSAGE, SPLAT} from 'triple-beam'
 
 export interface TransformableInfo {
   level: string;
-  message: any;
+  message: unknown;
   [LEVEL]?: string;
-  [MESSAGE]?: any;
-  [SPLAT]?: any;
-  [key: string | symbol]: any;
+  [MESSAGE]?: unknown;
+  [SPLAT]?: unknown;
+  [key: string | symbol]: unknown;
 }
 
-export type TransformFunction = (info: TransformableInfo, opts?: any) => TransformableInfo | boolean;
+export type TransformFunction = (info: TransformableInfo, opts?: unknown) => TransformableInfo | boolean;
 export type Colors = { [key: string]: string | string[] }; // tslint:disable-line interface-over-type-literal
-export type FormatWrap = (opts?: any) => Format;
+export type FormatWrap = (opts?: unknown) => Format;
 
 export class Format {
   constructor(opts?: object);
@@ -75,14 +75,14 @@ export interface ColorizeOptions {
   /**
    * An object containing the colors for the log levels. For example: `{ info: 'blue', error: 'red' }`.
    */
-  colors?: Record<string, string | string[]>;
+  colors?: Record<string, string>;
 }
 
 export interface JsonOptions {
   /**
    * A function that influences how the `info` is stringified.
    */
-  replacer?: (this: any, key: string, value: any) => any;
+  replacer?: (this: unknown, key: string, value: unknown) => unknown;
   /**
    * The number of white space used to format the json.
    */
@@ -111,7 +111,7 @@ export interface JsonOptions {
   deterministic?: boolean,
   /**
    * Maximum number of entries to serialize per object (at least one).
-   * The serialized output contains information about how many entries have not been serialized.
+   * The serialized output contains information about how munknown entries have not been serialized.
    * Ignored properties are counted as well (e.g., properties with symbol values).
    * Using the array replacer overrules this option.
    * @default Infinity
