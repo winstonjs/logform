@@ -75,7 +75,7 @@ export interface ColorizeOptions {
   /**
    * An object containing the colors for the log levels. For example: `{ info: 'blue', error: 'red' }`.
    */
-  colors?: Record<string, string>;
+  colors?: Record<string, string | string[]>;
 }
 
 export interface JsonOptions {
@@ -111,7 +111,7 @@ export interface JsonOptions {
   deterministic?: boolean,
   /**
    * Maximum number of entries to serialize per object (at least one).
-   * The serialized output contains information about how munknown entries have not been serialized.
+   * The serialized output contains information about how many entries have not been serialized.
    * Ignored properties are counted as well (e.g., properties with symbol values).
    * Using the array replacer overrules this option.
    * @default Infinity
