@@ -183,6 +183,10 @@ export interface TimestampOptions {
    * The name of an alias for the timestamp property, that will be added to the `info` object.
    */
   alias?: string;
+  /**
+   * The name of the timestamp property, that will take the place of "timestamp" if specified.
+   */
+  propName?: string;
 }
 
 export interface UncolorizeOptions {
