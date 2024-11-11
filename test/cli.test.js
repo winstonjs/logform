@@ -9,13 +9,18 @@ const {
   infoify,
   setupLevels
 } = require('./helpers');
+const { EnvManager } = require('../env-manager');
 const { LEVEL, MESSAGE } = require('triple-beam');
 
 describe('cli', () => {
   before(setupLevels);
 
   it('cli() (default) sets info[MESSAGE]', assumeFormatted(
-    cli(),
+    cli({
+      env: new EnvManager({
+        disableColor: false
+      })
+    }),
     infoify({ level: 'info', message: 'whatever' }),
     (info) => {
       assume(info.level).is.a('string');

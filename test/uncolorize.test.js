@@ -8,6 +8,7 @@ const format = require('../format');
 const simple = require('../simple');
 const uncolorize = require('../uncolorize');
 const { assumeFormatted, infoify, setupLevels } = require('./helpers');
+const { EnvManager } = require('../env-manager');
 const { LEVEL, MESSAGE } = require('triple-beam');
 const COLORED = Symbol.for('colored');
 
@@ -25,14 +26,13 @@ const rememberColors = format(info => {
 
   return info;
 });
-
 /*
  * Helper function to return a testable format that
  * transitions from colors to uncolored
  */
-function addAndRemoveColors(opts = {}) {
+function addAndRemoveColors(opts = {}, disableColor = false) {
   return combine(
-    colorize({ all: true }),
+    colorize({ all: true, env: new EnvManager({ disableColor }) }),
     simple(),
     rememberColors(),
     uncolorize(opts)
@@ -70,7 +70,30 @@ describe('uncolorize', () => {
         info.level = info.level.toUpperCase();
         return info;
       })(),
-      colorize(),
+      colorize({
+        env: new EnvManager({ disableColor: false })
+      }),
+      uncolorize()
+    ),
+    { [LEVEL]: 'info', level: 'info', message: 'whatever' },
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+
+      assume(info.level).equals('INFO');
+      assume(info.message).equals('whatever');
+    }
+  ));
+
+  it('same uncolorize() (default) preserves mutable level formatting when NO_COLOR env var is enabled', assumeFormatted(
+    combine(
+      format(info => {
+        info.level = info.level.toUpperCase();
+        return info;
+      })(),
+      colorize({
+        env: new EnvManager({ disableColor: true })
+      }),
       uncolorize()
     ),
     { [LEVEL]: 'info', level: 'info', message: 'whatever' },
@@ -89,7 +112,9 @@ describe('uncolorize', () => {
         info.level = info.level.toUpperCase();
         return info;
       })(),
-      colorize(),
+      colorize({
+        env: new EnvManager({ disableColor: false })
+      }),
       uncolorize()
     ),
     infoify({ level: 'info', message: Symbol() }),
@@ -114,6 +139,22 @@ describe('uncolorize', () => {
       assume(info[MESSAGE]).equals('info: whatever');
     }
   ));
+
+  it(
+    'same uncolorize({ level: false }) removes color from { message, [MESSAGE] } when NO_COLOR env var is enabled',
+    assumeFormatted(
+      addAndRemoveColors({ level: false }, true),
+      infoify({ level: 'info', message: 'whatever' }),
+      info => {
+        assume(info.level).is.a('string');
+        assume(info.message).is.a('string');
+
+        assume(info.level).equals('info');
+        assume(info.message).equals('whatever');
+        assume(info[MESSAGE]).equals('info: whatever');
+      }
+    )
+  );
 
   it('uncolorize({ message: false }) removes color from { level, [MESSAGE] }', assumeFormatted(
     addAndRemoveColors({ message: false }),
