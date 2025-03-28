@@ -106,9 +106,11 @@ export interface JsonOptions {
   circularValue?: string | null | TypeErrorConstructor | ErrorConstructor,
   /**
    * If `true`, guarantee a deterministic key order instead of relying on the insertion order.
+   * Set to `false` to keep original insertion order.
+   * Or provide an array comparator function that determines the order of the elements. 
    * @default true
    */
-  deterministic?: boolean,
+  deterministic?: boolean | ((a: string, b: string) => number),
   /**
    * Maximum number of entries to serialize per object (at least one).
    * The serialized output contains information about how many entries have not been serialized.
