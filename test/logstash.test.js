@@ -14,7 +14,7 @@ describe('logstash', () => {
     { level: 'info', message: 'whatever' },
     (info, expected) => {
       assume(info.level).equals('info');
-      assume(info.message).equals(undefined);
+      assume(info.message).equals(expected.message);
       assume(info[MESSAGE]).equals(JSON.stringify({
         '@fields': {
           level: expected.level
@@ -32,7 +32,7 @@ describe('logstash', () => {
     { level: 'info', message: 'whatever' },
     (info, expected) => {
       assume(info.level).equals('info');
-      assume(info.message).equals(undefined);
+      assume(info.message).equals(expected.message);
       assume(info[MESSAGE]).equals(JSON.stringify({
         '@fields': {
           level: expected.level
