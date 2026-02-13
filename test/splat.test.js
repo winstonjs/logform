@@ -136,4 +136,23 @@ describe('splat', () => {
     );
   });
 
+
+  it('%c in message with meta | preserves %c and merges meta', assumeSplat(
+    'hello %c world', [{ robotId: 5 }], info => {
+      assume(info.message).equals('hello %c world');
+      assume(info.robotId).equals(5);
+    }
+  ));
+
+  it('%c in message without meta | preserves %c in message', assumeSplat(
+    'hello %c world', [], 'hello %c world'
+  ));
+
+  it('%c mixed with valid specifiers | only interpolates valid specifiers', assumeSplat(
+    'hello %s %c world', ['test', { robotId: 5 }], info => {
+      assume(info.message).equals('hello test %c world');
+      assume(info.robotId).equals(5);
+    }
+  ));
+
 });
