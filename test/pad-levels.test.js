@@ -51,6 +51,16 @@ describe('padLevels', () => {
     }
   ));
 
+  it('padLevels() does not prepend "undefined" for levels not in the configured set', assumeFormatted(
+    padLevels({ levels: configs.npm.levels }),
+    infoify({ level: 'emerg', message: 'system is unusable' }),
+    info => {
+      assume(info.message).is.a('string');
+      assume(info.message).does.not.include('undefined');
+      assume(info.message).equals('system is unusable');
+    }
+  ));
+
   it('exposes the Format prototype', assumeHasPrototype(padLevels));
 });
 
