@@ -61,9 +61,10 @@ class Padder {
    * @returns {Info} Modified logform info object.
    */
   transform(info, opts) {
-    info.message = `${this.paddings[info[LEVEL]]}${info.message}`;
+    const padding = this.paddings[info[LEVEL]] || '';
+    info.message = `${padding}${info.message}`;
     if (info[MESSAGE]) {
-      info[MESSAGE] = `${this.paddings[info[LEVEL]]}${info[MESSAGE]}`;
+      info[MESSAGE] = `${padding}${info[MESSAGE]}`;
     }
 
     return info;
