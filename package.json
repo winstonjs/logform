@@ -44,7 +44,7 @@
     "eslint": "^8.8.0",
     "mocha": "^10.0.0",
     "nyc": "^17.1.0",
-    "rimraf": "^5.0.5"
+    "rimraf": "^6.0.1"
   },
   "types": "./index.d.ts",
   "engines": {
