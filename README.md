@@ -180,13 +180,13 @@ const ignorePrivate = format((info, opts) => {
   return info;
 });
 
-console.dir(ignorePrivate.transform({
+console.dir(ignorePrivate().transform({
   level: 'error',
   message: 'Public error to share'
 }));
 // { level: 'error', message: 'Public error to share' }
 
-console.dir(ignorePrivate.transform({
+console.dir(ignorePrivate().transform({
   level: 'error',
   private: true,
   message: 'This is super secret - hide it.'
