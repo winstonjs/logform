@@ -51,6 +51,15 @@ describe('padLevels', () => {
     }
   ));
 
+  it('padLevels does not prepend "undefined" for levels not in the padding map', assumeFormatted(
+    padLevels({ levels: configs.npm.levels }),
+    infoify({ level: 'emerg', message: 'custom level message' }),
+    info => {
+      assume(info.message).equals('custom level message');
+      assume(info[MESSAGE]).equals('custom level message');
+    }
+  ));
+
   it('exposes the Format prototype', assumeHasPrototype(padLevels));
 });
 
