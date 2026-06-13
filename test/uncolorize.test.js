@@ -1,3 +1,4 @@
+/* eslint-disable no-process-env */
 'use strict';
 
 const assume = require('assume');
@@ -42,6 +43,10 @@ function addAndRemoveColors(opts = {}) {
 describe('uncolorize', () => {
   before(setupLevels);
 
+  beforeEach(() => {
+    process.env.NO_COLOR = undefined;
+  });
+
   it('uncolorize() (default) removes all colors', assumeFormatted(
     addAndRemoveColors(),
     infoify({ level: 'info', message: 'whatever' }),
@@ -83,6 +88,29 @@ describe('uncolorize', () => {
     }
   ));
 
+  it('same uncolorize() (default) preserves mutable level formatting when NO_COLOR env var is enabled', () => {
+    process.env.NO_COLOR = 'true';
+
+    assumeFormatted(
+      combine(
+        format(info => {
+          info.level = info.level.toUpperCase();
+          return info;
+        })(),
+        colorize(),
+        uncolorize()
+      ),
+      { [LEVEL]: 'info', level: 'info', message: 'whatever' },
+      info => {
+        assume(info.level).is.a('string');
+        assume(info.message).is.a('string');
+
+        assume(info.level).equals('INFO');
+        assume(info.message).equals('whatever');
+      }
+    );
+  });
+
   it('uncolorize() not crashing with Symbol()', assumeFormatted(
     combine(
       format(info => {
@@ -114,6 +142,23 @@ describe('uncolorize', () => {
       assume(info[MESSAGE]).equals('info: whatever');
     }
   ));
+
+  it(
+    'same uncolorize({ level: false }) removes color from { message, [MESSAGE] } when NO_COLOR env var is enabled', () => {
+      process.env.NO_COLOR = 'true';
+      assumeFormatted(
+        addAndRemoveColors({ level: false }, true),
+        infoify({ level: 'info', message: 'whatever' }),
+        info => {
+          assume(info.level).is.a('string');
+          assume(info.message).is.a('string');
+
+          assume(info.level).equals('info');
+          assume(info.message).equals('whatever');
+          assume(info[MESSAGE]).equals('info: whatever');
+        }
+      );
+    });
 
   it('uncolorize({ message: false }) removes color from { level, [MESSAGE] }', assumeFormatted(
     addAndRemoveColors({ message: false }),
@@ -147,7 +192,6 @@ describe('uncolorize', () => {
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
-
       assume(info.level).equals(colors.green('info'));
       assume(info.message).equals(colors.green('whatever'));
       assume(info[MESSAGE]).equals('info: whatever');

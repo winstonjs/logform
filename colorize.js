@@ -65,6 +65,10 @@ class Colorizer {
       message = level;
     }
 
+    if (this.isColorDisabledByEnvVar()) {
+      return message;
+    }
+
     //
     // If the color for the level is just a string
     // then attempt to colorize the message with it.
@@ -103,6 +107,21 @@ class Colorizer {
     }
 
     return info;
+  }
+
+  isColorDisabledByEnvVar() {
+    // eslint-disable-next-line no-process-env
+    const NO_COLOR = process.env.NO_COLOR;
+    /**
+     * If the environment variable NO_COLOR is truthy, the style of the output
+     *  is automatically disabled.
+     */
+    const COLOR_DISABLED = NO_COLOR &&
+      NO_COLOR !== '0' &&
+      NO_COLOR !== 'false' &&
+      NO_COLOR !== 'undefined';
+
+    return COLOR_DISABLED;
   }
 }
 

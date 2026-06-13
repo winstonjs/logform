@@ -14,6 +14,11 @@ const { LEVEL, MESSAGE } = require('triple-beam');
 describe('cli', () => {
   before(setupLevels);
 
+  beforeEach(() => {
+    // eslint-disable-next-line no-process-env
+    process.env.NO_COLOR = undefined;
+  });
+
   it('cli() (default) sets info[MESSAGE]', assumeFormatted(
     cli(),
     infoify({ level: 'info', message: 'whatever' }),
