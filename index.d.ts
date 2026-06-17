@@ -5,14 +5,14 @@
 // TypeScript Version: 2.2
 import {LEVEL, MESSAGE, SPLAT} from 'triple-beam'
 
-export interface TransformableInfo {
+export type TransformableInfo<TCustom = {}> = TCustom & {
   level: string;
   message: unknown;
   [LEVEL]?: string;
   [MESSAGE]?: unknown;
   [SPLAT]?: unknown;
   [key: string | symbol]: unknown;
-}
+};
 
 export type TransformFunction = (info: TransformableInfo, opts?: unknown) => TransformableInfo | boolean;
 export type Colors = { [key: string]: string | string[] }; // tslint:disable-line interface-over-type-literal
@@ -50,7 +50,7 @@ export namespace format {
   function ms(): Format;
   function padLevels(opts?: PadLevelsOptions): Format;
   function prettyPrint(opts?: PrettyPrintOptions): Format;
-  function printf(templateFunction: (info: TransformableInfo) => string): Format;
+  function printf<TCustom = {}>(templateFunction: (info: TransformableInfo<TCustom>) => string): Format;
   function simple(): Format;
   function splat(): Format;
   function timestamp(opts?: TimestampOptions): Format;
@@ -107,7 +107,7 @@ export interface JsonOptions {
   /**
    * If `true`, guarantee a deterministic key order instead of relying on the insertion order.
    * Set to `false` to keep original insertion order.
-   * Or provide an array comparator function that determines the order of the elements. 
+   * Or provide an array comparator function that determines the order of the elements.
    * @default true
    */
   deterministic?: boolean | ((a: string, b: string) => number),
