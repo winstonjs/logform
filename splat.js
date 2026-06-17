@@ -19,7 +19,7 @@ const escapedPercent = /%%/g;
 
 class Splatter {
   constructor(opts) {
-    this.options = opts;
+    this.options = opts || {};
   }
 
   /**
@@ -68,7 +68,11 @@ class Splatter {
       }
     }
 
-    info.message = util.format(msg, ...splat);
+    if (this.options.inspectOptions) {
+      info.message = util.formatWithOptions(this.options.inspectOptions, msg, ...splat);
+    } else {
+      info.message = util.format(msg, ...splat);
+    }
     return info;
   }
 
