@@ -24,9 +24,9 @@ module.exports = format(info => {
 
   const padding = info.padding && info.padding[info.level] || '';
   if (stringifiedRest !== '{}') {
-    info[MESSAGE] = `${info.level}:${padding} ${info.message} ${stringifiedRest}`;
+    info[MESSAGE] = `${info.level}:${padding} ${jsonStringify(info.message)} ${stringifiedRest}`;
   } else {
-    info[MESSAGE] = `${info.level}:${padding} ${info.message}`;
+    info[MESSAGE] = `${info.level}:${padding} ${jsonStringify(info.message)}`;
   }
 
   return info;
