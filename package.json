@@ -41,7 +41,7 @@
     "@babel/preset-env": "^7.10.3",
     "@dabh/eslint-config-populist": "^5.0.0",
     "assume": "^2.2.0",
-    "eslint": "^8.8.0",
+    "eslint": "^9.19.0",
     "mocha": "^10.0.0",
     "nyc": "^17.1.0",
     "rimraf": "^5.0.5"
