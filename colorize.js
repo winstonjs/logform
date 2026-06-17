@@ -1,5 +1,6 @@
 'use strict';
 
+const { EnvManager } = require('./env-manager');
 const colors = require('@colors/colors/safe');
 const { LEVEL, MESSAGE } = require('triple-beam');
 
@@ -22,6 +23,10 @@ class Colorizer {
   constructor(opts = {}) {
     if (opts.colors) {
       this.addColors(opts.colors);
+    }
+
+    if (!opts.env) {
+      opts.env = new EnvManager();
     }
 
     this.options = opts;
@@ -63,6 +68,10 @@ class Colorizer {
   colorize(lookup, level, message) {
     if (typeof message === 'undefined') {
       message = level;
+    }
+
+    if (this.options.env.isColorDisabled) {
+      return message;
     }
 
     //

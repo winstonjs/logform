@@ -11,23 +11,38 @@ const {
   infoify,
   setupLevels
 } = require('./helpers');
+const { EnvManager } = require('../env-manager');
+
+const ENABLED_COLOR_ENV = new EnvManager({ disableColor: false });
+const DISABLED_COLOR_ENV = new EnvManager({ disableColor: true });
 
 describe('colorize', () => {
   before(setupLevels);
 
   it('colorize() (default)', assumeFormatted(
-    colorize(),
+    colorize({ env: ENABLED_COLOR_ENV }),
     infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals(colors.green('info'));
+      assume(info.message).equals('whatever');
+    }
+  ));
+
+  it('not output color colorize() (default) when NO_COLOR env var is enabled', assumeFormatted(
+    colorize({ env: DISABLED_COLOR_ENV }),
+    infoify({ level: 'info', message: 'whatever' }),
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.level).equals('info');
       assume(info.message).equals('whatever');
     }
   ));
 
   it('colorize({ level: true })', assumeFormatted(
-    colorize({ level: true }),
+    colorize({ level: true, env: ENABLED_COLOR_ENV }),
     infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
@@ -37,8 +52,19 @@ describe('colorize', () => {
     }
   ));
 
+  it('not output color colorize({ level: true }) when NO_COLOR env var is enabled', assumeFormatted(
+    colorize({ level: true, env: DISABLED_COLOR_ENV }),
+    infoify({ level: 'info', message: 'whatever' }),
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.level).equals('info');
+      assume(info.message).equals('whatever');
+    }
+  ));
+
   it('colorize{ message: true })', assumeFormatted(
-    colorize({ message: true }),
+    colorize({ message: true, env: ENABLED_COLOR_ENV }),
     infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
@@ -48,19 +74,41 @@ describe('colorize', () => {
     }
   ));
 
+  it('not output color colorize{ message: true }) when NO_COLOR env var is enabled', assumeFormatted(
+    colorize({ message: true, env: DISABLED_COLOR_ENV }),
+    infoify({ level: 'info', message: 'whatever' }),
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.level).equals('info');
+      assume(info.message).equals('whatever');
+    }
+  ));
+
   it('colorize({ level: true, message: true })', assumeFormatted(
-    colorize({ level: true, message: true }),
+    colorize({ level: true, message: true, env: ENABLED_COLOR_ENV }),
     infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals(colors.green('info'));
       assume(info.message).equals(colors.green('whatever'));
+    }
+  ));
+
+  it('not output color colorize({ level: true, message: true }) when NO_COLOR env var is enabled', assumeFormatted(
+    colorize({ level: true, message: true, env: DISABLED_COLOR_ENV }),
+    infoify({ level: 'info', message: 'whatever' }),
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.level).equals('info');
+      assume(info.message).equals('whatever');
     }
   ));
 
   it('colorize({ all: true })', assumeFormatted(
-    colorize({ all: true }),
+    colorize({ all: true, env: ENABLED_COLOR_ENV }),
     infoify({ level: 'info', message: 'whatever' }),
     info => {
       assume(info.level).is.a('string');
@@ -70,8 +118,19 @@ describe('colorize', () => {
     }
   ));
 
+  it('not output color colorize({ all: true }) when NO_COLOR env var is enabled', assumeFormatted(
+    colorize({ all: true, env: DISABLED_COLOR_ENV }),
+    infoify({ level: 'info', message: 'whatever' }),
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.level).equals('info');
+      assume(info.message).equals('whatever');
+    }
+  ));
+
   it('colorize({ all: true }) [custom message]', assumeFormatted(
-    colorize({ all: true }),
+    colorize({ all: true, env: ENABLED_COLOR_ENV }),
     {
       level: 'info',
       [LEVEL]: 'info',
@@ -88,13 +147,45 @@ describe('colorize', () => {
     }
   ));
 
+  it('not output color colorize({ all: true }) [custom message] when NO_COLOR env var is enabled', assumeFormatted(
+    colorize({ all: true, env: DISABLED_COLOR_ENV }),
+    {
+      level: 'info',
+      [LEVEL]: 'info',
+      message: 'whatever',
+      [MESSAGE]: '[info] whatever custom'
+    },
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info[LEVEL]).equals('info');
+      assume(info.level).equals('info');
+      assume(info.message).equals('whatever');
+      assume(info[MESSAGE]).equals('[info] whatever custom');
+    }
+  ));
+
   it('colorizes when LEVEL !== level', assumeFormatted(
-    colorize(),
+    colorize({
+      env: ENABLED_COLOR_ENV
+    }),
     { [LEVEL]: 'info', level: 'INFO', message: 'whatever' },
     info => {
       assume(info.level).is.a('string');
       assume(info.message).is.a('string');
       assume(info.level).equals(colors.green('INFO'));
+    }
+  ));
+
+  it('not output color colorizes when LEVEL !== level and NO_COLOR env var is enabled', assumeFormatted(
+    colorize({
+      env: DISABLED_COLOR_ENV
+    }),
+    { [LEVEL]: 'info', level: 'INFO', message: 'whatever' },
+    info => {
+      assume(info.level).is.a('string');
+      assume(info.message).is.a('string');
+      assume(info.level).not.equals(colors.green('INFO'));
     }
   ));
 });
@@ -130,7 +221,9 @@ describe('Colorizer', () => {
   });
 
   describe('#colorize(LEVEL, level, message)', () => {
-    const instance = new Colorizer();
+    const instance = new Colorizer({
+      env: ENABLED_COLOR_ENV
+    });
 
     it('colorize(level) [single color]', () => {
       assume(instance.colorize('weird', 'weird')).equals(colors.cyan('weird'));
@@ -150,6 +243,28 @@ describe('Colorizer', () => {
       assume(instance.colorize('multiple', 'multiple', 'message')).equals(
         colors.bold(colors.red('message'))
       );
+    });
+  });
+
+  describe('not output color #colorize(LEVEL, level, message) when NO_COLOR env var is enabled', () => {
+    const instance = new Colorizer({
+      env: DISABLED_COLOR_ENV
+    });
+
+    it('colorize(level) [single color]', () => {
+      assume(instance.colorize('weird', 'weird')).equals('weird');
+    });
+
+    it('colorize(level) [multiple colors]', () => {
+      assume(instance.colorize('multiple', 'multiple')).equals('multiple');
+    });
+
+    it('colorize(level, message) [single color]', () => {
+      assume(instance.colorize('weird', 'weird', 'message')).equals('message');
+    });
+
+    it('colorize(level, message) [multiple colors]', () => {
+      assume(instance.colorize('multiple', 'multiple', 'message')).equals('message');
     });
   });
 });
