@@ -11,7 +11,8 @@ const { LEVEL, MESSAGE } = require('triple-beam');
  *
  * Optionally, the Error's `stack` and/or `cause` properties can also be appended to the `info` object.
  */
-module.exports = format((einfo, { stack, cause }) => {
+module.exports = format((einfo, opts = {}) => {
+  const { stack, cause } = opts;
   if (einfo instanceof Error) {
     const info = Object.assign({}, einfo, {
       level: einfo.level,

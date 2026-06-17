@@ -143,3 +143,14 @@ describe('errors()(Error)', () => {
     { immutable: false }
   ));
 });
+
+describe('errors().transform called without options', () => {
+  it('does not throw when transform is called with a single argument', () => {
+    const errorsFormat = errors({ stack: true });
+    const transformErr = new Error('Oh no!');
+    const info = errorsFormat.transform(transformErr);
+    assume(info).is.an('object');
+    assume(info.message).equals(transformErr.message);
+    assume(info[MESSAGE]).equals(transformErr.message);
+  });
+});
