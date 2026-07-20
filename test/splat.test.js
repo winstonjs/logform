@@ -62,6 +62,19 @@ describe('splat', () => {
     }
   ));
 
+  it('more arguments than % with a leftover primitive | does not spread its characters into info', assumeSplat(
+    'one %s', ['two', 'three'], info => {
+      // Regression test for #109: after `%s` consumes 'two', the leftover
+      // primitive 'three' must NOT be char-spread into indexed properties.
+      assume(info.message).equals('one two');
+      assume(info[0]).equals(undefined);
+      assume(info[1]).equals(undefined);
+      assume(info[2]).equals(undefined);
+      assume(info[3]).equals(undefined);
+      assume(info[4]).equals(undefined);
+    }
+  ));
+
   it('%% | escaped % sets info.message', assumeSplat(
     'test %d%%', [100], 'test 100%'
   ));

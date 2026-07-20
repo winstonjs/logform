@@ -59,12 +59,16 @@ class Splatter {
 
     // Now that { splat } has been separated from any potential { meta }. we
     // can assign this to the `info` object and write it to our format stream.
-    // If the additional metas are **NOT** objects or **LACK** enumerable properties
-    // you are going to have a bad time.
+    // Only non-null objects carry enumerable properties worth merging; merging
+    // a leftover primitive (e.g. a string) would spread it into char-indexed
+    // properties on `info` (see #109), so those are skipped instead.
     const metalen = metas.length;
     if (metalen) {
       for (let i = 0; i < metalen; i++) {
-        Object.assign(info, metas[i]);
+        const meta = metas[i];
+        if (typeof meta === 'object' && meta !== null) {
+          Object.assign(info, meta);
+        }
       }
     }
 
