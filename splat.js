@@ -54,8 +54,14 @@ class Splatter {
     const expectedSplat = tokens.length - escapes;
     const extraSplat = expectedSplat - splat.length;
     const metas = extraSplat < 0
-      ? splat.splice(extraSplat, -1 * extraSplat)
+      ? splat.slice(extraSplat)
       : [];
+
+    // `splat` may be the same array referenced by info[SPLAT], which is
+    // shared across every transport's format pipeline for this log call -
+    // mutating it (e.g. via splice) here would drop the extra metadata for
+    // every transport after the first, so this only ever reads from it.
+    const formatArgs = extraSplat < 0 ? splat.slice(0, extraSplat) : splat;
 
     // Now that { splat } has been separated from any potential { meta }. we
     // can assign this to the `info` object and write it to our format stream.
@@ -68,7 +74,7 @@ class Splatter {
       }
     }
 
-    info.message = util.format(msg, ...splat);
+    info.message = util.format(msg, ...formatArgs);
     return info;
   }
 
@@ -97,8 +103,10 @@ class Splatter {
     // This condition will take care of inputs with info[SPLAT]
     // but no tokens present
     if (!tokens && (splat || splat.length)) {
+      // Read-only: splat may be the same array referenced by info[SPLAT],
+      // shared across every transport's format pipeline for this log call.
       const metas = splat.length > 1
-        ? splat.splice(0)
+        ? splat.slice(0)
         : splat;
 
       // Now that { splat } has been separated from any potential { meta }. we
