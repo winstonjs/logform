@@ -155,4 +155,37 @@ describe('splat', () => {
     }
   ));
 
+  // See: https://github.com/winstonjs/winston/issues/2365
+  // winston shallow-clones info per transport, so each transport's format
+  // pipeline gets its own info object but the same info[SPLAT] array
+  // reference. Mutating that array in place during the first transport's
+  // pass silently drops the meta for every subsequent transport.
+  it('does not mutate info[SPLAT], so a second transport still sees the meta', () => {
+    const sharedSplat = ['ball', 'cool', { extraData: 'traceId' }];
+    const infoA = { level: 'info', message: 'this %s is %s', [SPLAT]: sharedSplat };
+    const infoB = { level: 'info', message: 'this %s is %s', [SPLAT]: sharedSplat };
+
+    const first = splat().transform(infoA);
+    assume(first.message).equals('this ball is cool');
+    assume(first.extraData).equals('traceId');
+
+    const second = splat().transform(infoB);
+    assume(second.message).equals('this ball is cool');
+    assume(second.extraData).equals('traceId');
+  });
+
+  it('no tokens | does not mutate info[SPLAT] either', () => {
+    const sharedSplat = [{ extraData: 'traceId' }, { more: 'meta' }];
+    const infoA = { level: 'info', message: 'no tokens here', [SPLAT]: sharedSplat };
+    const infoB = { level: 'info', message: 'no tokens here', [SPLAT]: sharedSplat };
+
+    const first = splat().transform(infoA);
+    assume(first.extraData).equals('traceId');
+    assume(first.more).equals('meta');
+
+    const second = splat().transform(infoB);
+    assume(second.extraData).equals('traceId');
+    assume(second.more).equals('meta');
+  });
+
 });
