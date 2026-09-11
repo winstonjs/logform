@@ -42,7 +42,7 @@ export namespace format {
   function cli(opts?: CliOptions): Format;
   function colorize(opts?: ColorizeOptions): Colorizer;
   function combine(...formats: Format[]): Format;
-  function errors(opts?: object): Format;
+  function errors(opts?: ErrorsOptions): Format;
   function json(opts?: JsonOptions): Format;
   function label(opts?: LabelOptions): Format;
   function logstash(): Format;
@@ -76,6 +76,17 @@ export interface ColorizeOptions {
    * An object containing the colors for the log levels. For example: `{ info: 'blue', error: 'red' }`.
    */
   colors?: Record<string, string | string[]>;
+}
+
+export interface ErrorsOptions {
+  /**
+   * If set to `true` the Error's `stack` will be appended to the `info` object.
+   */
+  stack?: boolean;
+  /**
+   * If set to `true` the Error's `cause` will be appended to the `info` object.
+   */
+  cause?: boolean;
 }
 
 export interface JsonOptions {
