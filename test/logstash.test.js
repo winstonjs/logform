@@ -42,4 +42,22 @@ describe('logstash', () => {
       }));
     }
   ));
+
+  it('preserves empty messages and zero timestamps', helpers.assumeFormatted(
+    logstash(),
+    { level: 'info', message: '', timestamp: 0, context: 'example' },
+    info => {
+      assume(info.message).equals(undefined);
+      assume(info.timestamp).equals(undefined);
+      assume(info[MESSAGE]).equals(JSON.stringify({
+        '@message': '',
+        '@timestamp': 0,
+        '@fields': {
+          level: 'info',
+          context: 'example'
+        }
+      }));
+    }
+  ));
+
 });
