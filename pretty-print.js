@@ -24,6 +24,6 @@ module.exports = format((info, opts = {}) => {
   delete stripped[MESSAGE];
   delete stripped[SPLAT];
 
-  info[MESSAGE] = inspect(stripped, false, opts.depth || null, opts.colorize);
+  info[MESSAGE] = inspect(stripped, false, opts.depth === undefined ? null : opts.depth, opts.colorize);
   return info;
 });
