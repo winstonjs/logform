@@ -46,4 +46,14 @@ describe('prettyPrint', () => {
       assume(info[MESSAGE]).equals(util.inspect(stripped));
     }
   ));
+  it('prettyPrint({ depth: 0 }) preserves zero depth', assumeFormatted(
+    prettyPrint({ depth: 0 }),
+    infoify({ level: 'info', message: 'hello', nested: { child: { value: 42 } } }),
+    info => {
+      assume(info[MESSAGE]).equals(util.inspect({
+        level: 'info', message: 'hello', nested: { child: { value: 42 } }
+      }, false, 0, false));
+    }
+  ));
+
 });
