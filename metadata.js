@@ -49,7 +49,7 @@ module.exports = format((info, opts = {}) => {
     fillExceptKeys = opts.fillExcept;
   }
 
-  if (fillExceptKeys.length > 0) {
+  if (opts.fillExcept || fillExceptKeys.length > 0) {
     return fillExcept(info, fillExceptKeys, metadataKey);
   }
 

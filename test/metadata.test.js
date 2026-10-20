@@ -27,6 +27,26 @@ describe('metadata', () => {
     }
   ));
 
+  for (const key of ['metadata', 'customMetadata']) {
+    it(`metadata({ fillExcept: [], key: '${key}' }) collects every string key`, helpers.assumeFormatted(
+      metadata({ fillExcept: [], key }),
+      testInfoObject,
+      info => {
+        assume(info[key]).deep.equals(testInfoObject);
+        assume(Object.keys(info)).deep.equals([key]);
+      }
+    ));
+  }
+
+  it('an empty fillExcept takes precedence over fillWith', helpers.assumeFormatted(
+    metadata({ fillExcept: [], fillWith: ['message'] }),
+    testInfoObject,
+    info => {
+      assume(info.metadata).deep.equals(testInfoObject);
+      assume(Object.keys(info)).deep.equals(['metadata']);
+    }
+  ));
+
   it('metadata({ fillWith: [keys] }) only adds specified keys to the metadata object', helpers.assumeFormatted(
     metadata({ fillWith: ['level', 'someObject'] }),
     testInfoObject,
