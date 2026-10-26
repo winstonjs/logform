@@ -215,7 +215,11 @@ console.dir(willNeverThrow.transform({
 
 ### Align
 
-The `align` format adds a `\t` delimiter before the message to align it in the same place.
+The `align` format prepends a `\t` delimiter to `info.message`; it does not pad
+`info.level`. Alignment depends on the text preceding that tab in the final output
+and on the viewer's tab stops. For example, `combine(align(), simple())` produces
+`info: \tmessage` and `verbose: \tmessage`, which reach different tab stops in a
+viewer with eight-column tabs.
 
 ```js
 const { format } = require('logform');
@@ -232,6 +236,41 @@ console.log(info);
 ```
 
 This was previously exposed as `{ align: true }` in `winston < 3.0.0`.
+
+To align messages across different level lengths with `simple`, use `padLevels`
+instead of `align`. It adds spaces based on the configured level names, so it does
+not depend on tab stops:
+
+```js
+const { format } = require('logform');
+const LEVEL = Symbol.for('level');
+const MESSAGE = Symbol.for('message');
+
+const alignedSimple = format.combine(
+  format.padLevels(),
+  format.simple()
+);
+
+for (const level of ['info', 'verbose']) {
+  const info = alignedSimple.transform({
+    level,
+    [LEVEL]: level,
+    message: 'my message'
+  });
+  console.log(info[MESSAGE]);
+}
+// info:     my message
+// verbose:  my message
+```
+
+`padLevels()` defaults to npm levels. For custom levels, pass the complete level
+map as `padLevels({ levels })`. Padding uses `info[Symbol.for('level')]`, which
+Winston supplies; set it when calling transforms directly, as above. Put
+`padLevels` before the finalizing `simple` or `printf` format. With `printf`, keep
+the other prefix fields at a fixed width for each level. Padding is based on level
+string lengths, not terminal display widths for wide or combining characters.
+`cli({ levels })` also combines padding and colorization, but unlike `simple` it
+does not append extra metadata to the output.
 
 ### CLI
 

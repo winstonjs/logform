@@ -6,6 +6,9 @@ const combine = require('../combine');
 const label = require('../label');
 const timestamp = require('../timestamp');
 const { formats } = require('./helpers');
+const { format } = require('../');
+const { LEVEL, MESSAGE } = require('triple-beam');
+const colors = require('@colors/colors/safe');
 
 describe('combine', () => {
   it('exposes the cascade function', () => {
@@ -40,6 +43,85 @@ describe('combine', () => {
           function notaformat() {}
         );
       }).throws();
+    });
+  });
+
+  describe('level padding compositions', () => {
+    const levels = { 'info': 0, 'verbose': 1, 'really-really-long': 2 };
+    const levelColors = { 'info': 'blue', 'verbose': 'cyan', 'really-really-long': 'yellow' };
+    const { Colorizer } = require('../colorize');
+    let originalColors;
+
+    beforeEach(() => {
+      originalColors = Colorizer.allColors;
+    });
+
+    afterEach(() => {
+      Colorizer.allColors = originalColors;
+    });
+
+    function assertAligned(fmt, column, metadata = '') {
+      Object.keys(levels).forEach(level => {
+        const actual = fmt.transform({
+          level,
+          [LEVEL]: level,
+          message: 'message',
+          requestId: 42
+        });
+        const output = colors.stripColors(actual[MESSAGE]);
+
+        assume(output.indexOf('message')).equals(column);
+        assume(output.slice(column)).equals(`message${metadata}`);
+        assume(actual[LEVEL]).equals(level);
+        assume(colors.stripColors(actual.level)).equals(level);
+        assume(actual.requestId).equals(42);
+      });
+    }
+
+    it('aligns the README simple example using the default npm levels', () => {
+      const fmt = combine(format.padLevels(), format.simple());
+      const output = ['info', 'verbose'].map(level => {
+        return fmt.transform({ level, [LEVEL]: level, message: 'my message' })[MESSAGE];
+      });
+
+      assume(output).deep.equals(['info:     my message', 'verbose:  my message']);
+    });
+
+    it('aligns custom levels with simple while retaining metadata', () => {
+      assertAligned(combine(format.padLevels({ levels }), format.simple()),
+        21, ' {"requestId":42}');
+    });
+
+    it('uses the raw LEVEL symbol when padding colorized levels', () => {
+      assertAligned(combine(
+        format.colorize({ colors: levelColors }),
+        format.padLevels({ levels }),
+        format.simple()
+      ), 21, ' {"requestId":42}');
+    });
+
+    it('preserves alignment when coloring both the level and padded message', () => {
+      assertAligned(combine(
+        format.padLevels({ levels }),
+        format.colorize({ colors: levelColors, all: true }),
+        format.simple()
+      ), 21, ' {"requestId":42}');
+    });
+
+    it('preserves alignment when removing colors before simple', () => {
+      assertAligned(combine(
+        format.colorize({ colors: levelColors }),
+        format.padLevels({ levels }),
+        format.uncolorize(),
+        format.simple()
+      ), 21, ' {"requestId":42}');
+    });
+
+    it('aligns a printf layout with a fixed-width prefix', () => {
+      assertAligned(combine(
+        format.padLevels({ levels }),
+        format.printf(info => `[app] ${info.level}:${info.message}`)
+      ), 26);
     });
   });
 
