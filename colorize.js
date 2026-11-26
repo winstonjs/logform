@@ -66,19 +66,32 @@ class Colorizer {
     }
 
     //
+    // Only use a color that was registered for this level. A plain lookup
+    // would also find inherited names such as `constructor` or `toString`,
+    // which are not colors and would throw when called.
+    //
+    const color = Object.prototype.hasOwnProperty.call(
+      Colorizer.allColors || {}, lookup
+    ) ? Colorizer.allColors[lookup] : undefined;
+
+    if (!color) {
+      return message;
+    }
+
+    //
     // If the color for the level is just a string
     // then attempt to colorize the message with it.
     //
-    if (!Array.isArray(Colorizer.allColors[lookup])) {
-      return colors[Colorizer.allColors[lookup]](message);
+    if (!Array.isArray(color)) {
+      return colors[color](message);
     }
 
     //
     // If it is an Array then iterate over that Array, applying
     // the colors function for each item.
     //
-    for (let i = 0, len = Colorizer.allColors[lookup].length; i < len; i++) {
-      message = colors[Colorizer.allColors[lookup][i]](message);
+    for (let i = 0, len = color.length; i < len; i++) {
+      message = colors[color[i]](message);
     }
 
     return message;
