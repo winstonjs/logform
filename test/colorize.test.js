@@ -151,5 +151,15 @@ describe('Colorizer', () => {
         colors.bold(colors.red('message'))
       );
     });
+
+    it('colorize(level) [no registered color]', () => {
+      assume(instance.colorize('unknown', 'unknown')).equals('unknown');
+    });
+
+    it('colorize(level) [inherited property name]', () => {
+      ['constructor', 'toString', 'valueOf', 'hasOwnProperty'].forEach(level => {
+        assume(instance.colorize(level, level)).equals(level);
+      });
+    });
   });
 });
